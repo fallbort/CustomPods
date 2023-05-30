@@ -242,7 +242,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
           toDestination:(NSString *)destination
               overwrite:(BOOL)overwrite
                password:(NSString *)password
-        progressHandler:(void (^)(NSString *entry, unz_file_info zipInfo, long entryNumber, long total))progressHandler
+        progressHandler:(void (^)(NSString *entry, unz_file_info zipInfo, long entryNumber, long total,long long size))progressHandler
       completionHandler:(void (^)(NSString *path, BOOL succeeded, NSError * _Nullable error))completionHandler
 {
     return [self unzipFileAtPath:path toDestination:destination preserveAttributes:YES overwrite:overwrite password:password error:nil delegate:nil progressHandler:progressHandler completionHandler:completionHandler];
@@ -250,7 +250,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
 
 + (BOOL)unzipFileAtPath:(NSString *)path
           toDestination:(NSString *)destination
-        progressHandler:(void (^_Nullable)(NSString *entry, unz_file_info zipInfo, long entryNumber, long total))progressHandler
+        progressHandler:(void (^_Nullable)(NSString *entry, unz_file_info zipInfo, long entryNumber, long total,long long size))progressHandler
       completionHandler:(void (^_Nullable)(NSString *path, BOOL succeeded, NSError * _Nullable error))completionHandler
 {
     return [self unzipFileAtPath:path toDestination:destination preserveAttributes:YES overwrite:YES password:nil error:nil delegate:nil progressHandler:progressHandler completionHandler:completionHandler];
@@ -274,7 +274,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
                password:(nullable NSString *)password
                   error:(NSError **)error
                delegate:(nullable id<SSZipArchiveDelegate>)delegate
-        progressHandler:(void (^_Nullable)(NSString *entry, unz_file_info zipInfo, long entryNumber, long total))progressHandler
+        progressHandler:(void (^_Nullable)(NSString *entry, unz_file_info zipInfo, long entryNumber, long total,long long size))progressHandler
       completionHandler:(void (^_Nullable)(NSString *path, BOOL succeeded, NSError * _Nullable error))completionHandler
 {
     return [self unzipFileAtPath:path toDestination:destination preserveAttributes:preserveAttributes overwrite:overwrite nestedZipLevel:0 password:password error:error delegate:delegate progressHandler:progressHandler completionHandler:completionHandler];
@@ -288,7 +288,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
                password:(nullable NSString *)password
                   error:(NSError **)error
                delegate:(nullable id<SSZipArchiveDelegate>)delegate
-        progressHandler:(void (^_Nullable)(NSString *entry, unz_file_info zipInfo, long entryNumber, long total))progressHandler
+        progressHandler:(void (^_Nullable)(NSString *entry, unz_file_info zipInfo, long entryNumber, long total, long long size))progressHandler
       completionHandler:(void (^_Nullable)(NSString *path, BOOL succeeded, NSError * _Nullable error))completionHandler
 {
     // Guard against empty strings
@@ -369,6 +369,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
     NSError *unzippingError;
     do {
         currentFileNumber++;
+        long long totalbytesread = 0;
         if (ret == MZ_END_OF_LIST) {
             break;
         }
@@ -494,7 +495,9 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
                 int readBytes = unzReadCurrentFile(zip, buffer, 4096);
                 if (readBytes >= 0) {
                     FILE *fp = fopen(fullPath.fileSystemRepresentation, "wb");
+                    int times = 0;
                     while (fp) {
+                        times += 1;
                         if (readBytes > 0) {
                             if (0 == fwrite(buffer, readBytes, 1, fp)) {
                                 if (ferror(fp)) {
@@ -505,6 +508,14 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
                                     break;
                                 }
                             }
+                            totalbytesread=totalbytesread+readBytes;
+                            // Added by me
+                            if (times >= 1000 && progressHandler)
+                            {
+                                times = 0;
+                                progressHandler(strPath, fileInfo, currentFileNumber, totalbytesread,totalbytesread);
+                            }
+                            // End added by me
                         } else {
                             break;
                         }
@@ -687,7 +698,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
             
             if (progressHandler)
             {
-                progressHandler(strPath, fileInfo, currentFileNumber, globalInfo.number_entry);
+                progressHandler(strPath, fileInfo, currentFileNumber, globalInfo.number_entry,totalbytesread);
             }
         }
     } while (ret == UNZ_OK && success);
@@ -764,17 +775,18 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
     return [self createZipFileAtPath:path withFilesAtPaths:paths withPassword:password progressHandler:nil];
 }
 
-+ (BOOL)createZipFileAtPath:(NSString *)path withFilesAtPaths:(NSArray<NSString *> *)paths withPassword:(NSString *)password progressHandler:(void(^ _Nullable)(NSUInteger entryNumber, NSUInteger total))progressHandler
++ (BOOL)createZipFileAtPath:(NSString *)path withFilesAtPaths:(NSArray<NSString *> *)paths withPassword:(NSString *)password progressHandler:(void(^ _Nullable)(NSUInteger entryNumber, NSUInteger total,long long size))progressHandler
 {
     SSZipArchive *zipArchive = [[SSZipArchive alloc] initWithPath:path];
     BOOL success = [zipArchive open];
     if (success) {
+        long long totalbytesread = 0;
         NSUInteger total = paths.count, complete = 0;
         for (NSString *filePath in paths) {
             success &= [zipArchive writeFile:filePath withPassword:password];
             if (progressHandler) {
                 complete++;
-                progressHandler(complete, total);
+                progressHandler(complete, total,totalbytesread);
             }
         }
         success &= [zipArchive close];
@@ -800,7 +812,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
     withContentsOfDirectory:(NSString *)directoryPath
         keepParentDirectory:(BOOL)keepParentDirectory
                withPassword:(nullable NSString *)password
-         andProgressHandler:(void(^ _Nullable)(NSUInteger entryNumber, NSUInteger total))progressHandler {
+         andProgressHandler:(void(^ _Nullable)(NSUInteger entryNumber, NSUInteger total,long long size))progressHandler {
     return [self createZipFileAtPath:path withContentsOfDirectory:directoryPath keepParentDirectory:keepParentDirectory compressionLevel:Z_DEFAULT_COMPRESSION password:password AES:YES progressHandler:progressHandler];
 }
 
@@ -810,11 +822,12 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
            compressionLevel:(int)compressionLevel
                    password:(nullable NSString *)password
                         AES:(BOOL)aes
-            progressHandler:(void(^ _Nullable)(NSUInteger entryNumber, NSUInteger total))progressHandler {
+            progressHandler:(void(^ _Nullable)(NSUInteger entryNumber, NSUInteger total,long long size))progressHandler {
     
     SSZipArchive *zipArchive = [[SSZipArchive alloc] initWithPath:path];
     BOOL success = [zipArchive open];
     if (success) {
+        long long totalbytesread = 0;
         // use a local fileManager (queue/thread compatibility)
         NSFileManager *fileManager = [[NSFileManager alloc] init];
         NSDirectoryEnumerator *dirEnumerator = [fileManager enumeratorAtPath:directoryPath];
@@ -849,7 +862,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
             }
             if (progressHandler) {
                 complete++;
-                progressHandler(complete, total);
+                progressHandler(complete, total,totalbytesread);
             }
         }
         success &= [zipArchive close];
@@ -884,7 +897,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
            compressionLevel:(int)compressionLevel
                    password:(nullable NSString *)password
                         AES:(BOOL)aes
-            progressHandler:(void(^ _Nullable)(NSUInteger entryNumber, NSUInteger total))progressHandler
+            progressHandler:(void(^ _Nullable)(NSUInteger entryNumber, NSUInteger total,long long size))progressHandler
                keepSymlinks:(BOOL)keeplinks {
     if (!keeplinks) {
         return [SSZipArchive createZipFileAtPath:path
@@ -898,6 +911,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
         SSZipArchive *zipArchive = [[SSZipArchive alloc] initWithPath:path];
         BOOL success = [zipArchive open];
         if (success) {
+            long long totalbytesread = 0;
             // use a local fileManager (queue/thread compatibility)
             NSFileManager *fileManager = [[NSFileManager alloc] init];
             NSDirectoryEnumerator *dirEnumerator = [fileManager enumeratorAtPath:directoryPath];
@@ -935,7 +949,7 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
                 }
                 if (progressHandler) {
                     complete++;
-                    progressHandler(complete, total);
+                    progressHandler(complete, total,totalbytesread);
                 }
             }
             success &= [zipArchive close];
