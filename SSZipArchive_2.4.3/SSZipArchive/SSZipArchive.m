@@ -496,6 +496,11 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
                 if (readBytes >= 0) {
                     FILE *fp = fopen(fullPath.fileSystemRepresentation, "wb");
                     int times = 0;
+                    int maxTimes = 1000;
+                    if (readBytes > 0) {
+                        int newMax = fileInfo.uncompressed_size / (readBytes * 1000);
+                        maxTimes = newMax > maxTimes ? maxTimes : newMax;
+                    }
                     while (fp) {
                         times += 1;
                         if (readBytes > 0) {
@@ -510,10 +515,10 @@ BOOL _fileIsSymbolicLink(const unz_file_info *fileInfo);
                             }
                             totalbytesread=totalbytesread+readBytes;
                             // Added by me
-                            if (times >= 1000 && progressHandler)
+                            if (times >= maxTimes && progressHandler)
                             {
                                 times = 0;
-                                progressHandler(strPath, fileInfo, currentFileNumber, totalbytesread,totalbytesread);
+                                progressHandler(strPath, fileInfo, currentFileNumber, globalInfo.number_entry,totalbytesread);
                             }
                             // End added by me
                         } else {
