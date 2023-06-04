@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Cartography
+import MeMeKit
 
 public enum CameraCellType {
     case camera
@@ -19,10 +19,10 @@ public final class CameraCell: UICollectionViewCell {
             switch type {
             case .camera:
                 imageView.image = UIImage(named: "albumIcCamera")
-                label.text = NELocalize.localizedString("moments_photo")
+                label.text = NELocalize.localizedString("photo")
             case .video:
                 imageView.image = UIImage(named: "albumIcVideo")
-                label.text = NELocalize.localizedString("moments_video")
+                label.text = NELocalize.localizedString("video")
             }
         }
     }
@@ -56,15 +56,17 @@ public final class CameraCell: UICollectionViewCell {
     private func setupView() {
         addSubview(imageView)
         addSubview(label)
-        constrain(imageView, label) {
-            $0.height == 28
-            $0.width == 28
-            $0.centerX == $0.superview!.centerX
-            $0.bottom == $0.superview!.centerY
-            $1.top == $0.superview!.centerY + 2
-            $1.height == 17
-            $1.left == $0.superview!.left
-            $1.right == $0.superview!.right
+        imageView.snp.makeConstraints { maker in
+            maker.bottom.equalTo(self.snp.centerY)
+            maker.centerX.equalTo(self.snp.centerX)
+            maker.width.equalTo(28)
+            maker.height.equalTo(28)
+        }
+        label.snp.makeConstraints { maker in
+            maker.top.equalTo(self.snp.centerY).offset(2)
+            maker.left.equalTo(self.snp.left)
+            maker.right.equalTo(self.snp.right)
+            maker.height.equalTo(17)
         }
     }
 }

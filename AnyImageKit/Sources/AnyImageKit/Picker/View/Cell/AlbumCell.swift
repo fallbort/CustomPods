@@ -6,7 +6,6 @@
 //  Copyright © 2019-2021 AnyImageProject.org. All rights reserved.
 //
 
-import Cartography
 import UIKit
 
 final class AlbumCell: UITableViewCell {
@@ -54,11 +53,11 @@ final class AlbumCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(subTitleLabel)
 //        addSubview(separatorLine)
-        constrain(posterImageView) {
-            $0.left == $0.superview!.left + 16
-            $0.top == $0.superview!.top + 12
-            $0.bottom == $0.superview!.bottom - 12
-            $0.width == $0.height
+        posterImageView.snp.makeConstraints { maker in
+            maker.left.equalTo(contentView.snp.left).offset(16)
+            maker.top.equalTo(contentView.snp.top).offset(12)
+            maker.bottom.equalTo(contentView.snp.bottom).offset(-12)
+            maker.width.equalTo(posterImageView.snp.height)
         }
         titleLabel.snp.makeConstraints { maker in
             maker.centerY.equalTo(contentView.snp.centerY)
