@@ -93,12 +93,12 @@ final class CaptureViewController: AnyImageViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.setMultiIdleTimerDisable(key: "\(self.className)+\(self.getAddress())", isDisable: true)
+        UIApplication.shared.setMultiValueMixTrue(uniqueKey: "\(self.className)+\(self.getAddress())", keyPath: \UIApplication.isIdleTimerDisabled, value: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        UIApplication.shared.setMultiIdleTimerDisable(key: "\(self.className)+\(self.getAddress())", isDisable: false)
+        UIApplication.shared.setMultiValueMixTrue(uniqueKey: "\(self.className)+\(self.getAddress())", keyPath: \UIApplication.isIdleTimerDisabled, value: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {

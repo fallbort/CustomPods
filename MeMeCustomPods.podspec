@@ -45,6 +45,7 @@ Pod::Spec.new do |spec|
       base.resource_bundles = {'AnyImageKit_Core' => 'AnyImageKit/Sources/AnyImageKit/Resources/Core/**/*', 'AnyImageKit_Picker' => 'AnyImageKit/Sources/AnyImageKit/Resources/Picker/**/*', 'AnyImageKit_Editor' => 'AnyImageKit/Sources/AnyImageKit/Resources/Editor/**/*', 'AnyImageKit_Capture' => 'AnyImageKit/Sources/AnyImageKit/Resources/Capture/**/*'}
       base.framework    = "UIKit","Foundation"
       base.dependency 'SnapKit'
+      base.dependency 'MeMeKit'
       base.dependency 'Kingfisher'
       # base.pod_target_xcconfig = { 'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'ANYIMAGEKIT_ENABLE_PICKER' }
       # base.pod_target_xcconfig = { 'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'ANYIMAGEKIT_ENABLE_EDITOR' }
