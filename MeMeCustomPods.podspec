@@ -51,4 +51,31 @@ Pod::Spec.new do |spec|
       # base.pod_target_xcconfig = { 'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'ANYIMAGEKIT_ENABLE_EDITOR' }
       # base.pod_target_xcconfig = { 'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'ANYIMAGEKIT_ENABLE_CAPTURE' }
   end
+
+  spec.subspec 'ShareAndPay' do |base|
+      base.source_files = 'ShareAndPay/Source/**/*.{h,m,swift}','ShareAndPay/**/*.{modulemap}'
+      base.framework    = "Foundation"
+
+      base.dependency 'UMCommon'
+      base.dependency 'UMDevice'
+      base.dependency 'UMCCommonLog'
+
+      base.dependency 'UMShare/UI'
+      base.dependency 'UMShare/Social/ReducedWeChat'
+      base.dependency 'UMLink'
+      
+      base.dependency 'WechatOpenSDK'
+      
+      base.prefix_header_contents  =  '#import "WXApi.h"' , '#import <UMCommon/UMCommon.h>', '#import <UMCommonLog/UMCommonLogManager.h>'
+#      base.public_header_files = 'ShareAndPay/Source/**/*.{h}'
+
+#base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/path_to/CommonCrypto' }
+#base.user_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/path_to/CommonCrypto' }
+
+base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/ShareAndPay'] }
+
+
+#      base.dependency 'MeMeKit'
+      
+  end
 end

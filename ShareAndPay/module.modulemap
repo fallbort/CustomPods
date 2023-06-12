@@ -1,0 +1,19 @@
+//
+//  module.modulemap
+//  MeMeCustomPods
+//
+//  Created by xfb on 2023/6/12.
+//
+
+// 按需导入
+module WechatOpenSDK { //必须与导入的`OC Framework`同名
+  header "Source/WechatOpenSDKHeader.h"
+  //..
+  export *
+}
+
+module UMSocialSDK { //必须与导入的`OC Framework`同名
+  header "Source/UMSocialSDKHeader.h"
+  //..
+  export *
+}
