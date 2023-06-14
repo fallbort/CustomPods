@@ -7,13 +7,13 @@
 
 // 按需导入
 module WechatOpenSDK { //必须与导入的`OC Framework`同名
-  header "Source/WechatOpenSDKHeader.h"
+  header "WechatOpenSDKHeader.h"
   //..
   export *
 }
 
 module UMSocialSDK { //必须与导入的`OC Framework`同名
-  header "Source/UMSocialSDKHeader.h"
+  header "UMSocialSDKHeader.h"
   //..
   export *
 }

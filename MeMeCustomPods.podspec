@@ -53,7 +53,7 @@ Pod::Spec.new do |spec|
   end
 
   spec.subspec 'ShareAndPay' do |base|
-      base.source_files = 'ShareAndPay/Source/**/*.{h,m,swift}','ShareAndPay/**/*.{modulemap}'
+      base.source_files = 'ShareAndPay/Source/**/*.{h,m,swift}','ShareAndPay/*.{modulemap,h}'
       base.framework    = "Foundation"
 
       base.dependency 'UMCommon'
@@ -77,5 +77,20 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
 
 #      base.dependency 'MeMeKit'
       
+  end
+
+  spec.subspec 'JiGuang' do |base|
+      base.source_files = 'JiGuang/Source/**/*.{h,m,swift}','JiGuang/*.{modulemap,h}'
+      base.resource_bundles = {'JVerificationResource' => 'JiGuang/Resources/**/*'}
+      base.framework    = "Foundation"
+
+      base.dependency 'JCore','4.2.1-noidfa'
+      base.dependency 'JPush'
+      base.dependency 'JVerification'
+      
+      base.dependency 'MeMeKit'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/JiGuang'] }
+
   end
 end
