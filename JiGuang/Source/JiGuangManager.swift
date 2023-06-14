@@ -29,8 +29,18 @@ import MeMeKit
         config.timeout = 5000;
         config.authBlock = { (result) -> Void in
             if let result = Optional(result) {
-                if let code = result["code"], let content = result["content"] {
-                     print("初始化结果 result: code = \(code), content = \(content)")
+                if let code = result["code"] as? Int, code == 8000 {
+                    JVERIFICATIONService.preLogin(5000) { (result) in
+                        if let result = Optional(result), let code = result["code"] as? Int,code == 7000 {
+                            
+                        }else if let result = Optional(result), let code = result["code"] as? Int {
+                            
+                        }else{
+                            
+                        }
+                    }
+                }else if let content = result["content"] {
+                    
                 }
             }
         }
@@ -41,63 +51,40 @@ import MeMeKit
     }
     
     public func startLogin(workingChangeBlock:((_ isWorking:Bool)->())? = nil,complete:@escaping ((_ loginToken:String?,_ errorCode:Int)->())) {
+        
+        guard JVERIFICATIONService.checkVerifyEnable() == true else {
+            complete(nil,-1000000)
+            return
+        }
         DispatchQueue.main.async {
             workingChangeBlock?(true)
         }
         
-        JVERIFICATIONService.getToken { (result) in
-            if let result = Optional(result),let token = result["token"] as? String, token.count > 0,let op = result["operator"] {
-                JVERIFICATIONService.preLogin(5000) { (result) in
-                    if let result = Optional(result), let code = result["code"] as? Int,code == 7000 {
-                        if let vc = ScreenUIManager.topViewController() {
-                            JVERIFICATIONService.getAuthorizationWith(vc, hide: true, animated: true, timeout: 15*1000, completion: { (result) in
-                                if let result = Optional(result),let token = result["loginToken"] as? String, token.count > 0 {
-                                    DispatchQueue.main.async {
-                                        workingChangeBlock?(false)
-                                        complete(token,0)
-                                    }
-                                }else if let result = Optional(result), let code = result["code"] as? Int {
-                                    DispatchQueue.main.async {
-                                        workingChangeBlock?(false)
-                                        complete(nil,code)
-                                    }
-                                }else{
-                                    DispatchQueue.main.async {
-                                        workingChangeBlock?(false)
-                                        complete(nil,-99996)
-                                    }
-                                }
-                            }) { (type, content) in
-
-                            }
-                        }else{
-                            DispatchQueue.main.async {
-                                workingChangeBlock?(false)
-                                complete(nil,-99997)
-                            }
-                        }
-                    }else if let result = Optional(result), let code = result["code"] as? Int {
-                        DispatchQueue.main.async {
-                            workingChangeBlock?(false)
-                            complete(nil,code)
-                        }
-                    }else{
-                        DispatchQueue.main.async {
-                            workingChangeBlock?(false)
-                            complete(nil,-99998)
-                        }
+        if let vc = ScreenUIManager.topViewController() {
+            JVERIFICATIONService.getAuthorizationWith(vc, hide: true, animated: true, timeout: 15*1000, completion: { (result) in
+                if let result = Optional(result),let token = result["loginToken"] as? String, token.count > 0 {
+                    DispatchQueue.main.async {
+                        workingChangeBlock?(false)
+                        complete(token,0)
+                    }
+                }else if let result = Optional(result), let code = result["code"] as? Int {
+                    DispatchQueue.main.async {
+                        workingChangeBlock?(false)
+                        complete(nil,code)
+                    }
+                }else{
+                    DispatchQueue.main.async {
+                        workingChangeBlock?(false)
+                        complete(nil,-99996)
                     }
                 }
-            }else if let result = Optional(result),let code = result["code"] as? Int {
-                DispatchQueue.main.async {
-                    workingChangeBlock?(false)
-                    complete(nil,code)
-                }
-            }else{
-                DispatchQueue.main.async {
-                    workingChangeBlock?(false)
-                    complete(nil,-99999)
-                }
+            }) { (type, content) in
+
+            }
+        }else{
+            DispatchQueue.main.async {
+                workingChangeBlock?(false)
+                complete(nil,-99997)
             }
         }
     }
