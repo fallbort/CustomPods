@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  MGFaceIDDetect
+
+  Created by Megvii on 2017/7/17.
+  Copyright © 2017年 megvii. All rights reserved.
+*/
+
+"livenessExitLeftPromptText"                 =           "cancel";
+"livenessExitRightPromptText"                 =           "sure";
+"livenessExitTitlePromptText"                 =           "Are you sure to quit?";
+"livenessExit2HeadlineText"                 =           "Please confirm whether to exit the verification process?";
+"livenessExit2MainText"                 =           "Exit verification will not be able to identify your identity and may involve your funds and information security.";
+"livenessExit2LeftText"                 =           "Exit";
+"livenessExit2RightText"                 =           "Continue to verify";
+"livenessHomePromptWaitText"                 =           "Please wait for verification";
+"livenessHomePromptBlinkText"                 =           "Please blink your eyes";
+"livenessHomePromptOpenMouthText"                 =           "Please open your mouth and close it";
+"livenessHomePromptShakeHeadText"                 =           "Please shake your head";
+"livenessHomePromptNodText"                 =           "Please nod your head";
+"livenessHomePromptFrontalFaceText" = "Please show your frontal face";
+"livenessHomePromptFaceEreaText" = "Invalid face area for detection";
+"livenessHomePromptBrighterText" = "Please under brighter lights conditions";
+"livenessHomePromptDarkerText" = "Please under less bright lights conditions";
+"livenessHomePromptCloserText" = "Please come closer";
+"livenessHomePromptFurtherText" = "Please be a little farther";
+"livenessHomePromptNoBacklightingText" = "Please avoid side lighting and backlighting";
+"livenessHomePromptFrontalFaceInBoundingBoxText" = "Please fit your full-frontal face in the bounding box";
+"livenessHomePromptNoEyesOcclusionText" = "Please avoid eyes occlusion";
+"livenessHomePromptNoMouthOcclusionText" = "Please avoid mouth occlusion";
+"livenessHomePromptVerticalText" = "Please pick up the phone and keep it vertical";
+"livenessHomePromptMultiplayerText" = "Please ensure single verification";
+"livenessHomePromptStayStillText" = "Good, please stay still";
+"livenessHomePromptTooBrightText" = "Lights too bright, please under less bright lights conditions.";

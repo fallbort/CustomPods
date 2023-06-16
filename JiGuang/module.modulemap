@@ -6,7 +6,7 @@
 //
 
 module JverificationSDK { //必须与导入的`OC Framework`同名
-  header "JverificationSDKHeader.h"
+  header "Modules/JverificationSDKHeader.h"
   //..
   export *
 }

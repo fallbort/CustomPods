@@ -36,7 +36,7 @@ Pod::Spec.new do |spec|
   spec.default_subspec = 'Base'
 
   spec.subspec 'Base' do |base|
-      base.source_files = 'Source/Base/**/*.{h,m,swift}'
+      base.source_files = 'Source/Base/**/*.{h,m,mm,swift}'
       base.framework    = "Foundation"
   end
 
@@ -53,7 +53,7 @@ Pod::Spec.new do |spec|
   end
 
   spec.subspec 'ShareAndPay' do |base|
-      base.source_files = 'ShareAndPay/Source/**/*.{h,m,swift}','ShareAndPay/*.{modulemap,h}'
+      base.source_files = 'ShareAndPay/Source/**/*.{h,m,mm,swift}','ShareAndPay/*.{modulemap}','ShareAndPay/Modules/*.{h}'
       base.framework    = "Foundation"
 
       base.dependency 'UMCommon'
@@ -80,8 +80,9 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
   end
 
   spec.subspec 'JiGuang' do |base|
-      base.source_files = 'JiGuang/Source/**/*.{h,m,swift}','JiGuang/*.{modulemap,h}'
-      base.resource_bundles = {'JVerificationResource' => 'JiGuang/Resources/**/*'}
+      base.source_files = 'JiGuang/Source/**/*.{h,m,mm,swift}','JiGuang/*.{modulemap}','JiGuang/Modules/*.{h}'
+#      base.resource_bundles = {'JVerificationResource' => 'JiGuang/Resources/JVerificationResource/**/*'}
+      base.resources = ['JiGuang/Resources/JVerificationResource.bundle']
       base.framework    = "Foundation"
 
       base.dependency 'JCore','4.2.1-noidfa'
@@ -93,4 +94,22 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
       base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/JiGuang'] }
 
   end
+
+  spec.subspec 'Face' do |base|
+      base.source_files = 'Face/Source/**/*.{h,m,mm,swift}','Face/*.{modulemap}','Face/Modules/*.{h}'
+#      base.resource_bundles = {'MGFaceIDLiveCustomDetect' => 'Face/sdk/resource/*.bundle'}
+    base.resources = ['Face/sdk/resource/MGFaceIDLiveCustomDetect.bundle']
+      base.public_header_files = 'Face/Source/**/*.{h}'
+      base.framework    = "UIKit","CoreMotion","MediaPlayer"
+      
+#      base.prefix_header_contents  = '@import MeMeKit;'
+      
+      base.dependency 'MeMeKit'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/Face'] }
+
+      base.vendored_frameworks    = "Face/sdk/framework/**/*.framework"
+  end
+
+
 end
