@@ -1,6 +1,5 @@
 //
-//  DemoMegNetwork.h
-//  DemoMegLiveCustomUI
+//  FaceMegNetwork.h
 //
 //  Created by Megvii on 2018/11/2.
 //  Copyright © 2018 Megvii. All rights reserved.
@@ -14,15 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void(^RequestSuccess)(NSInteger statusCode, NSDictionary* responseObject);
 typedef void(^RequestFailure)(NSInteger statusCode, NSError* error);
 
-@interface DemoMegNetwork : NSObject
+@interface FaceMegNetwork : NSObject
 
-+ (DemoMegNetwork *)singleton;
++ (FaceMegNetwork *)singleton;
 
 - (void)queryDemoMGFaceIDAntiSpoofingBizTokenWithUserName:(NSString *)userNameStr idcardNumber:(NSString *)idcardNumberStr liveConfig:(NSDictionary *)liveInfo success:(RequestSuccess)successBlock failure:(RequestFailure)failureBlock;
 
 - (void)queryDemoMGFaceIDAntiSpoofingVerifyWithBizToken:(NSString *)bizTokenStr verify:(NSData *)megliveData success:(RequestSuccess)successBlock failure:(RequestFailure)failureBlock;
-
-- (void)downloadBundleResourceWithSuccess:(RequestSuccess)successBlock;
 
 -(void)configWithAppKey:(NSString*)appKey appSecret:(NSString*)appSecret;
 @end

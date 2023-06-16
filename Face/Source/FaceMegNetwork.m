@@ -1,53 +1,35 @@
 //
-//  DemoMegNetwork.m
-//  DemoMegLiveCustomUI
+//  FaceMegNetwork.m
 //
 //  Created by Megvii on 2018/11/2.
 //  Copyright © 2018 Megvii. All rights reserved.
 //
 
-#import "DemoMegNetwork.h"
+#import "FaceMegNetwork.h"
 #import <CommonCrypto/CommonHMAC.h>
 #import <CommonCrypto/CommonCryptor.h>
 #import <math.h>
 
-#if UserAFNetwork
-#import <AFNetworking/AFNetworking.h>
-#endif
-
-#if UserDownload
-#import <SSZipArchive/SSZipArchive.h>
-#endif
-
 #define kMGFaceIDNetworkHost @"https://api.megvii.com"
 #define kMGFaceIDNetworkTimeout 30
 
-@interface DemoMegNetwork ()
-#if !UserAFNetwork
+@interface FaceMegNetwork ()
 @property (nonatomic, copy) NSString* formMPboundary;
 @property (nonatomic, copy) NSString* startMPboundary;
 @property (nonatomic, copy) NSString* endMPboundary;
-#endif
 
 @property (nonatomic, copy) NSString* appKey;
 @property (nonatomic, copy) NSString* appSecret;
 @end
 
-@implementation DemoMegNetwork
+@implementation FaceMegNetwork
 
-static DemoMegNetwork* sing = nil;
-#if UserAFNetwork
-//  使用AFNetworking作为项目中的网络请求库
-static AFHTTPSessionManager* sessionManager = nil;
-#endif
-+ (DemoMegNetwork *)singleton {
+static FaceMegNetwork* sing = nil;
+
++ (FaceMegNetwork *)singleton {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sing = [[DemoMegNetwork alloc] init];
-#if UserAFNetwork
-        //  使用AFNetworking作为项目中的网络请求库
-        sessionManager = [[AFHTTPSessionManager manager] init];
-#endif
+        sing = [[FaceMegNetwork alloc] init];
     });
     return sing;
 }
@@ -58,7 +40,7 @@ static AFHTTPSessionManager* sessionManager = nil;
 }
 
 - (void)queryDemoMGFaceIDAntiSpoofingBizTokenWithUserName:(NSString *)userNameStr idcardNumber:(NSString *)idcardNumberStr liveConfig:(NSDictionary *)liveInfo success:(RequestSuccess)successBlock failure:(RequestFailure)failureBlock {
-#if !UserAFNetwork
+
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"idcard_name" : userNameStr,
                                                                                     @"idcard_number" : idcardNumberStr,
                                                                                     @"sign" : [self getFaceIDSignStr],
@@ -76,42 +58,10 @@ static AFHTTPSessionManager* sessionManager = nil;
     [self sendAsynchronousRequest:request
                           success:successBlock
                           failure:failureBlock];
-#else
-    //  使用AFNetworking作为项目中的网络请求库进行`biztoken`的获取和活体结果的验证。
-    [sessionManager.requestSerializer setValue:@"multipart/form-data; charset=utf-8; boundary=__X_PAW_BOUNDARY__" forHTTPHeaderField:@"Content-Type"];
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"idcard_name" : userNameStr,
-                                                                                    @"idcard_number" : idcardNumberStr,
-                                                                                    @"sign" : [self getFaceIDSignStr],
-                                                                                    @"sign_version" : [self getFaceIDSignVersionStr],
-                                                                                    @"comparison_type" : @"1" ,
-                                                                                    }];
-    [params addEntriesFromDictionary:liveInfo];
-    [sessionManager POST:[NSString stringWithFormat:@"%@/faceid/v3/sdk/get_biz_token", kMGFaceIDNetworkHost]
-              parameters:params
-constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-}
-                progress:nil
-                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                     if (successBlock) {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             NSHTTPURLResponse* urlResponse = (NSHTTPURLResponse *)task.response;
-                             successBlock([urlResponse statusCode], (NSDictionary *)responseObject);
-                         });
-                     }
-                 }
-                 failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                     if (failureBlock) {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             NSHTTPURLResponse* urlResponse = (NSHTTPURLResponse *)task.response;
-                             failureBlock([urlResponse statusCode], error);
-                         });
-                     }
-                 }];
-#endif
 }
 
 - (void)queryDemoMGFaceIDAntiSpoofingVerifyWithBizToken:(NSString *)bizTokenStr verify:(NSData *)megliveData success:(RequestSuccess)successBlock failure:(RequestFailure)failureBlock {
-#if !UserAFNetwork
+
     NSDictionary* params = @{@"sign" : [self getFaceIDSignStr],
                              @"sign_version" : [self getFaceIDSignVersionStr],
                              @"biz_token" : bizTokenStr};
@@ -127,70 +77,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     [self sendAsynchronousRequest:request
                           success:successBlock
                           failure:failureBlock];
-#else
-    //  使用AFNetworking作为项目中的网络请求库进行`biztoken`的获取和活体结果的验证。
-    [sessionManager.requestSerializer setValue:@"multipart/form-data; charset=utf-8; boundary=__X_PAW_BOUNDARY__" forHTTPHeaderField:@"Content-Type"];
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithDictionary:@{@"sign" : [self getFaceIDSignStr],
-                                                                                    @"sign_version" : [self getFaceIDSignVersionStr],
-                                                                                    @"biz_token" : bizTokenStr,
-                                                                                    }];
-    [sessionManager POST:[NSString stringWithFormat:@"%@/faceid/v3/sdk/verify", kMGFaceIDNetworkHost]
-              parameters:params
-constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-    [formData appendPartWithFileData:megliveData name:@"meglive_data" fileName:@"meglive_data" mimeType:@"text/html"];
-}
-                progress:nil
-                 success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                     if (successBlock) {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             NSHTTPURLResponse* urlResponse = (NSHTTPURLResponse *)task.response;
-                             successBlock([urlResponse statusCode], (NSDictionary *)responseObject);
-                         });
-                     }
-                 }
-                 failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                     if (failureBlock) {
-                         dispatch_async(dispatch_get_main_queue(), ^{
-                             NSHTTPURLResponse* urlResponse = (NSHTTPURLResponse *)task.response;
-                             failureBlock([urlResponse statusCode], error);
-                         });
-                     }
-                 }];
-#endif
 }
 
-- (void)downloadBundleResourceWithSuccess:(RequestSuccess)successBlock {
-#if UserDownload
-    NSString* ossStr = @"";
-    NSAssert(ossStr.length != 0, @"Please set `ossStr`");
-    NSURL* ossUrl = [NSURL URLWithString:ossStr];
-    NSURLRequest* request = [NSURLRequest requestWithURL:ossUrl];
-    NSURLSessionDownloadTask* downloadTask = [[NSURLSession sharedSession] downloadTaskWithRequest:request completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        //  将下载完成的文件迁移到Document文件夹下
-        NSString* toURLStr = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"bundle.zip"];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:toURLStr]) {
-            [[NSFileManager defaultManager] removeItemAtPath:toURLStr error:nil];
-        }
-        BOOL isSuccess = NO;
-        isSuccess = [[NSFileManager defaultManager] moveItemAtPath:location.path toPath:toURLStr error:nil];
-        if (isSuccess) {
-            NSString* sourceHomeFilePath = [NSString stringWithFormat:@"%@/", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) firstObject]];
-            isSuccess = [SSZipArchive unzipFileAtPath:toURLStr toDestination:sourceHomeFilePath];
-            [[NSFileManager defaultManager] removeItemAtURL:toURL error:nil];
-        }
-        if (successBlock) {
-            successBlock(isSuccess ? 200 : 400, @{@"URL" : [NSString stringWithFormat:@"%@/MGFaceIDLiveCustomDetect.bundle", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) firstObject]]});
-        }
-    }];
-    [downloadTask resume];
-#else
-    if (successBlock) {
-        successBlock(400, @{@"URL" : @""});
-    }
-#endif
-}
-
-#if !UserAFNetwork
 - (NSMutableURLRequest *)getRequest:(NSURL *)uri method:(NSString *)method {
     NSMutableURLRequest* urlRequest = [NSMutableURLRequest requestWithURL:uri
                                                               cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -290,7 +178,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     }
     return _endMPboundary;
 }
-#endif
 
 - (NSString *)getFaceIDSignStr {
     int valid_durtion = 1000;

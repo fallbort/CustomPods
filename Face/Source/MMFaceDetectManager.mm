@@ -7,7 +7,7 @@
 
 #import "MMFaceDetectManager.h"
 #import "FaceDetectUtils.h"
-#import "DemoMegNetwork.h"
+#import "FaceMegNetwork.h"
 #if !TARGET_IPHONE_SIMULATOR
 #import <MGFaceIDLiveDetect/MGFaceIDLiveDetect.h>
 #endif
@@ -24,14 +24,14 @@ static MMFaceDetectManager* sing = nil;
 }
 
 -(void)startupWithAppKey:(NSString*)appKey appSecret:(NSString*)appSecret {
-    [[DemoMegNetwork singleton] configWithAppKey:appKey appSecret:appSecret];
+    [[FaceMegNetwork singleton] configWithAppKey:appKey appSecret:appSecret];
 }
 
 -(void)startFaceDetectWithUserName:(NSString*)userName idCardNumber:(NSString*)idCardNumber complete:(void(^ _Nullable)(BOOL success,NSInteger statusCode, NSError * _Nullable error,UIImage* _Nullable image))complete {
     NSMutableDictionary* liveInfoDict = [[NSMutableDictionary alloc] initWithCapacity:1];
     [liveInfoDict setObject:@"meglive" forKey:@"liveness_type"];
     __weak __typeof(self)weakSelf = self;
-    [[DemoMegNetwork singleton] queryDemoMGFaceIDAntiSpoofingBizTokenWithUserName:userName idcardNumber:idCardNumber liveConfig:liveInfoDict success:^(NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
+    [[FaceMegNetwork singleton] queryDemoMGFaceIDAntiSpoofingBizTokenWithUserName:userName idcardNumber:idCardNumber liveConfig:liveInfoDict success:^(NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
         if (statusCode == 200 && responseObject && [[responseObject allKeys] containsObject:@"biz_token"] && [responseObject objectForKey:@"biz_token"]) {
             NSString* bizToken = [responseObject objectForKey:@"biz_token"];
             [weakSelf realStartDetectWithToken:bizToken complete:complete];
@@ -53,6 +53,7 @@ static MMFaceDetectManager* sing = nil;
     if (bundlePath == nil) {
         bundlePath = @"";
     }
+#if !TARGET_IPHONE_SIMULATOR
     BOOL loadResrouce = [MGFaceIDLiveDetectManager designationMGFaceIDLiveDetectFilePath:bundlePath];
     if (loadResrouce == YES) {
         MGFaceIDLiveDetectError* error = nil;
@@ -73,7 +74,7 @@ static MMFaceDetectManager* sing = nil;
             [detectManager startMGFaceIDLiveDetectWithCurrentController:vc
                                                                callback:^(MGFaceIDLiveDetectError *error, NSData *deltaData, NSString *bizTokenStr, NSDictionary *extraOutDataDict) {
                 if (error.errorType == MGFaceIDLiveDetectErrorNone && deltaData) {
-                    [[DemoMegNetwork singleton] queryDemoMGFaceIDAntiSpoofingVerifyWithBizToken:bizToken
+                    [[FaceMegNetwork singleton] queryDemoMGFaceIDAntiSpoofingVerifyWithBizToken:bizToken
                                                                                          verify:deltaData
                                                                                         success:^(NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
                         NSString* imageString = responseObject[@"images"][@"image_best"];
@@ -111,6 +112,13 @@ static MMFaceDetectManager* sing = nil;
             complete(NO,statusCode,error,nil);
         }
     }
+#else
+    if (complete != nil) {
+        NSInteger statusCode = -99123;
+        NSError* error = [NSError errorWithDomain:@"模拟器无法启动人脸识别" code:statusCode userInfo:nil];
+        complete(NO,statusCode,error,nil);
+    }
+#endif
     
 }
 
