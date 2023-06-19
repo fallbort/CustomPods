@@ -1,0 +1,66 @@
+{
+  "menu": [
+     {
+         "name": "biaozhunmei",
+         "dir": "标准眉",
+         "menuTag": 1,
+         "selected": false,
+         "normalThumb":"eyebrow_biaozhunmei.png",
+         "selectedThumb":"eyebrow_biaozhunmei.png",
+         "thumb":"eb_biaozhunmei_icon.png",
+         "downloaded": 0,
+     },
+     {
+         "name": "jianmei",
+         "dir": "剑眉",
+         "menuTag": 2,
+         "selected": false,
+         "normalThumb":"eyebrow_jianmei.png",
+         "selectedThumb":"eyebrow_jianmei.png",
+         "thumb":"eb_jianmei_icon.png",
+         "downloaded": 0,
+     },
+     {
+         "name": "liuyemei",
+         "dir": "柳叶眉",
+         "menuTag": 3,
+         "selected": false,
+         "normalThumb":"eyebrow_liuyemei.png",
+         "selectedThumb":"eyebrow_liuyemei.png",
+         "thumb":"eb_liuyemei_icon.png",
+         "downloaded": 0,
+     },
+     {
+         "name": "pingzhimei",
+         "dir": "平直眉",
+         "menuTag": 4,
+         "selected": false,
+         "normalThumb":"eyebrow_pingzhimei.png",
+         "selectedThumb":"eyebrow_pingzhimei.png",
+         "thumb":"eb_pingzhimei_icon.png",
+         "downloaded": 0,
+     },
+     {
+         "name": "liuxingmei",
+         "dir": "流星眉",
+         "menuTag": 5,
+         "selected": false,
+         "normalThumb":"eyebrow_liuxingmei.png",
+         "selectedThumb":"eyebrow_liuxingmei.png",
+         "thumb":"eb_liuxingmei_icon.png",
+         "downloaded": 0,
+     },
+     {
+         "name": "oushimei",
+         "dir": "欧式眉",
+         "menuTag": 6,
+         "selected": false,
+         "normalThumb":"eyebrow_oushimei.png",
+         "selectedThumb":"eyebrow_oushimei.png",
+         "thumb":"eb_oushimei_icon.png",
+         "downloaded": 0,
+     }
+     
+  ]
+  
+}

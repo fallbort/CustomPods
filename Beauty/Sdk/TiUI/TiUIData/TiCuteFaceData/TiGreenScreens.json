@@ -1,0 +1,78 @@
+{
+  "menu": [
+    {
+        "name": "",
+        "menuTag":0,
+        "selected": true,
+        "thumb":"tiezhi_wu_selected.png",
+        "normalThumb":"tiezhi_wu_normal.png",
+        "downloaded": 2
+    },
+    {
+        "name": "",
+        "menuTag":99,
+        "selected": false,
+        "thumb":"icon_lvmu_bianji.png",
+        "normalThumb":"icon_lvmu_bianji.png",
+        "downloaded": 2
+    },
+    {
+        "name": "gs_aegean_sea",
+        "menuTag":1,
+        "selected": false,
+        "thumb": "gs_aegean_sea_icon.png",
+        "downloaded": 2
+    },
+    {
+        "name": "gs_class_room",
+        "menuTag":2,
+        "selected": false,
+        "thumb": "gs_class_room_icon.png",
+        "downloaded": 2
+    },
+    {
+        "name": "gs_imperial_palace",
+        "menuTag":3,
+        "selected": false,
+        "thumb": "gs_imperial_palace_icon.png",
+        "downloaded": 2
+    },
+    {
+        "name": "gs_snowscape",
+        "menuTag":4,
+        "selected": false,
+        "thumb": "gs_snowscape_icon.png",
+        "downloaded": 2
+    },
+    {
+         "name": "gs_starry_sky",
+         "menuTag":5,
+         "selected": false,
+         "thumb": "gs_starry_sky_icon.png",
+         "downloaded": 2
+    },
+    {
+         "name": "gs_street",
+         "menuTag":6,
+         "selected": false,
+         "thumb": "gs_street_icon.png",
+         "downloaded": 2
+    },
+    {
+        "name": "gs_subway_window",
+        "menuTag":7,
+        "selected": false,
+        "thumb": "gs_subway_window_icon.png",
+        "downloaded": 2
+    },
+    {
+         "name": "gs_the_bund",
+         "menuTag":8,
+         "selected": false,
+         "thumb": "gs_the_bund_icon.png",
+         "downloaded": 2
+     },
+     
+  ]
+  
+}

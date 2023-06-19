@@ -97,8 +97,8 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
 
   spec.subspec 'Face' do |base|
       base.source_files = 'Face/Source/**/*.{h,m,mm,swift}','Face/*.{modulemap}','Face/Modules/*.{h}'
-#      base.resource_bundles = {'MGFaceIDLiveCustomDetect' => 'Face/sdk/resource/*.bundle'}
-    base.resources = ['Face/sdk/resource/MGFaceIDLiveCustomDetect.bundle']
+#      base.resource_bundles = {'MGFaceIDLiveCustomDetect' => 'Face/Sdk/resource/*.bundle'}
+    base.resources = ['Face/Sdk/resource/MGFaceIDLiveCustomDetect.bundle']
       base.public_header_files = 'Face/Source/**/*.{h}'
       base.framework    = "UIKit","CoreMotion","MediaPlayer"
       
@@ -108,8 +108,25 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
 
       base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/Face'] }
 
-      base.vendored_frameworks    = "Face/sdk/framework/**/*.framework"
+      base.vendored_frameworks    = "Face/Sdk/framework/**/*.framework"
   end
 
+  spec.subspec 'Beauty' do |base|
+      base.source_files = 'Beauty/Source/**/*.{h,m,mm,swift}','Beauty/*.{modulemap}','Beauty/Modules/*.{h}'
+      base.resource_bundles = {
+        'TiUIIcon' => ['Beauty/Sdk/TiUI/TiUIIcon/*'],
+        'TiSDKResource' => ['Beauty/Sdk/TiSDKResource.bundle/*']}
+#      base.resources = ['Beauty/Sdk/TiSDKResource.bundle']
+      base.public_header_files = 'Beauty/Source/**/*.{h}'
+      base.framework    = "Foundation"
+      
+#      base.prefix_header_contents  = '@import MeMeKit;'
+      
+      base.dependency 'MeMeKit'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/Beauty'] }
+
+      base.vendored_frameworks    = "Beauty/Sdk/*.framework"
+  end
 
 end

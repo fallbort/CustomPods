@@ -1,0 +1,56 @@
+{
+  "menu": [
+    {
+        "name": "",
+        "menuTag":0,
+        "selected": true,
+        "thumb":"tiezhi_wu_selected.png",
+        "normalThumb":"tiezhi_wu_normal.png",
+        "downloaded": 2
+    },
+    {
+        "name": "panda",
+        "menuTag":1,
+        "selected": false,
+        "thumb": "panda_icon.png",
+        "downloaded": 0
+    },
+    {
+        "name": "fox",
+        "menuTag":2,
+        "selected": false,
+        "thumb": "fox_icon.png",
+        "downloaded": 0
+    },
+    {
+        "name": "pig",
+        "menuTag":3,
+        "selected": false,
+        "thumb": "pig_icon.png",
+        "downloaded": 0
+    },
+    {
+        "name": "spirit",
+        "menuTag":4,
+        "selected": false,
+        "thumb": "spirit_icon.png",
+        "downloaded": 0
+    },
+    {
+        "name": "white_n95",
+        "menuTag":5,
+        "selected": false,
+        "thumb": "white_n95_icon.png",
+        "downloaded": 0
+    },
+    {
+        "name": "medical_mask",
+        "menuTag":6,
+        "selected": false,
+        "thumb": "medical_mask_icon.png",
+        "downloaded": 0
+    }
+    
+  ]
+  
+}

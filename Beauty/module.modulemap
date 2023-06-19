@@ -1,0 +1,12 @@
+//
+//  module.modulemap
+//  Pods
+//
+//  Created by xfb on 2023/6/14.
+//
+
+module TiSDK { //必须与导入的`OC Framework`同名
+  header "Modules/TiSDKHeader.h"
+  //..
+  export *
+}
