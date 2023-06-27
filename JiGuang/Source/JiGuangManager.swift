@@ -53,7 +53,7 @@ import MeMeKit
     public func startLogin(workingChangeBlock:((_ isWorking:Bool)->())? = nil,complete:@escaping ((_ loginToken:String?,_ errorCode:Int)->())) {
         
         guard JVERIFICATIONService.checkVerifyEnable() == true else {
-            complete(nil,-1000000)
+            complete(nil,JiGuangErrorCode.NetInvalid.rawValue)
             return
         }
         DispatchQueue.main.async {

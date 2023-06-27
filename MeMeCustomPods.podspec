@@ -157,4 +157,21 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
        }
   end
 
+
+spec.subspec 'Login' do |base|
+      base.source_files = 'Login/Source/**/*.{h,m,mm,swift}','Login/*.{modulemap}','Login/Modules/*.{h}'
+      base.public_header_files = 'Login/Source/**/*.{h}'
+      base.framework    = "Foundation", "AuthenticationServices"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+
+      base.dependency 'MeMeKit'
+      base.dependency 'MeMeComponents/Base'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/Login'] }
+
+      base.vendored_frameworks    = "Login/Sdk/*.framework"
+  end
+
 end
