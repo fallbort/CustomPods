@@ -19,7 +19,7 @@ public struct AppleLoginResponseData {
 extension MeMeLoginManager {
     public func loginWithApple(complete:((_ res:AppleLoginResponseData?,_ error:CustomNSError?)->())?) {
         if #available(iOS 13.0, *) {
-            let changingSuccess = self.loginkeeper.setStartChanging(id: LoginType.apple) { statusValue in
+            let changingSuccess = self.loginkeeper.setStartChanging(id: MeMeLoginType.apple) { statusValue in
                 if let result = statusValue as? (res:AppleLoginResponseData?,error:CustomNSError?) {
                     complete?(result.res,result.error)
                 }
@@ -89,8 +89,8 @@ extension MeMeLoginManager: ASAuthorizationControllerDelegate {
     
     fileprivate func makeEndResponse(data:AppleLoginResponseData?,error:MemeCommonError?) {
         let value:(res:AppleLoginResponseData?,error:CustomNSError?) = (data,error)
-        self.loginkeeper.setStatus(id: LoginType.apple, value: value)
-        self.loginkeeper.setEndChanging(id: LoginType.apple)
+        self.loginkeeper.setStatus(id: MeMeLoginType.apple, value: value)
+        self.loginkeeper.setEndChanging(id: MeMeLoginType.apple)
     }
 }
 

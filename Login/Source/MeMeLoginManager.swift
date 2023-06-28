@@ -26,7 +26,7 @@ import MeMeKit
     
     //MARK: <>内部UI变量
     //MARK: <>内部数据变量
-    lazy var loginkeeper = CellStatusKeeper<LoginType,Any>()
+    lazy var loginkeeper = CellStatusKeeper<MeMeLoginType,Any>()
     
     //MARK: <>内部block
     
