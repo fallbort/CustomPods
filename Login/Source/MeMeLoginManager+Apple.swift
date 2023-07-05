@@ -11,9 +11,9 @@ import MeMeKit
 import MeMeComponents
 
 public struct AppleLoginResponseData {
-    var token:String
-    var uid:String
-    var authorizationCode:String
+    public var token:String
+    public var uid:String
+    public var authorizationCode:String
 }
 
 extension MeMeLoginManager {
