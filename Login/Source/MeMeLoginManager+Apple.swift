@@ -51,28 +51,23 @@ extension MeMeLoginManager: ASAuthorizationControllerDelegate {
                             let response = AppleLoginResponseData.init(token: identityToken, uid: appleIDCredential.user, authorizationCode: authorizationCode)
                             self.makeEndResponse(data: response, error: nil)
                         } else {
-                            let error = NSError.init(domain: MemeErrorDomain, code: 5)
-                            let memeError = MemeCommonError.normal(error)
+                            let memeError = MemeCommonError.normal(code: 5, msg: "", isCustom: true)
                             self.makeEndResponse(data: nil, error: memeError)
                         }
                     } else {
-                        let error = NSError.init(domain: MemeErrorDomain, code: 4)
-                        let memeError = MemeCommonError.normal(error)
+                        let memeError = MemeCommonError.normal(code: 4, msg: "", isCustom: true)
                         self.makeEndResponse(data: nil, error: memeError)
                     }
                 } else {
-                    let error = NSError.init(domain: MemeErrorDomain, code: 3)
-                    let memeError = MemeCommonError.normal(error)
+                    let memeError = MemeCommonError.normal(code: 3, msg: "", isCustom: true)
                     self.makeEndResponse(data: nil, error: memeError)
                 }
             } else {
-                let error = NSError.init(domain: MemeErrorDomain, code: 2)
-                let memeError = MemeCommonError.normal(error)
+                let memeError = MemeCommonError.normal(code: 2, msg: "", isCustom: true)
                 self.makeEndResponse(data: nil, error: memeError)
             }
         default:
-            let error = NSError.init(domain: MemeErrorDomain, code: 1)
-            let memeError = MemeCommonError.normal(error)
+            let memeError = MemeCommonError.normal(code: 1, msg: "", isCustom: true)
             self.makeEndResponse(data: nil, error: memeError)
         }
     }
@@ -82,7 +77,8 @@ extension MeMeLoginManager: ASAuthorizationControllerDelegate {
         case ASAuthorizationError.canceled.rawValue:
             self.makeEndResponse(data: nil, error: MemeCommonError.cancel)
         default:
-            let memeError = MemeCommonError.normal(error as NSError)
+            let systemerror = error as NSError
+            let memeError = MemeCommonError.normal(code: systemerror.code, msg: systemerror.localizedDescription, isCustom: false)
             self.makeEndResponse(data: nil, error: memeError)
         }
     }
