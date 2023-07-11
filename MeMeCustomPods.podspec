@@ -51,6 +51,18 @@ Pod::Spec.new do |spec|
       # base.pod_target_xcconfig = { 'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'ANYIMAGEKIT_ENABLE_EDITOR' }
       # base.pod_target_xcconfig = { 'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'ANYIMAGEKIT_ENABLE_CAPTURE' }
   end
+  
+  spec.subspec 'PhotoPicker' do |base|
+      base.source_files = 'PhotoPicker/Source/**/*.swift'
+      base.dependency 'MeMeKit/MeMeBaseKit'
+      base.dependency 'MeMeComponents/Net'
+      base.dependency 'MeMeCustomPods/AnyImageKit'
+      base.dependency 'TOCropViewController'
+      base.dependency 'MBProgressHUD'
+      base.dependency 'RxSwift'
+      base.dependency 'Result'
+      base.frameworks    = "Foundation", "Photos"
+  end
 
   spec.subspec 'ShareAndPay' do |base|
       base.source_files = 'ShareAndPay/Source/**/*.{h,m,mm,swift}','ShareAndPay/*.{modulemap}','ShareAndPay/Modules/*.{h}'
@@ -158,7 +170,7 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
   end
 
 
-spec.subspec 'Login' do |base|
+  spec.subspec 'Login' do |base|
       base.source_files = 'Login/Source/**/*.{h,m,mm,swift}','Login/*.{modulemap}','Login/Modules/*.{h}'
       base.public_header_files = 'Login/Source/**/*.{h}'
       base.framework    = "Foundation", "AuthenticationServices"
