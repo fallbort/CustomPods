@@ -140,35 +140,6 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
 
       base.vendored_frameworks    = "Beauty/Sdk/*.framework"
   end
-  
-  spec.subspec 'IM' do |base|
-      base.source_files = 'IM/Source/**/*.{h,m,mm,swift}','IM/*.{modulemap}','IM/Modules/*.{h}'
-      base.public_header_files = 'IM/Source/**/*.{h}'
-      base.framework    = "Foundation"
-
-#      base.prefix_header_contents  = '@import MeMeKit;'
-
-
-      base.dependency 'MeMeKit'
-      base.dependency 'NECommonUIKit'
-      base.dependency 'NECommonKit'
-      base.dependency 'NECoreIMKit'
-      base.dependency 'NECoreKit'
-
-      base.dependency 'NEConversationKit'
-      base.dependency 'NEChatKit'
-      base.dependency 'NEConversationUIKit'
-      base.dependency 'NEChatUIKit'
-
-      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/IM'] }
-
-      base.vendored_frameworks    = "IM/Sdk/*.framework"
-      
-      base.pod_target_xcconfig = {
-        'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES'
-       }
-  end
-
 
   spec.subspec 'Login' do |base|
       base.source_files = 'Login/Source/**/*.{h,m,mm,swift}','Login/*.{modulemap}','Login/Modules/*.{h}'
@@ -184,6 +155,18 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
       base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/Login'] }
 
       base.vendored_frameworks    = "Login/Sdk/*.framework"
+  end
+  
+  spec.subspec 'LTScrollview' do |base|
+      base.source_files = 'LTScrollview/Source/**/*.{h,m,mm,swift}','LTScrollview/*.{modulemap}','LTScrollview/Modules/*.{h}'
+      base.public_header_files = 'LTScrollview/Source/**/*.{h}'
+      base.framework    = "UIKit"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/LTScrollview'] }
+
+      base.vendored_frameworks    = "LTScrollview/Sdk/*.framework"
   end
 
 end
