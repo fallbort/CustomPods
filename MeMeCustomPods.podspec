@@ -169,4 +169,18 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
       base.vendored_frameworks    = "LTScrollview/Sdk/*.framework"
   end
 
+  spec.subspec 'MainPush' do |base|
+      base.source_files = 'MainPush/Source/**/*.{h,m,mm,swift}','MainPush/*.{modulemap}','MainPush/Modules/*.{h}'
+      base.public_header_files = 'MainPush/Source/**/*.{h}'
+      base.framework    = "UIKit"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+      base.dependency 'MeMeKit'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/MainPush'] }
+
+      base.vendored_frameworks    = "MainPush/Sdk/*.framework"
+  end
+
 end
