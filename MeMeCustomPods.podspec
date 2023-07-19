@@ -183,4 +183,22 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
       base.vendored_frameworks    = "MainPush/Sdk/*.framework"
   end
 
+  spec.subspec 'Netty' do |base|
+      base.source_files = 'Netty/Source/**/*.{h,m,mm,swift}','Netty/*.{modulemap}','Netty/Modules/*.{h}'
+      base.public_header_files = 'Netty/Source/**/*.{h}'
+      base.framework    = "UIKit"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+      base.dependency 'CocoaAsyncSocket'
+      base.dependency 'Result'
+      base.dependency 'ObjectMapper'
+      base.dependency 'MeMeKit/MeMeBaseKit'
+      base.dependency 'Alamofire'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/Netty'] }
+
+      base.vendored_frameworks    = "Netty/Sdk/*.framework"
+  end
+
 end
