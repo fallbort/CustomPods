@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSString* endMPboundary;
 
 @property (nonatomic, copy) NSString* appKey;
-@property (nonatomic, copy) NSString* appSecret;
+@property (nonatomic, copy) NSString* _Nullable appSecret;
 @end
 
 @implementation FaceMegNetwork
@@ -34,7 +34,7 @@ static FaceMegNetwork* sing = nil;
     return sing;
 }
 
--(void)configWithAppKey:(NSString*)appKey appSecret:(NSString*)appSecret {
+-(void)configWithAppKey:(NSString*)appKey appSecret:(NSString* _Nullable)appSecret {
     self.appKey = appKey;
     self.appSecret = appSecret;
 }

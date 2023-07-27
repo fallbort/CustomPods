@@ -23,7 +23,7 @@ static MMFaceDetectManager* sing = nil;
     return sing;
 }
 
--(void)startupWithAppKey:(NSString*)appKey appSecret:(NSString*)appSecret {
+-(void)startupWithAppKey:(NSString*)appKey appSecret:(NSString* _Nullable)appSecret {
     [[FaceMegNetwork singleton] configWithAppKey:appKey appSecret:appSecret];
 }
 
@@ -34,7 +34,25 @@ static MMFaceDetectManager* sing = nil;
     [[FaceMegNetwork singleton] queryDemoMGFaceIDAntiSpoofingBizTokenWithUserName:userName idcardNumber:idCardNumber liveConfig:liveInfoDict success:^(NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
         if (statusCode == 200 && responseObject && [[responseObject allKeys] containsObject:@"biz_token"] && [responseObject objectForKey:@"biz_token"]) {
             NSString* bizToken = [responseObject objectForKey:@"biz_token"];
-            [weakSelf realStartDetectWithToken:bizToken complete:complete];
+            [weakSelf realStartDetectWithToken:bizToken complete:^(BOOL success, NSInteger statusCode, NSError * _Nullable error, NSData * _Nullable data) {
+                if (success == YES) {
+                    [weakSelf afterToVerifyWithWithToken:bizToken data:data complete:^(BOOL success, NSInteger statusCode, NSError * _Nullable error, UIImage * _Nullable image) {
+                        if (success == YES) {
+                            if (complete != nil) {
+                                complete(success,statusCode,error,image);
+                            }
+                        }else{
+                            if (complete != nil) {
+                                complete(success,statusCode,error,nil);
+                            }
+                        }
+                    }];
+                }else{
+                    if (complete != nil) {
+                        complete(success,statusCode,error,nil);
+                    }
+                }
+            }];
         }else{
             if (complete != nil) {
                 NSError* error = [NSError errorWithDomain:@"" code:-99123 userInfo:nil];
@@ -48,7 +66,14 @@ static MMFaceDetectManager* sing = nil;
     }];
 }
 
--(void)realStartDetectWithToken:(NSString*)bizToken complete:(void(^ _Nullable)(BOOL success,NSInteger statusCode, NSError * _Nullable error,UIImage* _Nullable image))complete {
+-(void)startFaceDetectWithToken:(NSString*)bizToken complete:(void(^ _Nullable)(BOOL success,NSInteger statusCode, NSError * _Nullable error,NSData* _Nullable data))complete {
+    NSMutableDictionary* liveInfoDict = [[NSMutableDictionary alloc] initWithCapacity:1];
+    [liveInfoDict setObject:@"meglive" forKey:@"liveness_type"];
+    __weak __typeof(self)weakSelf = self;
+    [weakSelf realStartDetectWithToken:bizToken complete:complete];
+}
+
+-(void)realStartDetectWithToken:(NSString*)bizToken complete:(void(^ _Nullable)(BOOL success,NSInteger statusCode, NSError * _Nullable error,NSData* _Nullable data))complete {
     NSString* bundlePath = [NSBundle.mainBundle pathForResource:@"MGFaceIDLiveCustomDetect" ofType:@"bundle"];
     if (bundlePath == nil) {
         bundlePath = @"";
@@ -74,22 +99,7 @@ static MMFaceDetectManager* sing = nil;
             [detectManager startMGFaceIDLiveDetectWithCurrentController:vc
                                                                callback:^(MGFaceIDLiveDetectError *error, NSData *deltaData, NSString *bizTokenStr, NSDictionary *extraOutDataDict) {
                 if (error.errorType == MGFaceIDLiveDetectErrorNone && deltaData) {
-                    [[FaceMegNetwork singleton] queryDemoMGFaceIDAntiSpoofingVerifyWithBizToken:bizToken
-                                                                                         verify:deltaData
-                                                                                        success:^(NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
-                        NSString* imageString = responseObject[@"images"][@"image_best"];
-                        
-                        NSData* data = [[NSData alloc] initWithBase64EncodedString:imageString options:0];
-                        UIImage* image = [UIImage imageWithData:data];
-                        if (complete != nil) {
-                            complete(YES,statusCode,nil,image);
-                        }
-                    }
-                                                                                        failure:^(NSInteger statusCode, NSError * _Nonnull error) {
-                        if (complete != nil) {
-                            complete(NO,statusCode,error,nil);
-                        }
-                    }];
+                    complete(YES,0,nil,deltaData);
                 }else{
                     if (complete != nil) {
                         NSInteger statusCode = -99126;
@@ -120,6 +130,25 @@ static MMFaceDetectManager* sing = nil;
     }
 #endif
     
+}
+
+-(void)afterToVerifyWithWithToken:(NSString*)bizToken data:(NSData*)deltaData complete:(void(^ _Nullable)(BOOL success,NSInteger statusCode, NSError * _Nullable error,UIImage* _Nullable image))complete {
+    [[FaceMegNetwork singleton] queryDemoMGFaceIDAntiSpoofingVerifyWithBizToken:bizToken
+                                                                         verify:deltaData
+                                                                        success:^(NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
+        NSString* imageString = responseObject[@"images"][@"image_best"];
+        
+        NSData* data = [[NSData alloc] initWithBase64EncodedString:imageString options:0];
+        UIImage* image = [UIImage imageWithData:data];
+        if (complete != nil) {
+            complete(YES,statusCode,nil,image);
+        }
+    }
+                                                                        failure:^(NSInteger statusCode, NSError * _Nonnull error) {
+        if (complete != nil) {
+            complete(NO,statusCode,error,nil);
+        }
+    }];
 }
 
 @end

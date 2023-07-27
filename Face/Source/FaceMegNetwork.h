@@ -21,7 +21,7 @@ typedef void(^RequestFailure)(NSInteger statusCode, NSError* error);
 
 - (void)queryDemoMGFaceIDAntiSpoofingVerifyWithBizToken:(NSString *)bizTokenStr verify:(NSData *)megliveData success:(RequestSuccess)successBlock failure:(RequestFailure)failureBlock;
 
--(void)configWithAppKey:(NSString*)appKey appSecret:(NSString*)appSecret;
+-(void)configWithAppKey:(NSString*)appKey appSecret:(NSString* _Nullable)appSecret;
 @end
 
 NS_ASSUME_NONNULL_END
