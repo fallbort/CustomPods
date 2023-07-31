@@ -62,9 +62,10 @@ extension MMPluginManagerProtocol {
 
 
 private var livePluginMangerKey = "key"
+private var liveWeakPluginMangerKey = "key"
 
 extension NSObject {
-    //当前retain的MMPluginManagerProtocol对象
+    //当前retain的MMPluginManagerProtocol对象，用于维持pluginmanager
     public var mmPluginManger: MMPluginManagerProtocol? {
         get {
             let timer = objc_getAssociatedObject(self, &livePluginMangerKey) as? MMPluginManagerProtocol
@@ -74,7 +75,28 @@ extension NSObject {
         set {
             newValue?.mmPluginOwnerObject?.mmPluginManger = nil
             newValue?.mmPluginOwnerObject = self
+            self.mmWeakPluginManger = newValue
             objc_setAssociatedObject(self, &livePluginMangerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
+    //当前weak的MMPluginManagerProtocol对象,用于获取内部的plugin
+    public weak var mmWeakPluginManger: MMPluginManagerProtocol? {
+        get {
+            let weakArray = objc_getAssociatedObject(self, &liveWeakPluginMangerKey) as? WeakReferenceArray<MMPluginManagerProtocol>
+            if let object = weakArray?.allObjects().first as? MMPluginManagerProtocol {
+                return object
+            } else {
+                return nil
+            }
+        }
+        
+        set {
+            let weakArray = WeakReferenceArray<MMPluginManagerProtocol>()
+            if let object = newValue {
+                weakArray.addObject(object)
+            }
+            objc_setAssociatedObject(self, &liveWeakPluginMangerKey, weakArray, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
 }
+
