@@ -82,6 +82,9 @@ public class MMPluginConfigurator<CommonD:MMCommonDataProtocol,WatchD:MMWatchDat
         }
     }
     
+    func removeAllPlugins(_ pluginManager:MMPluginManagerProtocol) {
+        self.configPlugin(pluginManager, self.pluginArray, isAdd: false)
+    }
     //MARK:<>内部View
     
     //MARK:<>内部UI变量

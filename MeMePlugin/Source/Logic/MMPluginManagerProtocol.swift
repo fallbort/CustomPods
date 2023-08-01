@@ -13,6 +13,7 @@ import MeMeKit
 //管理插件的插件
 public protocol MMPluginManagerProtocol : NSObject, MMPluginProtocol {
     var mmPluginOwnerObject:NSObject? { get }
+    func stopAll()
 }
 
 private var mmPluginOwnerkey = "key"
@@ -35,6 +36,11 @@ extension MMPluginManagerProtocol {
             if let object = newValue {
                 weakArray.addObject(object)
             }
+            let oldManager = self.mmPluginOwnerObject?.mmPluginManger
+            if oldManager == self {
+                self.mmPluginOwnerObject?.mmPluginManger = nil
+            }
+            
             objc_setAssociatedObject(self, &mmPluginOwnerkey, weakArray, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
@@ -58,6 +64,8 @@ extension MMPluginManagerProtocol {
             objc_setAssociatedObject(self, &mmPluginMainViewkey, weakArray, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
+    
+    public func stopAll() {}
 }
 
 

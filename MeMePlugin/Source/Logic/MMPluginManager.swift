@@ -52,6 +52,10 @@ open class MMPluginManager<CommonD:MMCommonDataProtocol,WatchD:MMWatchDataProtoc
         return plugins
     }
     
+    open func stopAll() {
+        self.configurator.removeAllPlugins(self)
+    }
+    
     //MARK:<>内部View
     
     //MARK:<>内部UI变量

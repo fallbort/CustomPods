@@ -10,16 +10,23 @@ import Foundation
 import UIKit
 import MeMeKit
 
-public protocol MMPluginProtocol : AnyObject,DisposeBagProtocol, MMLayoutProtocol {
+public protocol MMPluginStageProtocol {
     func didPluginConfiged() //所有当前批次的插件外部参数配置完成后插件开始载入
     func didAllPluginLoaded(plugins:[MMPluginProtocol]) //所有当前批次的插件载入完成后的通告,可选方法,只会触发一次
     func clean() //外部调用清理数据,用于卸载插件
     
     func didNewPluginLoaded(_ newPlugins:[MMPluginProtocol]) //初始化完成后，有新插件配置完成,每批次增加都会触发
     func didOldPluginRemoved(_ oldPlugins:[MMPluginProtocol]) //初始化完成后，有老插件移除,每批次删除都会触发
-    
+}
+
+extension MMPluginStageProtocol {
+    public func didAllPluginLoaded(plugins:[MMPluginProtocol]) {}
+    public func didNewPluginLoaded(_ newPlugins:[MMPluginProtocol]) {}
+    public func didOldPluginRemoved(_ oldPlugins:[MMPluginProtocol]) {}
+}
+
+public protocol MMPluginProtocol : AnyObject,MMPluginStageProtocol,DisposeBagProtocol, MMLayoutProtocol {
     func fetchTypeObject<T>(_ type: T.Type) -> T? where T : MMPluginProtocol //获取一个插件
-    
     
     var dataDriver:MMDataDriverProtocol? {get set} //外部配置，数据通道
     var totalData:MMTotalDataProtocol? {get set} //外部配置，总存储数据,所有数据都在这里
@@ -29,9 +36,6 @@ public protocol MMPluginProtocol : AnyObject,DisposeBagProtocol, MMLayoutProtoco
 }
 
 extension MMPluginProtocol {
-    public func didAllPluginLoaded(plugins:[MMPluginProtocol]) {}
-    public func didNewPluginLoaded(_ newPlugins:[MMPluginProtocol]) {}
-    public func didOldPluginRemoved(_ oldPlugins:[MMPluginProtocol]) {}
     public func fetchTypeObject<T>(_ type: T.Type) -> T? {
         if type == MMTotalDataProtocol.self,let data = self.totalData as? T {
             return data
