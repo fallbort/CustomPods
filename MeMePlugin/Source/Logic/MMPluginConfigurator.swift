@@ -72,7 +72,8 @@ public class MMPluginConfigurator<CommonD:MMCommonDataProtocol,WatchD:MMWatchDat
             onePlugin.totalData = self.dataPlugin
         }
         if needStore {
-            self.pluginArray.append(contentsOf: plugins)
+            let addPlugins:[MMPluginProtocol] = plugins.flatMap({($0 is MMPluginManagerProtocol) ? nil : $0})
+            self.pluginArray.append(contentsOf: addPlugins)
         }
         for onePlugin in plugins {
             onePlugin.didPluginConfiged()

@@ -32,16 +32,26 @@ extension MMPluginManagerProtocol {
         }
         
         set {
-            let weakArray = WeakReferenceArray<NSObject>()
-            if let object = newValue {
-                weakArray.addObject(object)
+            if newValue?.getAddress() != self.mmPluginOwnerObject?.getAddress() {
+                if newValue?.mmPluginManger != self {
+                    if newValue?.mmPluginManger?.mmPluginOwnerObject != nil {
+                        newValue?.mmPluginManger?.mmPluginOwnerObject = nil
+                    }
+                }
+                
+                let weakArray = WeakReferenceArray<NSObject>()
+                if let object = newValue {
+                    weakArray.addObject(object)
+                }
+                let oldObject = self.mmPluginOwnerObject
+                objc_setAssociatedObject(self, &mmPluginOwnerkey, weakArray, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                if oldObject != newValue && oldObject?.mmPluginManger == self {
+                    oldObject?.mmPluginManger = nil
+                }
+                if newValue?.mmPluginManger != self {
+                    newValue?.mmPluginManger = self
+                }
             }
-            let oldManager = self.mmPluginOwnerObject?.mmPluginManger
-            if oldManager == self {
-                self.mmPluginOwnerObject?.mmPluginManger = nil
-            }
-            
-            objc_setAssociatedObject(self, &mmPluginOwnerkey, weakArray, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
@@ -81,10 +91,23 @@ extension NSObject {
         }
         
         set {
-            newValue?.mmPluginOwnerObject?.mmPluginManger = nil
-            newValue?.mmPluginOwnerObject = self
-            self.mmWeakPluginManger = newValue
-            objc_setAssociatedObject(self, &livePluginMangerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            if newValue?.getAddress() != self.mmPluginManger?.getAddress() {
+                if newValue?.mmPluginOwnerObject != self {
+                    if newValue?.mmPluginOwnerObject?.mmPluginManger != nil {
+                        newValue?.mmPluginOwnerObject?.mmPluginManger = nil
+                    }
+                }
+                let oldManager = self.mmPluginManger
+                objc_setAssociatedObject(self, &livePluginMangerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                if oldManager?.getAddress() != newValue?.getAddress() && oldManager?.mmPluginOwnerObject == self {
+                    oldManager?.mmPluginOwnerObject = nil
+                }
+                if newValue?.mmPluginOwnerObject != self {
+                    newValue?.mmPluginOwnerObject = self
+                }
+                self.mmWeakPluginManger = newValue
+            }
+            
         }
     }
     //当前weak的MMPluginManagerProtocol对象,用于获取内部的plugin
