@@ -601,7 +601,7 @@ extension AgoraLiveManager {
                 localCanvas.view = localPreview
             }
             localCanvas.uid = localUid
-            localCanvas.renderMode = .fill
+            localCanvas.renderMode = .hidden
             agoraSDK.setupLocalVideo(localCanvas)
             agoraSDK.startPreview()
         }
