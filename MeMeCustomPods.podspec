@@ -215,5 +215,24 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
 
       base.vendored_frameworks    = "MeMePlugin/Sdk/*.framework"
   end
+  
+  spec.subspec 'PushPull' do |base|
+      base.source_files = 'PushPull/Source/**/*.{h,m,mm,swift}','PushPull/*.{modulemap}','PushPull/Modules/*.{h}'
+      base.public_header_files = 'PushPull/Source/**/*.{h}'
+      base.framework    = "UIKit"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+      base.dependency 'MeMeKit/MeMeBaseKit'
+      base.dependency 'RxSwift'
+      
+      base.dependency 'AgoraRtcEngine_iOS', '3.6.1.4'
+#      base.dependency 'ZegoExpressEngine'
+      base.dependency 'SwiftyJSON'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/PushPull'] }
+
+      base.vendored_frameworks    = "PushPull/Sdk/*.framework"
+  end
 
 end
