@@ -9,6 +9,8 @@
 import Foundation
 import MeMeKit
 
+fileprivate var allPluginManagers: WeakReferenceArray<MMPluginManagerProtocol>?
+
 
 //管理插件的插件
 public protocol MMPluginManagerProtocol : NSObject, MMPluginProtocol {
@@ -18,6 +20,7 @@ public protocol MMPluginManagerProtocol : NSObject, MMPluginProtocol {
 
 private var mmPluginOwnerkey = "key"
 private var mmPluginMainViewkey = "key"
+private var mmAllPluginskey = "key"
 
 extension MMPluginManagerProtocol {
     //当前谁reatain了MMPluginManagerProtocol对象
@@ -73,6 +76,20 @@ extension MMPluginManagerProtocol {
             }
             objc_setAssociatedObject(self, &mmPluginMainViewkey, weakArray, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
+    }
+    
+    public static var mmPluginManagers:WeakReferenceArray<MMPluginManagerProtocol> {
+        if let managers = allPluginManagers {
+            return managers
+        }else{
+            let managers = WeakReferenceArray<MMPluginManagerProtocol>()
+            allPluginManagers = managers
+            return managers
+        }
+    }
+    
+    public var mmPluginManagers:WeakReferenceArray<MMPluginManagerProtocol> {
+        return Self.mmPluginManagers
     }
     
     public func stopAll() {}

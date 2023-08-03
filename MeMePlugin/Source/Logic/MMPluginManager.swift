@@ -24,6 +24,7 @@ open class MMPluginManager<CommonD:MMCommonDataProtocol,WatchD:MMWatchDataProtoc
     public init(dataDriver:DDriver? = nil) {
         self.dataPlugin = MMTotalData<CommonD,WatchD,BroadD,DDriver>(dataDriver: dataDriver)
         super.init()
+        self.mmPluginManagers.addObject(self)
     }
     
     open func didPluginConfiged() {
