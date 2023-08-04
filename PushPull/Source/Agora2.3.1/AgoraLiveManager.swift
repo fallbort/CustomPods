@@ -233,6 +233,10 @@ class AgoraLiveManager: NSObject {
 
     fileprivate var publishRetryTimer:CancelableTimeoutBlock? //推流
     
+    fileprivate var isMeMuted = false
+    fileprivate var isOthersMuted = false
+    fileprivate var isOtherIdsMuted:[UInt] = []
+    
     var didConnectedFailedBlock:(()->Bool)?
     
     var _myPosition:Int = 0
@@ -1349,6 +1353,7 @@ extension AgoraLiveManager {
       
         // （该方法用于允许/禁止往网络发送本地音频流）
         let operateCode = agoraKit.muteLocalAudioStream(muted)
+        isMeMuted = muted
         return Int(operateCode)
     }
     
@@ -1359,7 +1364,28 @@ extension AgoraLiveManager {
         
         // muteAllRemoteAudioStreams 是全局控制，muteRemoteAudioStream 是精细控制
         let operateCode = agoraKit.muteAllRemoteAudioStreams(muted)
+        isOthersMuted = muted
+        if muted {
+            isOtherIdsMuted = joinedUids.mapUids()
+        }else{
+            isOtherIdsMuted = []
+        }
         return Int(operateCode)
+    }
+    
+    func refreshMuteStatus() {
+        var hasNotContained = false
+        for uid in joinedUids {
+            if isOtherIdsMuted.contains(where: {$0 == uid}) {
+                hasNotContained = true
+                break
+            }
+        }
+        if hasNotContained == true  {
+            isOthersMuted = false
+        }else{
+            isOthersMuted = true
+        }
     }
     
     // 静音，将某一远端用户，0 == 成功。
@@ -1368,6 +1394,15 @@ extension AgoraLiveManager {
        
         // 如果之前有对"所有远端音频进行静音"，在调用本API之前，请确保你已调用muteOtherUsersAudio(false)
         let operateCode = agoraKit.muteRemoteAudioStream(uid, mute: muted)
+        if muted == true {
+            isOtherIdsMuted.append(uid)
+            refreshMuteStatus()
+        }else{
+            if let index = isOtherIdsMuted.firstIndex(where: {uid == $0}) {
+                isOtherIdsMuted.remove(at: index)
+            }
+            refreshMuteStatus()
+        }
         return Int(operateCode)
     }
     
@@ -1380,12 +1415,30 @@ extension AgoraLiveManager {
         return Int(operateCode)
     }
     
+    func getMeMuteAudio() -> Bool {
+        return isMeMuted
+    }
+    
+    func getOtherUserAudio(uid: UInt) -> Bool {
+        return isOtherIdsMuted.contains(where: {$0 == uid})
+    }
+    
+    func getAllOtherUsersAudio() -> Bool {
+        return isOthersMuted
+    }
+    
     // 是否开启外功放
     func enableSpeakerphone(enableSpeaker: Bool) -> Int {
         guard let agoraKit = agoraKit else { return 0 }
         
         let operateCode = agoraKit.setEnableSpeakerphone(enableSpeaker)
         return Int(operateCode)
+    }
+    
+    func getPeakerphoneEnabled() -> Bool {
+        guard let agoraKit = agoraKit else { return false }
+        
+        return agoraKit.isSpeakerphoneEnabled()
     }
     
     // 旋转摄像头，默认前置摄像头，每点击一次，交互替换一次。
@@ -2021,6 +2074,7 @@ extension AgoraLiveManager: AgoraRtcEngineDelegate {
     func rtcEngine(_ engine: AgoraRtcEngineKit, didJoinedOfUid uid: UInt, elapsed: Int) {
         //print("AgoraRtc：Who joined, uid: \(uid), elapsed: \(elapsed)")
         joinedUids.append(Int(uid))
+        refreshMuteStatus()
         //log.debug("AgoraRtc：didJoinedOfUid")
         if agoraLiveType == .PK || agoraLiveType == .newPK {
             if isRoomOwner == true {
@@ -2047,6 +2101,7 @@ extension AgoraLiveManager: AgoraRtcEngineDelegate {
         let reasonStr = AgoraLiveHelper.userOfflineReasonTypeFormat(reason)
         //print("AgoraRtc：Who offline, uid: \(uid), reason: " + reasonStr)
         joinedUids.removeAll(where: {$0 == uid})
+        refreshMuteStatus()
         //log.debug("AgoraRtc：didOfflineOfUid")
         // 视频连麦
         if let canvas = videoCanvasMapping[uid], agoraLiveType == .Video || agoraLiveType == .connectlive  {

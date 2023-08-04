@@ -81,6 +81,10 @@ class LiveAgoraPusher : NSObject, MeMeLivePusher {
         return agoraManager?.enableSpeakerphone(enableSpeaker: enableSpeaker) ?? 0
     }
     
+    func getPeakerphoneEnabled() -> Bool {
+        return agoraManager?.getPeakerphoneEnabled() ?? false
+    }
+    
     func playEffectSound(filePath: String) -> Int {
         return agoraManager?.playEffectSound(filePath: filePath) ?? 0
     }
@@ -114,6 +118,28 @@ class LiveAgoraPusher : NSObject, MeMeLivePusher {
             }
         }
         return 0
+    }
+    
+    func getMeMuteAudio() -> Bool {
+        return agoraManager?.getMeMuteAudio() ?? false
+    }
+    
+    func getOhterMuteAudio(uid: UInt) -> Bool {
+        return agoraManager?.getOtherUserAudio(uid: uid) ?? false
+    }
+    
+    func getOhtersMuteAudio() -> Bool {
+        return agoraManager?.getAllOtherUsersAudio() ?? false
+    }
+    
+    func getMuteAudio(userId:Int?) -> Bool {
+        if userId == -1 {
+            return self.getMeMuteAudio()
+        }else if let userId = userId {
+            return self.getOhterMuteAudio(uid: (UInt)(userId))
+        }else{
+            return getOhtersMuteAudio()
+        }
     }
     
     func adjustRecordingSignalVolume(volume: Int) {

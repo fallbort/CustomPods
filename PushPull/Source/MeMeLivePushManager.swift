@@ -183,9 +183,11 @@ public protocol MeMeLivePusher :NSObjectProtocol {
     func getLocalVideoMuted() -> Bool //获取本地视频状态
     
     func enableSpeakerphone(enableSpeaker: Bool) -> Int //是否开启外功放
+    func getPeakerphoneEnabled() -> Bool //是否开启外功放
     func playEffectSound(filePath: String) -> Int  //播放声效
     func playEffectSound(filePath: String, publish: Bool, effectID: Int) //播放声效
     func muteAudio(userId:Int?,muted:Bool) -> Int //静音统一接口，userId = -1 是自己，userId = 0 是所有其他人，其他为某个用户
+    func getMuteAudio(userId:Int?) -> Bool //获取静音统一接口，userId = -1 是自己，userId = 0 是所有其他人，其他为某个用户
     
     func adjustRecordingSignalVolume(volume: Int)  //调整话筒音量
     func getRecordingSignalVolume() -> Int //获取话筒音量
