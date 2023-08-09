@@ -11,10 +11,23 @@ import MeMeKit
 import SwiftyUserDefaults
 
 private extension DefaultsKeys {
+    static let pushToken = DefaultsKey<String?>("meme.apple.push.token")
     static let pushRequested = DefaultsKey<Bool>("meme.push.requested", defaultValue: false)
+    static let alertDenial = DefaultsKey<Bool>("meme.push.alert.denial", defaultValue: false)
 }
 
 public class PushService {
+    public static var pushToken: String? {
+        get {
+            return Defaults[key: DefaultsKeys.pushToken]
+        }
+        set {
+            guard let newValue = newValue , newValue != pushToken else {
+                return
+            }
+            Defaults[key: DefaultsKeys.pushToken] = newValue
+        }
+    }
     
     fileprivate(set) public static var pushReqeusted: Bool {
         get {
@@ -25,6 +38,18 @@ public class PushService {
                 return
             }
             Defaults[key: DefaultsKeys.pushRequested] = newValue
+        }
+    }
+    
+    fileprivate(set) public static var denialAlert: Bool {
+        get {
+            return Defaults[key: DefaultsKeys.alertDenial]
+        }
+        set {
+            guard newValue != denialAlert else {
+                return
+            }
+            Defaults[key: DefaultsKeys.alertDenial] = newValue
         }
     }
     
@@ -54,7 +79,30 @@ public class PushService {
             continueBlock?(true)
         }
     }
+    
+    fileprivate class func showRequestAlert() {
+        let title = NELocalize.localizedString("System prevents MeMe to access notification", comment: "")
+        let message = NELocalize.localizedString("To grant the permission: settings -> MeMe -> notification", comment: "")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
+        let actionCancel = UIAlertAction(title: NELocalize.localizedString("Do not ask again", comment: ""), style: .cancel) { action in
+            PushService.denialAlert = true
+        }
+        alert.addAction(actionCancel)
+
+        let actionSet = UIAlertAction(title: NELocalize.localizedString("Settings", comment: ""), style: .default) { action in
+            if let URL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.openURL(URL as URL)
+            }
+        }
+        alert.addAction(actionSet)
+
+        ScreenUIManager.topViewController()?.present(alert, animated: true)
+    }
+
+    public class func cleanPushToken() {
+        Defaults.remove(DefaultsKeys.pushToken)
+    }
 
 }
 

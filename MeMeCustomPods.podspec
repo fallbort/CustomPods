@@ -36,7 +36,7 @@ Pod::Spec.new do |spec|
   spec.default_subspec = 'Base'
 
   spec.subspec 'Base' do |base|
-      base.source_files = 'Source/Base/**/*.{h,m,mm,swift}'
+      base.source_files = 'Base/Source/**/*.{h,m,mm,swift}'
       base.framework    = "Foundation"
   end
 
@@ -233,6 +233,48 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
       base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/PushPull'] }
 
       base.vendored_frameworks    = "PushPull/Sdk/*.framework"
+  end
+  
+  spec.subspec 'MeMePay' do |base|
+      base.source_files = 'MeMePay/Source/**/*.{h,m,mm,swift}','MeMePay/*.{modulemap}','MeMePay/Modules/*.{h}'
+      base.public_header_files = 'MeMePay/Source/**/*.{h}'
+      base.framework    = "UIKit"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+      base.dependency 'MeMeKit/MeMeBaseKit'
+      base.dependency 'MeMeCustomPods/Base'
+      base.dependency 'MeMeCustomPods/MeMePayData'
+      base.dependency 'RxSwift'
+      base.dependency 'SwiftyJSON'
+      base.dependency 'ObjectMapper'
+      base.dependency 'Result'
+      base.dependency 'Cartography'
+      base.dependency 'YYModel'
+      
+      
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/MeMePay'] }
+
+      base.vendored_frameworks    = "MeMePay/Sdk/*.framework"
+  end
+  
+  spec.subspec 'MeMePayData' do |base|
+      base.source_files = 'MeMePayData/Source/**/*.{h,m,mm,swift}','MeMePayData/*.{modulemap}','MeMePayData/Modules/*.{h}'
+      base.public_header_files = 'MeMePayData/Source/**/*.{h}'
+      base.framework    = "Foundation","StoreKit"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+      base.dependency 'MeMeKit/MeMeBaseKit'
+      base.dependency 'SwiftyUserDefaults'
+      base.dependency 'ObjectMapper'
+      
+      
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/MeMePayData'] }
+
+      base.vendored_frameworks    = "MeMePayData/Sdk/*.framework"
   end
 
 end
