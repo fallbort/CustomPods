@@ -28,7 +28,7 @@ public class BankService {
     public class func deposit(productId: String, amount: Double, currency: String, receipt: String, preorderId:String?,transactionId:String, toUid: Int?, isSubscribePay:Bool ,extParamater: [String: Any]? = nil, passthrough: String? = nil, completion: @escaping (Result<UserBank, MemeCommonError>) -> Void) {
         // deposit { sessionToken:%s, type:%s, amount:%f, currency:%s, receipt:%s, adID:%s }
         // { ticket:%d, diamond:%d, depositCount:%d }   //-- 购买之后的balance和总充值次数
-        var params: [String: Any] = ["type": "appleiap", "receipt": receipt, "amount": amount, "currency": currency ,"productId": productId, "language": LanguageService.currentLanguageCode,"transactionId":transactionId,"countryCode":"zh_CN"]
+        var params: [String: Any] = ["channel": "appleiap", "receipt": receipt, "amount": amount, "currency": currency ,"productId": productId, "language": LanguageService.currentLanguageCode,"transactionId":transactionId,"countryCode":"zh_CN"]
         if let extParamater = extParamater {
             params.merge(with: extParamater)
         }
@@ -36,16 +36,9 @@ public class BankService {
         if let preorderId = preorderId {
             params["preorderId"] = preorderId
         }
-        if let toUid = toUid {
-            params["depositUid"] = toUid
-        }
 
         if let passthrough = passthrough {
             params["passthrough"] = passthrough
-        }
-        if isSubscribePay == true {
-            params["skuType"] = "subs"
-
         }
         
         MMPayConfig.requestBlock(.deposit,params) { result in
@@ -78,24 +71,13 @@ public class BankService {
         }
     }
     
-    public class func preOrder(detail: String, completion: @escaping (Result<String?, MemeCommonError>)->Void) {
-        var shumei:[String:String] = [String:String]()
-        shumei["countrycode"] = ""
-        shumei["os"] = "ios"
-        shumei["appversion"] = "\(DeviceInfo.appShortVersion).\(DeviceInfo.appBuild)"
-        var jsonString: String?
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: shumei, options: [])
-            jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
-        } catch let error {
-            gLog(error)
-        }
-        let params: [String: Any] = ["gateway": "appleiap", "detail": detail,"shumei":(jsonString ?? "")]
+    public class func preOrder(productId:String,amount:Double,currency:String, passthrough:String, detail: String, completion: @escaping (Result<String?, MemeCommonError>)->Void) {
+        let params: [String: Any] = ["channel":"appleiap","productId":productId,"appid":"10001", "amount":"\(amount)","currency":currency,"passthrough":passthrough,"sign":"","detail": detail]
         
         MMPayConfig.requestBlock(.preOrder,params) { result in
             switch result {
             case let .success(info):
-                if let dict = info as? [String:Any], let preorderId = dict["preorderId"] as? String {
+                if let dict = info as? [String:Any], let preorderId = dict["orderId"] as? String {
                     completion(.success(preorderId))
                 } else {
                     completion(.failure(.network))

@@ -382,7 +382,7 @@ extension PayService {
         // BI log: 20. 开启一个苹果支付
          let passthroughStr:String = order.extensionString == nil ? ((passthrough?["passthrough"] as? String) ?? "") : (order.extensionString ?? "")
         PayService.traceIAPPaymentStatus(step: 20, productId: productId, amount: amount, currency_now: currency, currency_global: currencyGlobal, server_json: passthroughStr, ext: order.extension)
-        BankService.preOrder(detail: PayService.getLogJsonString(productId: productId,passthrough:passthroughStr, isBadOrder: false)) { [weak self] result in
+        BankService.preOrder(productId: productId, amount: amount, currency: currency, passthrough: passthroughStr, detail: PayService.getLogJsonString(productId: productId,passthrough:passthroughStr, isBadOrder: false)) { [weak self] result in
             switch result {
             case .success(let orderId):
                 order.preorderId = orderId
@@ -632,7 +632,7 @@ extension PayService: NEPayDelegate {
                         }
                     }
                     let passthroughStr:String = orderItem.item?.extensionString == nil ? ((extParamater?["passthrough"] as? String) ?? "") : (orderItem.item?.extensionString ?? "")
-                    BankService.preOrder(detail: PayService.getLogJsonString(productId: product.productIdentifier,passthrough:passthroughStr, isBadOrder: true)) { [weak self] result in
+                    BankService.preOrder(productId: orderItem.item?.productId ?? "", amount: orderItem.item?.price ?? 0, currency: orderItem.item?.currency ?? "", passthrough: passthroughStr, detail: PayService.getLogJsonString(productId: product.productIdentifier,passthrough:passthroughStr, isBadOrder: true)) { [weak self] result in
                         switch result {
                         case .success(let preorderId):
                             orderItem.item?.preorderId = preorderId
@@ -776,7 +776,7 @@ extension PayService: NEPayDelegate {
             PayService.traceIAPPaymentStatus(step: 203, productId: "", amount: nil, currency_now: nil, currency_global: nil, server_json: "preorderId不存在")
             let passthroughStr:String = order?.extensionString == nil ? ((extParamater?["passthrough"] as? String) ?? "") : (order?.extensionString ?? "")
             // 如果preorderId 不存在，说明是处理一笔坏账订单,重新生成一个preorderId
-            BankService.preOrder(detail: PayService.getLogJsonString(productId: order?.productId,passthrough:passthroughStr, isBadOrder: true)) { [weak self] result in
+            BankService.preOrder(productId: order?.productId ?? "", amount: order?.price ?? 0, currency: order?.currency ?? "", passthrough: passthroughStr, detail: PayService.getLogJsonString(productId: order?.productId,passthrough:passthroughStr, isBadOrder: true)) { [weak self] result in
                 switch result {
                 case .success(let preorderId):
                     order?.preorderId = preorderId

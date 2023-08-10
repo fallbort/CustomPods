@@ -107,7 +107,7 @@ public class MMPayManager : PayProductDelegate{
     }
     
     //productId与productIndex二选一
-    public func startRecharge(productId:String? = nil,productIndex:Int? = nil,isSubscribePay:Bool ,depositKey:String?,depositId:String?,complete:@escaping ((_ success: Bool?,_ resultInfo:NEPurchaseResultInfo)->())) {
+    public func startRecharge(productId:String?,productIndex:Int? = nil,isSubscribePay:Bool = false,depositKey:String?,depositId:String?,complete:@escaping ((_ success: Bool?,_ resultInfo:NEPurchaseResultInfo)->())) {
         var passthroughStr:String?
         if let depositKey = depositKey,let depositId = depositId {
             passthroughStr = "{\"\(depositKey)\":\"\(depositId)\"}"
@@ -117,7 +117,7 @@ public class MMPayManager : PayProductDelegate{
         let task = PayTask(productIndex: productIndex, productId: productId,isSubscribePay: isSubscribePay)
         self.startRecharge(task: task, passthrough: passthroughStr, complete: complete)
     }
-    public func startRecharge(productId:String? = nil,productIndex:Int? = nil,isSubscribePay:Bool,passthrough:String? = nil,complete:@escaping ((_ success: Bool?,_ resultInfo:NEPurchaseResultInfo)->())) {
+    public func startRecharge(productId:String?,productIndex:Int? = nil,isSubscribePay:Bool = false,passthrough:String? = nil,complete:@escaping ((_ success: Bool?,_ resultInfo:NEPurchaseResultInfo)->())) {
         let task = PayTask(productIndex: productIndex, productId: productId,isSubscribePay: isSubscribePay)
         self.startRecharge(task: task, passthrough: passthrough, complete: complete)
     }
