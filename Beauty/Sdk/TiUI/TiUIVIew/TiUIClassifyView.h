@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 //萌颜Block
 @property (copy, nonatomic)void(^CutefaceBlock)(NSString * name);
 
+- (void)Judge_First:(NSString *)key;
+
 @property(nonatomic,strong) NSArray *modArr;
 
 @end

@@ -14,7 +14,7 @@
 
 // 初始化状态回调值
 typedef struct InitStatus {
-    int code ;//100正式、101测试
+    int code ;
     const char*message;
 } InitStatus;
 

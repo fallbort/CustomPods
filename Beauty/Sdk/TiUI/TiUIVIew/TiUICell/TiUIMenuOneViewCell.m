@@ -81,10 +81,8 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
         
         [_meizhuangView setBackBlock:^(BOOL is_back) {
             if(is_back){
-                
                 [[TiUIManager shareManager].tiUIViewBoxView.menuView setBackgroundColor:TI_RGB_Alpha(45.0, 45.0, 45.0, 0.6)];
                 [[TiUIManager shareManager].tiUIViewBoxView.subMenuView setBackgroundColor:TI_RGB_Alpha(45.0, 45.0, 45.0, 0.6)];
-                
                 [weakSelf.meizhuangView setHidden:true];
                 [weakSelf.menuCollectionView setHidden:false];
                 [weakSelf.menuCollectionView reloadData];

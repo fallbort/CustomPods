@@ -23,7 +23,6 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
 @implementation TiUIMenuTwoViewCell
 
 - (UICollectionView *)menuCollectionView{
-    
     if (!_menuCollectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -35,11 +34,10 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         _menuCollectionView.backgroundColor = [UIColor clearColor];
         _menuCollectionView.dataSource= self;
         _menuCollectionView.delegate = self;
+       
         [_menuCollectionView registerClass:[TiUISubMenuTwoViewCell class] forCellWithReuseIdentifier:TiUIMenuCollectionViewCellId];
-        
     }
     return _menuCollectionView;
-    
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -62,11 +60,8 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronization:) name:@"NotificationName_TIUIMenuTwo_UpdateFilter" object:nil];
         //注册通知——通知是否重置一键美颜和滤镜
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetOneKey:) name:@"NotificationName_TIUIMenuTwo_isReset" object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCollectionView:) name:@"NotificationName_TIUIMenuTwo_isRefresh" object:nil];
-        
     }
     return self;
-    
 }
 
 #pragma mark ---UICollectionViewDataSource---
@@ -131,18 +126,16 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
  //返回对应indexPath的cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    TiUISubMenuTwoViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:TiUIMenuCollectionViewCellId forIndexPath:indexPath];
+   TiUISubMenuTwoViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:TiUIMenuCollectionViewCellId forIndexPath:indexPath];
     TIMenuMode *subMod = nil;
     switch (self.mode.menuTag) {
         case 4:
         {
             subMod = [TiMenuPlistManager shareManager].filterModeArr[indexPath.row];
-            
             if (subMod.selected)
             {
                 self.filterIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
             }
-            
             [cell setCellType:TI_UI_TWOSUBCELL_TYPE_ONE];
             
             cell.layer.masksToBounds = NO;
@@ -172,7 +165,6 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         case 10:
         {
             subMod = [TiMenuPlistManager shareManager].onekeyModeArr[indexPath.row];
-
             if (subMod.selected)
             {
                 self.selectedIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
@@ -205,7 +197,6 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         default:
             break;
     }
-    
     [cell setSubMod:subMod];
     //滤镜分类单独判断
     if (self.mode.menuTag == 4 && [subMod.thumb  isEqual: @""]) {
@@ -213,49 +204,21 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
     }else{
         cell.backgroundColor = UIColor.whiteColor;
     }
-    
     return cell;
 }
-
-//- (void)refreshCollectionView:(NSNotification *)notification{
-//    NSNumber *isFilterN = notification.object;
-//    BOOL isFilter =  [isFilterN boolValue];
-//    if (isRefreshOneKey) {
-//        NSIndexPath *isRefreshOKIndexPath = [NSIndexPath indexPathForRow:[TiSetSDKParameters getSelectPositionForKey:TI_UIDCK_ONEKEY_POSITION] inSection:0];
-//        //跳转一键美颜指定位置
-//        [self.menuCollectionView reloadData];
-//        [self.menuCollectionView scrollToItemAtIndexPath:isRefreshOKIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-//        isRefreshOneKey = false;
-//    }
-//
-//    if (isRefreshFilter) {
-//        NSIndexPath *isRefreshFTIndexPath = [NSIndexPath indexPathForRow:[TiSetSDKParameters getSelectPositionForKey:TI_UIDCK_FILTER_POSITION] inSection:0];
-//        //跳转滤镜指定位置
-//        [self.menuCollectionView reloadData];
-//        [self.menuCollectionView scrollToItemAtIndexPath:isRefreshFTIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-//        isRefreshFilter = false;
-//    }
-//
-//}
 
 //滤镜同步一键美颜
 - (void)synchronization:(NSNotification *)notification{
     
-//    if (is_updateFilter) {
-//        
-//        NSInteger index = [notification.object integerValue];
-//        NSIndexPath *IndexPath = [NSIndexPath indexPathForRow:index inSection:0];
-//        //滤镜
-//        [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:IndexPath.row WithPath:@"TiFilter.json"];
-//        [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.filterIndexPath.row WithPath:@"TiFilter.json"];
-//        [self.menuCollectionView reloadData];
-//        self.filterIndexPath = IndexPath;
-//        //储存滤镜选中位置
-//        [TiSetSDKParameters setSelectPosition:self.filterIndexPath.row forKey:TI_UIDCK_FILTER_POSITION];
-//        is_updateFilter = false;
-//
-//    }
-    
+    NSInteger index = [notification.object integerValue];
+    NSIndexPath *IndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    //滤镜
+    [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:IndexPath.row WithPath:@"TiFilter.json"];
+    [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.filterIndexPath.row WithPath:@"TiFilter.json"];
+    [self.menuCollectionView reloadData];
+    self.filterIndexPath = IndexPath;
+    is_updateFilter = false;
+
 }
 
 - (void)resetOneKey:(NSNotification *)notification{
@@ -268,10 +231,6 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         //一键美颜
         [TiMenuPlistManager shareManager].onekeyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:IndexPath.row WithPath:@"TiOneKeyBeauty.json"];
         [TiMenuPlistManager shareManager].onekeyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiOneKeyBeauty.json"];
-        
-        //重置-储存一键美颜选中位置
-        [TiSetSDKParameters setSelectPosition:IndexPath.row forKey:TI_UIDCK_ONEKEY_POSITION];
-        
         if (self.selectedIndexPath) {
             [self.menuCollectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,IndexPath]];
         }else{
@@ -279,10 +238,9 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         }
         self.selectedIndexPath = IndexPath;
         //调整1
-        [self.menuCollectionView scrollToItemAtIndexPath:self.selectedIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+        [self.menuCollectionView scrollToItemAtIndexPath:self.selectedIndexPath atScrollPosition:UICollectionViewScrollPositionRight animated:YES];
     }
     if (self.filterIndexPath.row != 0) {
-        
         if (self.clickOnCellBlock)
         {
           self.clickOnCellBlock(IndexPath.row);
@@ -292,17 +250,10 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.filterIndexPath.row WithPath:@"TiFilter.json"];
         [self.menuCollectionView reloadData];
         self.filterIndexPath = IndexPath;
-        
     }else if (self.filterIndexPath.row == 0) {
-        
         [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:self.filterIndexPath.row WithPath:@"TiFilter.json"];
         [self.menuCollectionView reloadData];
-        
     }
-    //重置-储存滤镜选中位置
-    [TiSetSDKParameters setSelectPosition:self.filterIndexPath.row forKey:TI_UIDCK_FILTER_POSITION];
-    //跳转指定位置
-    [self.menuCollectionView scrollToItemAtIndexPath:self.filterIndexPath atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
     //重置所有滤镜参数到默认参数
     for (int i = 0; i < 10; i ++) {
         [TiSetSDKParameters setFloatValue:FilterValue forKey:300+i];
@@ -337,9 +288,6 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
                 [collectionView reloadItemsAtIndexPaths:@[indexPath]];
             }
             self.filterIndexPath = indexPath;
-            //储存滤镜选中位置
-            [TiSetSDKParameters setSelectPosition:self.filterIndexPath.row forKey:TI_UIDCK_FILTER_POSITION];
-            
             [[TiSDKManager shareManager] setBeautyFilter:modX.effectName Param:[TiSetSDKParameters getFloatValueForKey:(300+modX.menuTag)]];
 //            //汉字转拼音方法
 //            NSMutableString *pinyin = [modX.name mutableCopy];
@@ -395,13 +343,8 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
                 {
                   self.clickOnCellBlock(indexPath.row);
                 }
-                
                 [TiMenuPlistManager shareManager].onekeyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiOneKeyBeauty.json"];
                 [TiMenuPlistManager shareManager].onekeyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiOneKeyBeauty.json"];
-                
-                //储存一键美颜选中位置
-                [TiSetSDKParameters setSelectPosition:indexPath.row forKey:TI_UIDCK_ONEKEY_POSITION];
-                
                 TIMenuMode * mode = [[TIMenuMode alloc] init];
                 mode = [TiMenuPlistManager shareManager].onekeyModeArr[indexPath.row];
                 if (self.selectedIndexPath) {
@@ -453,7 +396,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
 
 - (void)dealloc{
     //移除通知
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+   [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 @end

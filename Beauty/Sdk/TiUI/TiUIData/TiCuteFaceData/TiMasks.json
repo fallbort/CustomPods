@@ -45,7 +45,7 @@
     },
     {
         "name": "medical_mask",
-        "menuTag":6,
+        "menuTag":5,
         "selected": false,
         "thumb": "medical_mask_icon.png",
         "downloaded": 0

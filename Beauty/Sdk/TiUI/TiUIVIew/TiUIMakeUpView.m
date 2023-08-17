@@ -388,7 +388,6 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET)
             {
                 [self.defaultBtn setSelected:false];
-                
                 [self.defaultLabel setTextColor:[UIColor whiteColor]];
                 
                 if (self.selectedIndexPath!=nil) {
@@ -531,7 +530,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
             {
                 [self.defaultBtn setSelected:false];
                 [self.defaultLabel setTextColor:[UIColor whiteColor]];
-
+                
                 if (self.selectedIndexPath!=nil) {
                     [TiMenuPlistManager shareManager].eyeshadowModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiEyeshadow.json"];
                   }
@@ -578,7 +577,6 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
             {
                 [self.defaultBtn setSelected:false];
                 [self.defaultLabel setTextColor:[UIColor whiteColor]];
-
                 if (self.selectedIndexPath!=nil) {
                     [TiMenuPlistManager shareManager].eyeLineModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiEyeline.json"];
                   }

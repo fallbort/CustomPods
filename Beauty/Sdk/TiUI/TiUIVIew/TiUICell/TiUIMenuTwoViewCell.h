@@ -15,6 +15,4 @@
 @property(nonatomic,copy)void(^clickOnCellBlock)(NSInteger index);
 @property(nonatomic,strong) UICollectionView *menuCollectionView;
 
-- (instancetype)initWithFrame:(CGRect)frame;
-
 @end

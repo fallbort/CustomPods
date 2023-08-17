@@ -21,9 +21,6 @@ extern NSString *resetObject;
 //绿幕编辑
 extern int is_greenEdit;
 
-extern bool isRefreshOneKey;
-extern bool isRefreshFilter;
-
 @interface TiUIMainMenuView : UIView
 
 @property(nonatomic,assign) BOOL isClassifyShow;

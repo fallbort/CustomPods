@@ -12,7 +12,7 @@
 #import "TiUIManager.h"
 
 //UI版本号
-#define Current_TISDK_Version @"1.6"
+#define Current_TISDK_Version @"1.5"
 
 //点击子菜单总开关按钮发出的通知
 #define NotificationCenterSubMenuOnTotalSwitch @"NotificationCenterSubMenuOnTotalSwitch"

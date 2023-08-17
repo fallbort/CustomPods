@@ -22,8 +22,6 @@ bool is_reset = false;
 bool is_resetBeauty = false;
 NSString *resetObject = @"";
 int is_greenEdit = 1;
-bool isRefreshOneKey = false;
-bool isRefreshFilter = false;
 
 @interface TiUIMainMenuView ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -180,7 +178,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
                  }
             }
             
-            if (classifyIndexArr == [weakSelf.classifyView.modArr[0] objectForKey:@"TIMenuClassify"]){}
+            if (classifyIndexArr == [self.classifyView.modArr[0] objectForKey:@"TIMenuClassify"]){}
             
         }];
         [_classifyView setCutefaceBlock:^(NSString * name) {
@@ -889,9 +887,6 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
             }
             [self.sliderRelatedView setSliderHidden:NO];
             [self setSliderTypeAndValue];
-            isRefreshFilter = true;
-            isRefreshOneKey = false;
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationName_TIUIMenuTwo_isRefresh" object:@(true)];
             break;
         case 10:
             for (TIMenuMode *mod in [TiMenuPlistManager shareManager].onekeyModeArr) {
@@ -903,9 +898,6 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationName_TIUIMenuOne_isOpen" object:@(true)];
             [self.sliderRelatedView setSliderHidden:NO];
             [self setSliderTypeAndValue];
-            [self.subMenuView reloadData];
-            isRefreshOneKey = true;
-            isRefreshFilter = false;
             break;
         case 11:
             for (TIMenuMode *mod in [TiMenuPlistManager shareManager].interactionsArr) {

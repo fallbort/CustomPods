@@ -47,6 +47,7 @@
         if ([subMod.normalThumb  isEqual: @""]) {
             [self.cellButton setTitle:[NSString stringWithFormat:@"%@",@""] withImage:nil withTextColor:UIColor.clearColor forState:UIControlStateNormal];
             [self.cellButton setClassifyText:subMod.name withTextColor:UIColor.whiteColor];
+            
         }else{
             [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name] withImage:[UIImage imageNamed:subMod.normalwhiteThumb] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
             [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name]

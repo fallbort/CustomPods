@@ -348,43 +348,15 @@ static dispatch_once_t token;
         if ([path isEqualToString:@"TiMenu"]||[path isEqualToString:@"TiBlusher"]||[path isEqualToString:@"TiEyelash"]||[path isEqualToString:@"TiEyebrows"]||[path isEqualToString:@"TiEyeshadow"]||[path isEqualToString:@"TiEyeline"]) {
   #pragma make  这里可以单独保存选中状态 除了选中区域外 其他的都默认重置选中状态
                }else{
-                   
-                   if ([path isEqualToString:@"TiOneKeyBeauty"]) {
-                       // 获取一键美颜选中位置
-                       NSIndexPath *newsIndexPath = [NSIndexPath indexPathForRow:[TiSetSDKParameters getSelectPositionForKey:TI_UIDCK_ONEKEY_POSITION] inSection:0];
-                       if (mode.menuTag == newsIndexPath.row) {
-                           mode.selected = YES;
-                           [self modifyObject:@(YES) forKey:@"selected" In:mode.menuTag WithPath:[NSString stringWithFormat:@"%@.json",path]];
-                       }else{
-                           if (mode.selected == YES) {
-                               mode.selected = NO;
-                               [self modifyObject:@(NO) forKey:@"selected" In:mode.menuTag WithPath:[NSString stringWithFormat:@"%@.json",path]];
-                           }
-                       }
-                   }else if ([path isEqualToString:@"TiFilter"]){
-                       // 获取滤镜选中位置
-                       NSIndexPath *newsIndexPath = [NSIndexPath indexPathForRow:[TiSetSDKParameters getSelectPositionForKey:TI_UIDCK_FILTER_POSITION] inSection:0];
-                       if (mode.menuTag == newsIndexPath.row) {
-                           mode.selected = YES;
-                           [self modifyObject:@(YES) forKey:@"selected" In:mode.menuTag WithPath:[NSString stringWithFormat:@"%@.json",path]];
-                       }else{
-                           if (mode.selected == YES) {
-                               mode.selected = NO;
-                               [self modifyObject:@(NO) forKey:@"selected" In:mode.menuTag WithPath:[NSString stringWithFormat:@"%@.json",path]];
-                           }
-                       }
+                   if (mode.menuTag == 0) {// 默认无 或者第一个按钮
+                       mode.selected = YES;
+                       [self modifyObject:@(YES) forKey:@"selected" In:mode.menuTag WithPath:[NSString stringWithFormat:@"%@.json",path]];
                    }else{
-                       if (mode.menuTag == 0) {// 默认无 或者第一个按钮
-                           mode.selected = YES;
-                           [self modifyObject:@(YES) forKey:@"selected" In:mode.menuTag WithPath:[NSString stringWithFormat:@"%@.json",path]];
-                       }else{
-                           if (mode.selected ==YES) {
-                               mode.selected = NO;
-                            [self modifyObject:@(NO) forKey:@"selected" In:mode.menuTag WithPath:[NSString stringWithFormat:@"%@.json",path]];
-                           }
+                       if (mode.selected ==YES) {
+                           mode.selected = NO;
+                        [self modifyObject:@(NO) forKey:@"selected" In:mode.menuTag WithPath:[NSString stringWithFormat:@"%@.json",path]];
                        }
                    }
-                   
                }
                
                [modeArr addObject:mode];

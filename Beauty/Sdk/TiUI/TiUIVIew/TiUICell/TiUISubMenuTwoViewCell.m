@@ -42,7 +42,7 @@
         if ([subMod.thumb  isEqual: @""]) {
             [self.cellButton setTitle:[NSString stringWithFormat:@"%@",@""] withImage:nil withTextColor:UIColor.clearColor forState:UIControlStateNormal];
             [self.cellButton setClassifyText:subMod.name withTextColor:UIColor.whiteColor];
-
+            
         }else{
             NSString *normalThumb = subMod.normalThumb?subMod.normalThumb:subMod.thumb;
             NSString *selectedThumb = subMod.selectedThumb?subMod.selectedThumb:subMod.thumb;

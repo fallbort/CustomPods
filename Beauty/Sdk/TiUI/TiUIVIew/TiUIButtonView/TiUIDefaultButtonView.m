@@ -113,7 +113,7 @@
         make.bottom.equalTo(self).offset((44-SCREEN_HEIGHT)/2);
         make.width.height.equalTo(@44);
     }];
-    [self setDemoLayout];
+//    [self setDemoLayout];
 }
 
 //演示demo 调用此方法

@@ -161,7 +161,6 @@ static dispatch_once_t token;
     }else{
         //判断是否出现重置功能遮罩层
         if (is_reset == false) {
-
             [self.tiUIViewBoxView.backView setHidden:true];
             if (!self.tiUIViewBoxView.back2Btn.hidden) {
                 [self.tiUIViewBoxView.back2Btn setHidden:true];
@@ -178,7 +177,7 @@ static dispatch_once_t token;
             }else{
                 [self.tiUIViewBoxView showClassifyView];
             }
-
+            
         }
         
     }
@@ -191,6 +190,7 @@ static dispatch_once_t token;
     } completion:^(BOOL finished) {
         
         [self hiddenAllViews:YES];
+        
     }];
 }
 

@@ -82,7 +82,7 @@ extern bool isswitch_greenEdit;
 -(void)setInteractionHintL:(NSString *)hint;
 
 /**
- *  加载UI 通过Window默认初始化在当前页面最上层 
+ *  加载UI 通过Window默认初始化在当前页面最上层
  */
 - (void)loadToWindowDelegate:(id<TiUIManagerDelegate>)delegate;
 /**

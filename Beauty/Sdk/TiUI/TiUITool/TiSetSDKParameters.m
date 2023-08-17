@@ -20,37 +20,37 @@ bool is_updateFilterValue = false;
 + (void)initSDK{
     
     //美白指定初始值
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_SKIN_WHITENING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_WHITENING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SkinWhiteningValue forKey:TI_UIDCK_SKIN_WHITENING_SLIDER];
     }
     [[TiSDKManager shareManager] setSkinWhitening:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_WHITENING_SLIDER]];
     
     //磨皮指定初始值
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_SKIN_BLEMISH_REMOVAL_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_BLEMISH_REMOVAL_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SkinBlemishRemovalValue forKey:TI_UIDCK_SKIN_BLEMISH_REMOVAL_SLIDER];
     }
      [[TiSDKManager shareManager] setSkinBlemishRemoval:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_BLEMISH_REMOVAL_SLIDER]];
     
     //精准美肤指定初始值
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_SKIN_PRECISE_BEAUTY_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_PRECISE_BEAUTY_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SkinPreciseBeautyValue forKey:TI_UIDCK_SKIN_PRECISE_BEAUTY_SLIDER];
     }
      [[TiSDKManager shareManager] setSkinPreciseBeauty:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_PRECISE_BEAUTY_SLIDER]];
     
     //亮度
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_SKIN_BRIGHTNESS_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_BRIGHTNESS_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SkinBrightnessValue forKey:TI_UIDCK_SKIN_BRIGHTNESS_SLIDER];
     }
     [[TiSDKManager shareManager] setSkinBrightness:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_BRIGHTNESS_SLIDER]];
     
     //粉嫩
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_SKIN_TENDERNESS_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_TENDERNESS_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SkinTendernessValue forKey:TI_UIDCK_SKIN_TENDERNESS_SLIDER];
     }
     [[TiSDKManager shareManager] setSkinTenderness:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_TENDERNESS_SLIDER]];
 
     //清晰
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_SKIN_SKINBRIGGT_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_SKINBRIGGT_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SkinBrightValue forKey:TI_UIDCK_SKIN_SKINBRIGGT_SLIDER];
     }
     [[TiSDKManager shareManager] setSkinSharpness:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_SKINBRIGGT_SLIDER]];
@@ -58,176 +58,174 @@ bool is_updateFilterValue = false;
     //    ------------------------------------------
  
     //大眼
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_EYEMAGNIFYING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYEMAGNIFYING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:EyeMagnifyingValue forKey:TI_UIDCK_EYEMAGNIFYING_SLIDER];
     }
     [[TiSDKManager shareManager] setEyeMagnifying:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYEMAGNIFYING_SLIDER]];
     //瘦脸
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_CHINSLIMMING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_CHINSLIMMING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:ChinSlimmingValue forKey:TI_UIDCK_CHINSLIMMING_SLIDER];
     }
     [[TiSDKManager shareManager] setChinSlimming:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_CHINSLIMMING_SLIDER]];
     //窄脸
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_FACENARROWING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FACENARROWING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:FaceNarrowingValue forKey:TI_UIDCK_FACENARROWING_SLIDER];
     }
     [[TiSDKManager shareManager] setFaceNarrowing:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FACENARROWING_SLIDER]];
     //脸部
     //瘦颧骨
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_CHEEKBONESLIMMING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_CHEEKBONESLIMMING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:CheekboneSlimmingValue forKey:TI_UIDCK_CHEEKBONESLIMMING_SLIDER];
     }
     [[TiSDKManager shareManager] setCheekboneSlimming:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_CHEEKBONESLIMMING_SLIDER]];
     //瘦下颌
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_JAWBONESLIMMING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_JAWBONESLIMMING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:JawboneSlimmingValue forKey:TI_UIDCK_JAWBONESLIMMING_SLIDER];
     }
     [[TiSDKManager shareManager] setJawboneSlimming:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_JAWBONESLIMMING_SLIDER]];
     //下巴
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_JAWTRANSFORMING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_JAWTRANSFORMING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:JawTransformingValue forKey:TI_UIDCK_JAWTRANSFORMING_SLIDER];
     }
     [[TiSDKManager shareManager] setJawTransforming:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_JAWTRANSFORMING_SLIDER]];
     //削下巴
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_JAWSLIMMING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_JAWSLIMMING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:JawSlimmingValue forKey:TI_UIDCK_JAWSLIMMING_SLIDER];
     }
     [[TiSDKManager shareManager] setJawSlimming:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_JAWSLIMMING_SLIDER]];
     //额头
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_FOREHEADTRANSFORMING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FOREHEADTRANSFORMING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:ForeheadTransformingValue forKey:TI_UIDCK_FOREHEADTRANSFORMING_SLIDER];
     }
     [[TiSDKManager shareManager] setForeheadTransforming:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FOREHEADTRANSFORMING_SLIDER]];
     //眼部
     //内眼角
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_EYEINNERCORNERS_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYEINNERCORNERS_SLIDER]) {
         [TiSetSDKParameters setFloatValue:EyeInnerCornersValue forKey:TI_UIDCK_EYEINNERCORNERS_SLIDER];
     }
     [[TiSDKManager shareManager] setEyeInnerCorners:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYEINNERCORNERS_SLIDER]];
     //外眼尾
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_EYEOUTERCORNERS_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYEOUTERCORNERS_SLIDER]) {
         [TiSetSDKParameters setFloatValue:EyeOuterCornersValue forKey:TI_UIDCK_EYEOUTERCORNERS_SLIDER];
     }
     [[TiSDKManager shareManager] setEyeOuterCorners:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYEOUTERCORNERS_SLIDER]];
     //眼间距
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_EYESPACING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYESPACING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:EyeSpacingValue forKey:TI_UIDCK_EYESPACING_SLIDER];
     }
     [[TiSDKManager shareManager] setEyeSpacing:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYESPACING_SLIDER]];
     //眼角
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_EYECORNERS_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYECORNERS_SLIDER]) {
         [TiSetSDKParameters setFloatValue:EyeCornersValue forKey:TI_UIDCK_EYECORNERS_SLIDER];
     }
     [[TiSDKManager shareManager] setEyeCorners:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_EYECORNERS_SLIDER]];
     //鼻子
     //瘦鼻
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_NOSEMINIFYING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_NOSEMINIFYING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:NoseMinifyingValue forKey:TI_UIDCK_NOSEMINIFYING_SLIDER];
     }
     [[TiSDKManager shareManager] setNoseMinifying:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_NOSEMINIFYING_SLIDER]];
     //长鼻
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_NOSEELONGATING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_NOSEELONGATING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:NoseElongatingValue forKey:TI_UIDCK_NOSEELONGATING_SLIDER];
     }
     [[TiSDKManager shareManager] setNoseElongating:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_NOSEELONGATING_SLIDER]];
     //嘴巴
     //嘴型
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_MOUTHTRANSFORMING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_MOUTHTRANSFORMING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:MouthTransformingValue forKey:TI_UIDCK_MOUTHTRANSFORMING_SLIDER];
     }
     [[TiSDKManager shareManager] setMouthTransforming:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_MOUTHTRANSFORMING_SLIDER]];
     //嘴高低
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_MOUTHHEIGHT_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_MOUTHHEIGHT_SLIDER]) {
         [TiSetSDKParameters setFloatValue:MouthHeightValue forKey:TI_UIDCK_MOUTHHEIGHT_SLIDER];
     }
     [[TiSDKManager shareManager] setMouthHeight:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_MOUTHHEIGHT_SLIDER]];
     //唇厚薄
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_MOUTHLIPSIZE_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_MOUTHLIPSIZE_SLIDER]) {
         [TiSetSDKParameters setFloatValue:MouthLipSizeValue forKey:TI_UIDCK_MOUTHLIPSIZE_SLIDER];
     }
     [[TiSDKManager shareManager] setMouthLipSize:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_MOUTHLIPSIZE_SLIDER]];
     //扬嘴角
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_MOUTHSMILING_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_MOUTHSMILING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:MouthSmilingValue forKey:TI_UIDCK_MOUTHSMILING_SLIDER];
     }
     [[TiSDKManager shareManager] setMouthSmiling:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_MOUTHSMILING_SLIDER]];
     //眉毛
     //眉高低
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_BROWHEIGHT_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWHEIGHT_SLIDER]) {
         [TiSetSDKParameters setFloatValue:BrowHeightValue forKey:TI_UIDCK_BROWHEIGHT_SLIDER];
     }
     [[TiSDKManager shareManager] setBrowHeight:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWHEIGHT_SLIDER]];
     //眉长短
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_BROWLENGTH_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWLENGTH_SLIDER]) {
         [TiSetSDKParameters setFloatValue:BrowLengthValue forKey:TI_UIDCK_BROWLENGTH_SLIDER];
     }
     [[TiSDKManager shareManager] setBrowLength:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWLENGTH_SLIDER]];
     //眉间距
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_BROWSPACE_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWSPACE_SLIDER]) {
         [TiSetSDKParameters setFloatValue:BrowSpaceValue forKey:TI_UIDCK_BROWSPACE_SLIDER];
     }
     [[TiSDKManager shareManager] setBrowSpace:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWSPACE_SLIDER]];
     //眉粗细
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_BROWSIZE_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWSIZE_SLIDER]) {
         [TiSetSDKParameters setFloatValue:BrowSizeValue forKey:TI_UIDCK_BROWSIZE_SLIDER];
     }
     [[TiSDKManager shareManager] setBrowSize:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWSIZE_SLIDER]];
     //提眉峰
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_BROWCORNER_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWCORNER_SLIDER]) {
         [TiSetSDKParameters setFloatValue:BrowCornerValue forKey:TI_UIDCK_BROWCORNER_SLIDER];
     }
     [[TiSDKManager shareManager] setBrowCorner:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_BROWCORNER_SLIDER]];
     
     //    ------------------------------------------
     
-    //    滤镜300～354
-    for (int key = 300; key <= 354; key++) {
-        if (!(key == 1 || key == 9 || key == 16 || key == 26 || key == 32 || key == 37 || key == 43 || key == 48)) {
-            if (![TiSetSDKParameters judgeCacheValueIsNullForKey:key]) {
-                [TiSetSDKParameters setFloatValue:FilterValue forKey:key];
-            }
+    //    滤镜300～346
+    for (int key = 300; key <= 346; key++) {
+        if (![TiSetSDKParameters getFloatValueForKey:key]) {
+            [TiSetSDKParameters setFloatValue:FilterValue forKey:key];
         }
     }
     
     //    TI_UIDCK_ONEKEY_SLIDER = 400, // 一键美颜
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_ONEKEY_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_ONEKEY_SLIDER]) {
         [TiSetSDKParameters setFloatValue:OnewKeyBeautyValue forKey:TI_UIDCK_ONEKEY_SLIDER];
     }
     //    TI_UIDCK_FACESHAPE_SLIDER = 500, //脸型
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_FACESHAPE_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FACESHAPE_SLIDER]) {
         [TiSetSDKParameters setFloatValue:FaceShapeBeautyValue forKey:TI_UIDCK_FACESHAPE_SLIDER];
     }
     //    TI_UIDCK_HAIRDRESS_SLIDER = 600, // 美发
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_HAIRDRESS_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_HAIRDRESS_SLIDER]) {
         [TiSetSDKParameters setFloatValue:HairdressValue forKey:TI_UIDCK_HAIRDRESS_SLIDER];
     }
     //相似度
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_SIMILARITY_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SIMILARITY_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SimilarityValue forKey:TI_UIDCK_SIMILARITY_SLIDER];
     }
     int Similarity =  [TiSetSDKParameters getBeautyMakeupIndexForKey:TI_UIDCK_SIMILARITY_SLIDER];
     [TiSetSDKParameters setBeautySlider:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SIMILARITY_SLIDER] forKey:TI_UIDCK_SIMILARITY_SLIDER withIndex:Similarity];
     //平滑度
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_SMOOTH_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SMOOTH_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SmoothnessValue forKey:TI_UIDCK_SMOOTH_SLIDER];
     }
     int Smoothness =  [TiSetSDKParameters getBeautyMakeupIndexForKey:TI_UIDCK_SMOOTH_SLIDER];
     [TiSetSDKParameters setBeautySlider:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SMOOTH_SLIDER] forKey:TI_UIDCK_SMOOTH_SLIDER withIndex:Smoothness];
     //透明度
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_HYALINE_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_HYALINE_SLIDER]) {
         [TiSetSDKParameters setFloatValue:AlphaValue forKey:TI_UIDCK_HYALINE_SLIDER];
     }
     int Alpha =  [TiSetSDKParameters getBeautyMakeupIndexForKey:TI_UIDCK_HYALINE_SLIDER];
     [TiSetSDKParameters setBeautySlider:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_HYALINE_SLIDER] forKey:TI_UIDCK_HYALINE_SLIDER withIndex:Alpha];
     // 美妆 腮红
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_CheekRed_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_CheekRed_SLIDER]) {
         [TiSetSDKParameters setFloatValue:CheekRedValue forKey:TI_UIDCK_CheekRed_SLIDER];
     }
     int index1 =  [TiSetSDKParameters getBeautyMakeupIndexForKey:TI_UIDCK_CheekRed_SLIDER];
     [TiSetSDKParameters setBeautySlider:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_CheekRed_SLIDER] forKey:TI_UIDCK_CheekRed_SLIDER withIndex:index1];
     
     // 美妆 睫毛
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_Eyelash_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_Eyelash_SLIDER]) {
             [TiSetSDKParameters setFloatValue:EyelashValue forKey:TI_UIDCK_Eyelash_SLIDER];
                }
     int index2 =  [TiSetSDKParameters getBeautyMakeupIndexForKey:TI_UIDCK_Eyelash_SLIDER];
@@ -235,20 +233,20 @@ bool is_updateFilterValue = false;
     [TiSetSDKParameters setBeautySlider:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_Eyelash_SLIDER] forKey:TI_UIDCK_Eyelash_SLIDER withIndex:index2];
 
     // 美妆 眉毛
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_Eyebrows_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_Eyebrows_SLIDER]) {
             [TiSetSDKParameters setFloatValue:EyebrowsValue forKey:TI_UIDCK_Eyebrows_SLIDER];
     }
     int index3 =  [TiSetSDKParameters getBeautyMakeupIndexForKey:TI_UIDCK_Eyebrows_SLIDER];
     [TiSetSDKParameters setBeautySlider:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_Eyebrows_SLIDER] forKey:TI_UIDCK_Eyebrows_SLIDER withIndex:index3];
     
     // 美妆 眼影
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_Eyeshadow_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_Eyeshadow_SLIDER]) {
         [TiSetSDKParameters setFloatValue:EyeshadowValue forKey:TI_UIDCK_Eyeshadow_SLIDER];
     }
     int index4 =  [TiSetSDKParameters getBeautyMakeupIndexForKey:TI_UIDCK_Eyeshadow_SLIDER];
     [TiSetSDKParameters setBeautySlider:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_Eyeshadow_SLIDER] forKey:TI_UIDCK_Eyeshadow_SLIDER withIndex:index4];
     // 美妆 眼线
-    if (![TiSetSDKParameters judgeCacheValueIsNullForKey:TI_UIDCK_Eyeline_SLIDER]) {
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_Eyeline_SLIDER]) {
         [TiSetSDKParameters setFloatValue:EyelineValue forKey:TI_UIDCK_Eyeline_SLIDER];
     }
     int index5 =  [TiSetSDKParameters getBeautyMakeupIndexForKey:TI_UIDCK_Eyeline_SLIDER];
@@ -349,45 +347,6 @@ bool is_updateFilterValue = false;
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //        return [defaults floatForKey:keyString];
         return [defaults integerForKey:keyString];
-    }
-}
-
-//判断缓存的值是否为空
-+ (NSString *)judgeCacheValueIsNullForKey:(TiUIDataCategoryKey)key {
-    
-    NSString *keyString = [self getTiUIDataCategoryKey:key];
-    if (keyString.length == 0 || keyString == nil) {
-        return @"";
-    } else {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *isNull = [defaults stringForKey:keyString];
-        return isNull;
-    }
-    
-}
-
-+ (void)setSelectPosition:(NSInteger)position forKey:(TiUIDataCategoryKey)key{
-    
-    NSString *keyString = [self getTiUIDataCategoryKey:key];
-    if (keyString.length == 0 || keyString == nil) {
-        return;
-    } else {
-        NSUserDefaults *positionDefaults = [NSUserDefaults standardUserDefaults];
-        [positionDefaults setInteger:position forKey:keyString];
-        [positionDefaults synchronize];
-//        NSLog(@"选中位置存入:%ld",(long)[positionDefaults integerForKey:keyString]);
-    }
-    
-}
-
-+ (NSInteger)getSelectPositionForKey:(TiUIDataCategoryKey)key{
-    NSString *keyString = [self getTiUIDataCategoryKey:key];
-    if (keyString.length == 0 || keyString == nil) {
-        return 0;
-    } else {
-        NSUserDefaults *positionDefaults = [NSUserDefaults standardUserDefaults];
-//        NSLog(@"选中位置获取:%ld",(long)[positionDefaults integerForKey:keyString]);
-        return [positionDefaults integerForKey:keyString];
     }
 }
 
@@ -647,10 +606,6 @@ bool is_updateFilterValue = false;
         case TI_UIDCK_FILTER46_SLIDER:
             return @"TI_UIDCK_FILTER46_SLIDER";
             break;
-//            滤镜位置
-        case TI_UIDCK_FILTER_POSITION:
-            return @"TiUIDCKFilterPosition";
-            break;
 //            美发
         case TI_UIDCK_HAIRDRESS_SLIDER://15
             return @"TiUIDCKHairSlider";
@@ -658,10 +613,6 @@ bool is_updateFilterValue = false;
 //            一键美颜
         case TI_UIDCK_ONEKEY_SLIDER:
             return @"TiUIDCKOneKeySlider";
-            break;
-//            一键美颜位置
-        case TI_UIDCK_ONEKEY_POSITION:
-            return @"TiUIDCKOneKeyPosition";
             break;
             //相似度
         case TI_UIDCK_SIMILARITY_SLIDER:

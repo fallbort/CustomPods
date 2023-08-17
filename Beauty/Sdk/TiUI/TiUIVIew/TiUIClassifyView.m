@@ -52,7 +52,7 @@ static NSString *const TiUIClassifyViewCellId = @"TiUIClassifyViewCellId";
 }
 
 - (void)setModType{
-
+    
     if (!_iconArr) {
         _iconArr = [[NSMutableArray alloc] init];
     }
@@ -64,9 +64,9 @@ static NSString *const TiUIClassifyViewCellId = @"TiUIClassifyViewCellId";
     [_iconArr addObject:@"icon_gongneng_mengyan"];
     [_iconArr addObject:@"icon_gongneng_meizhuang"];
     _titleColor = TI_RGB_Alpha(255.0, 255.0, 255.0, 1.0);
-
+    
     [_classifyMenuView reloadData];
-
+    
 }
 
 - (UICollectionView *)classifyMenuView{
@@ -105,7 +105,6 @@ static NSString *const TiUIClassifyViewCellId = @"TiUIClassifyViewCellId";
     self = [super init];
     if (self) {
         [self setBackgroundColor:TI_RGB_Alpha(45.0, 45.0, 45.0, 0.6)];
-        
         [self setModType];
         
         [self addSubview:self.classifyMenuView];
@@ -184,16 +183,22 @@ static NSString *const TiUIClassifyViewCellId = @"TiUIClassifyViewCellId";
 //选择了某个cell
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSString *name = [self.modArr[indexPath.row] objectForKey:@"name"];
+    
+//    [self Judge_First:name];    //已弃用
+    
     if (![name isEqualToString:@""] && ![self updateMV:name]) {
         [TiUIManager shareManager].tiUIViewBoxView.menuView.hidden = NO;
         [TiUIManager shareManager].tiUIViewBoxView.subMenuView.hidden = NO;
         NSArray *arr = [self.modArr[indexPath.row] objectForKey:@"TIMenuClassify"];
-         if (_clickOnTheClassificationBlock) {
-             _clickOnTheClassificationBlock(arr);
+         if (self.clickOnTheClassificationBlock) {
+             self.clickOnTheClassificationBlock(arr);
          }
          [self hiddenView];
     }
 }
+
+//已弃用
+- (void)Judge_First:(NSString *)key{}
 
 - (BOOL)updateMV:(NSString *)key{
     if ([key isEqual:@"美颜"]) {
@@ -229,12 +234,12 @@ static NSString *const TiUIClassifyViewCellId = @"TiUIClassifyViewCellId";
         [TiUIManager shareManager].tiUIViewBoxView.resetBtn.hidden = YES;
     }
     if ([key  isEqual: @"萌颜"]) {
-        if (_CutefaceBlock) {
-            _CutefaceBlock(@"萌颜");
+        if (self.CutefaceBlock) {
+            self.CutefaceBlock(@"萌颜");
         }
     }else{
-        if (_CutefaceBlock) {
-            _CutefaceBlock(@"其他");
+        if (self.CutefaceBlock) {
+            self.CutefaceBlock(@"其他");
         }
     }
     
