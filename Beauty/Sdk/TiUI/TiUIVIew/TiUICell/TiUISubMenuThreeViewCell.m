@@ -8,6 +8,7 @@
 
 #import "TiUISubMenuThreeViewCell.h"
 #import "TiUITool.h"
+@import MeMeKit;
 
 @interface TiUISubMenuThreeViewCell ()
 
@@ -55,8 +56,8 @@
         [self.cellButton mas_updateConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(17, 17, 17, 17));
         }];
-        [self.cellButton setImage:[UIImage imageNamed:@"icon_lvmu_bianji.png"] forState:UIControlStateNormal];
-        [self.cellButton setImage:[UIImage imageNamed:@"icon_lvmu_bianji_disabled.png"] forState:UIControlStateDisabled];
+        [self.cellButton setImage:[UIImage imageNamed:@"icon_lvmu_bianji.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
+        [self.cellButton setImage:[UIImage imageNamed:@"icon_lvmu_bianji_disabled.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateDisabled];
         [self endAnimation];
         [self.cellButton setDownloaded:YES];
         [self.cellButton setEnabled:isEnabled];
@@ -152,11 +153,11 @@
                 [self.cellButton setBorderWidth:0.0 BorderColor:[UIColor clearColor] forState:UIControlStateNormal];
                 [self.cellButton setBorderWidth:0.0 BorderColor:TI_Color_Default_Background_Pink forState:UIControlStateSelected];
                 [self.cellButton setTitle:nil
-                                withImage:[UIImage imageNamed:subMod.normalThumb]
+                                withImage:[UIImage imageNamed:subMod.normalThumb  inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]
                             withTextColor:nil
                                  forState:UIControlStateNormal];
                 [self.cellButton setTitle:nil
-                                withImage:[UIImage imageNamed:subMod.thumb]
+                                withImage:[UIImage imageNamed:subMod.thumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]
                             withTextColor:nil
                                  forState:UIControlStateSelected];
                 [self endAnimation];

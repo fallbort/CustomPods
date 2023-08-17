@@ -7,8 +7,8 @@
 //
 
 #import "TiDownloadZipManager.h"
-#import <ZipArchive/ZipArchive.h>
 #import <TiSDK/TiSDKInterface.h>
+@import MeMeKit;
 
 @interface TiDownloadZipManager ()<NSURLSessionDelegate,SSZipArchiveDelegate>
 

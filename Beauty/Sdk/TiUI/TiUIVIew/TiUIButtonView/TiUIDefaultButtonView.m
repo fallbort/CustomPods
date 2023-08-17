@@ -8,6 +8,7 @@
 
 #import "TiUIDefaultButtonView.h"
 #import "TiConfig.h"
+@import MeMeKit;
 
 @interface TiUIDefaultButtonView ()
 
@@ -21,7 +22,7 @@
     if (!_mainSwitchButton){
         _mainSwitchButton = [[UIButton alloc] init];
         [_mainSwitchButton setTag:0];
-        [_mainSwitchButton setImage:[UIImage imageNamed:@"icon_gongneng_white.png"] forState:UIControlStateNormal];
+        [_mainSwitchButton setImage:[UIImage imageNamed:@"icon_gongneng_white.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
         [_mainSwitchButton addTarget:self action:@selector(onButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _mainSwitchButton;
@@ -31,8 +32,8 @@
     if (!_cameraCaptureButton) {
         _cameraCaptureButton = [[UIButton alloc] init];
         [_cameraCaptureButton setTag:1];
-        [_cameraCaptureButton setImage:[UIImage imageNamed:@"btn_paizhao.png"] forState:UIControlStateNormal];
-        [_cameraCaptureButton setImage:[UIImage imageNamed:@"btn_paizhao.png"] forState:UIControlStateSelected];
+        [_cameraCaptureButton setImage:[UIImage imageNamed:@"btn_paizhao.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
+        [_cameraCaptureButton setImage:[UIImage imageNamed:@"btn_paizhao.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateSelected];
               [_cameraCaptureButton addTarget:self action:@selector(onButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _cameraCaptureButton;
@@ -42,7 +43,7 @@
     if (!_switchCameraButton) {
         _switchCameraButton = [[UIButton alloc] init];
         [_switchCameraButton setTag:2];
-        [_switchCameraButton setImage:[UIImage imageNamed:@"icon_fanzhuan_white.png"] forState:UIControlStateNormal];
+        [_switchCameraButton setImage:[UIImage imageNamed:@"icon_fanzhuan_white.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
         [_switchCameraButton addTarget:self action:@selector(onButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _switchCameraButton;
@@ -52,7 +53,7 @@
     if (!_TiDemoBtn) {
         _TiDemoBtn = [[UIButton alloc] init];
         [_TiDemoBtn setTag:3];
-        [_TiDemoBtn setImage:[UIImage imageNamed:@"btn_gongneng_rukou.png"] forState:UIControlStateNormal];
+        [_TiDemoBtn setImage:[UIImage imageNamed:@"btn_gongneng_rukou.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
         [_TiDemoBtn addTarget:self action:@selector(onButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [_TiDemoBtn setHidden:YES];
         [_TiDemoBtn setEnabled:NO];

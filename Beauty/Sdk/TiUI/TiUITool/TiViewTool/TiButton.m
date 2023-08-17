@@ -8,6 +8,7 @@
 
 #import "TiButton.h"
 #import "TiConfig.h"
+@import MeMeKit;
 
 @interface TiIndicatorAnimationView ()
 
@@ -26,7 +27,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.hidden = YES;
         self.angle = 0;
-        self.loadingView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_loading"]];
+        self.loadingView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_loading" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]];
         [self addSubview:self.loadingView];
         [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self).offset(10);
@@ -145,7 +146,7 @@
 
 - (UIImageView *)downloadView{
     if (!_downloadView) {
-        _downloadView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_download.png"]];
+        _downloadView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_download.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]];
         _downloadView.contentMode = UIViewContentModeScaleAspectFit;
         _downloadView.hidden = YES;
         _downloadView.userInteractionEnabled = NO;
@@ -359,7 +360,7 @@
             make.top.left.right.equalTo(self.topView);
             make.height.equalTo(@80);
         }];
-        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_yijian_gouxuan"]];
+        UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_yijian_gouxuan" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]];
         image.contentMode = UIViewContentModeScaleAspectFit;
         [self.cellmaskView addSubview:image];
         [image mas_makeConstraints:^(MASConstraintMaker *make) {

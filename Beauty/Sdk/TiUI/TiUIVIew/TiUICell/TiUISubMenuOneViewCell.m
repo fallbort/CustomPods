@@ -8,6 +8,7 @@
 
 #import "TiUISubMenuOneViewCell.h"
 #import "TiButton.h"
+@import MeMeKit;
 
 
 @interface TiUISubMenuOneViewCell ()
@@ -49,9 +50,9 @@
             [self.cellButton setClassifyText:subMod.name withTextColor:UIColor.whiteColor];
             
         }else{
-            [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name] withImage:[UIImage imageNamed:subMod.normalwhiteThumb] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
+            [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name] withImage:[UIImage imageNamed:subMod.normalwhiteThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
             [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name]
-                    withImage:[UIImage imageNamed:subMod.selectedThumb]
+                    withImage:[UIImage imageNamed:subMod.selectedThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]
                 withTextColor:TI_Color_Default_Background_Pink
                      forState:UIControlStateSelected];
             [self.cellButton setSelected:subMod.selected];

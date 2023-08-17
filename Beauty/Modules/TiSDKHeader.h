@@ -9,5 +9,6 @@
 #define TiSDKHeader_h
 
 #import <TiSDK/TiSDKInterface.h>
+#import "../Source/VM/TiInitManagerOC.h"
 
 #endif /* TiSDKHeader_h */

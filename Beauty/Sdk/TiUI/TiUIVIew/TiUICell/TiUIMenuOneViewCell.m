@@ -11,6 +11,7 @@
 #import "TiUISubMenuOneViewCell.h"
 #import "TiUIMakeUpView.h"
 #import "TiSetSDKParameters.h"
+@import MeMeKit;
 
 @interface TiUIMenuOneViewCell ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -105,7 +106,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
                 [weakSelf.meizhuangView setBackgroundColor:TI_RGB_Alpha(45.0, 45.0, 45.0, 0.6)];
                 [[TiUIManager shareManager].tiUIViewBoxView.topView setBackgroundColor:TI_RGB_Alpha(45.0, 45.0, 45.0, 0.6)];
                 [[TiUIManager shareManager].tiUIViewBoxView.topLabel setTextColor:[UIColor whiteColor]];
-                [weakSelf.meizhuangView.defaultBtn setImage:[UIImage imageNamed:@"meizhuang_wu_normal_white.png"] forState:UIControlStateNormal];
+                [weakSelf.meizhuangView.defaultBtn setImage:[UIImage imageNamed:@"meizhuang_wu_normal_white.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
                 if (Default_is_Null) {
                     [weakSelf.meizhuangView.defaultLabel setTextColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0)];
                 }else{
@@ -542,8 +543,8 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
 - (void)setMode:(TIMenuMode *)mode{
     if (mode) {
        _mode = mode;
-        [self.totalSwitch setTitle:[NSString stringWithFormat:@"%@:关",mode.name] withImage:[UIImage imageNamed:@"btn_close"] withTextColor:TI_Color_Default_Text_Black forState:UIControlStateNormal];
-        [self.totalSwitch setTitle:[NSString stringWithFormat:@"%@:开",mode.name] withImage:[UIImage imageNamed:@"btn_open"] withTextColor:TI_Color_Default_Background_Pink forState:UIControlStateSelected];
+        [self.totalSwitch setTitle:[NSString stringWithFormat:@"%@:关",mode.name] withImage:[UIImage imageNamed:@"btn_close" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_Color_Default_Text_Black forState:UIControlStateNormal];
+        [self.totalSwitch setTitle:[NSString stringWithFormat:@"%@:开",mode.name] withImage:[UIImage imageNamed:@"btn_open" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_Color_Default_Background_Pink forState:UIControlStateSelected];
         [self.totalSwitch setSelected:mode.totalSwitch];
         
         [self.menuCollectionView reloadData];

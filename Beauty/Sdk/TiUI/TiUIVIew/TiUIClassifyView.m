@@ -9,6 +9,7 @@
 #import "TiUIClassifyView.h"
 #import "TiConfig.h"
 #import "TiButton.h"
+@import MeMeKit;
 
 #define MINIMUMLINESPACING  (SCREEN_WIDTH - 4*TiUISubMenuOneViewTiButtonWidth)/5
 
@@ -28,12 +29,12 @@ static NSString *const TiUIClassifyViewCellId = @"TiUIClassifyViewCellId";
             @{
                 @"name":@"美颜",
                 @"icon":@"icon_gongneng_meiyan.png",
-                @"TIMenuClassify":@[@(10),@(0),@(13),@(1)]
+                @"TIMenuClassify":@[@(10),@(4),@(0),@(1),@(13),@(6)]
             },
             @{
                 @"name":@"滤镜",
                 @"icon":@"icon_gongneng_lvjing.png",
-                @"TIMenuClassify":@[@(4),@(5),@(6)]
+                @"TIMenuClassify":@[@(5)]
             },
             @{
                 @"name":@"萌颜",
@@ -155,7 +156,7 @@ static NSString *const TiUIClassifyViewCellId = @"TiUIClassifyViewCellId";
     if ([name isEqualToString:@""]) {
           [cellBtn setTitle:[dic valueForKey:@"name"] withImage:nil withTextColor:TI_Color_Default_Text_Black forState:UIControlStateNormal];
     }else{
-        [cellBtn setTitle:[dic valueForKey:@"name"] withImage:[UIImage imageNamed:_iconArr[indexPath.row]] withTextColor:_titleColor forState:UIControlStateNormal];
+        [cellBtn setTitle:[dic valueForKey:@"name"] withImage:[UIImage imageNamed:_iconArr[indexPath.row] inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:_titleColor forState:UIControlStateNormal];
     }
   
     [cell.contentView addSubview:cellBtn];

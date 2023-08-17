@@ -143,8 +143,8 @@ static dispatch_once_t token;
 // MARK: --弹出功能页UI--
 - (void)showMainMenuView{
     [self hiddenAllViews:NO];
-    self.tiUIViewBoxView.menuView.hidden = YES;
-    self.tiUIViewBoxView.subMenuView.hidden = YES;
+//    self.tiUIViewBoxView.menuView.hidden = YES;
+//    self.tiUIViewBoxView.subMenuView.hidden = YES;
     [UIView animateWithDuration:0.3 animations:^{
         self.tiUIViewBoxView.frame = CGRectMake(0,SCREEN_HEIGHT- TiUIViewBoxTotalHeight, SCREEN_WIDTH , TiUIViewBoxTotalHeight);
     }];

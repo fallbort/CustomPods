@@ -12,6 +12,7 @@
 #import "TiDownloadZipManager.h"
 #import "TiUIGreenScreensView.h"
 #import "TiSetSDKParameters.h"
+@import MeMeKit;
 
 @interface TiUIMenuThreeViewCell ()<UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -57,7 +58,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
 - (UIButton *)backGreenBtn{
     if (!_backGreenBtn) {
         _backGreenBtn = [[UIButton alloc] init];
-        [_backGreenBtn setImage:[UIImage imageNamed:@"icon_back_white.png"] forState:UIControlStateNormal];
+        [_backGreenBtn setImage:[UIImage imageNamed:@"icon_back_white.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
         [_backGreenBtn addTarget:self action:@selector(backGreen) forControlEvents:UIControlEventTouchUpInside];
     }
     return _backGreenBtn;

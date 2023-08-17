@@ -8,13 +8,14 @@
 
 #import "TiUIGreenScreensView.h"
 #import "TiSetSDKParameters.h"
+@import MeMeKit;
 
 @implementation TiUIGreenScreensView
 
 - (TiButton *)resetBtn{
     if (!_resetBtn) {
         _resetBtn = [[TiButton alloc] initWithScaling:1.0];
-        [_resetBtn setTitle:@"恢复" withImage:[UIImage imageNamed:@"icon_lvmu_huifu_disabled"] withTextColor:TI_RGB_Alpha(254.0, 254.0, 254.0, 0.4) forState:UIControlStateNormal];
+        [_resetBtn setTitle:@"恢复" withImage:[UIImage imageNamed:@"icon_lvmu_huifu_disabled" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_RGB_Alpha(254.0, 254.0, 254.0, 0.4) forState:UIControlStateNormal];
         [_resetBtn setEnabled:NO];
         [_resetBtn addTarget:self action:@selector(ResetEdit:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -32,8 +33,8 @@
 - (TiButton *)similarityBtn{
     if (!_similarityBtn) {
         _similarityBtn = [[TiButton alloc] initWithScaling:1.0];
-        [_similarityBtn setTitle:@"相似度" withImage:[UIImage imageNamed:@"icon_lvmu_xiangsi"] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
-        [_similarityBtn setTitle:@"相似度" withImage:[UIImage imageNamed:@"icon_lvmu_xiangsi"] withTextColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
+        [_similarityBtn setTitle:@"相似度" withImage:[UIImage imageNamed:@"icon_lvmu_xiangsi" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
+        [_similarityBtn setTitle:@"相似度" withImage:[UIImage imageNamed:@"icon_lvmu_xiangsi" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
         [_similarityBtn setBorderWidth:0.0 BorderColor:UIColor.clearColor forState:UIControlStateNormal];
         [_similarityBtn setBorderWidth:1.0 BorderColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
         [_similarityBtn addTarget:self action:@selector(clickEdit:) forControlEvents:UIControlEventTouchUpInside];
@@ -45,8 +46,8 @@
 - (TiButton *)smoothBtn{
     if (!_smoothBtn) {
         _smoothBtn = [[TiButton alloc] initWithScaling:1.0];
-        [_smoothBtn setTitle:@"平滑度" withImage:[UIImage imageNamed:@"icon_lvmu_smoothness"] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
-        [_smoothBtn setTitle:@"平滑度" withImage:[UIImage imageNamed:@"icon_lvmu_smoothness"] withTextColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
+        [_smoothBtn setTitle:@"平滑度" withImage:[UIImage imageNamed:@"icon_lvmu_smoothness" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
+        [_smoothBtn setTitle:@"平滑度" withImage:[UIImage imageNamed:@"icon_lvmu_smoothness" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
         [_smoothBtn setBorderWidth:0.0 BorderColor:UIColor.clearColor forState:UIControlStateNormal];
         [_smoothBtn setBorderWidth:1.0 BorderColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
         [_smoothBtn addTarget:self action:@selector(clickEdit:) forControlEvents:UIControlEventTouchUpInside];
@@ -57,8 +58,8 @@
 - (TiButton *)hyalineBtn{
     if (!_hyalineBtn) {
         _hyalineBtn = [[TiButton alloc] initWithScaling:1.0];
-        [_hyalineBtn setTitle:@"透明度" withImage:[UIImage imageNamed:@"icon_lvmu_alpha"] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
-        [_hyalineBtn setTitle:@"透明度" withImage:[UIImage imageNamed:@"icon_lvmu_alpha"] withTextColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
+        [_hyalineBtn setTitle:@"透明度" withImage:[UIImage imageNamed:@"icon_lvmu_alpha" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
+        [_hyalineBtn setTitle:@"透明度" withImage:[UIImage imageNamed:@"icon_lvmu_alpha" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
         [_hyalineBtn setBorderWidth:0.0 BorderColor:UIColor.clearColor forState:UIControlStateNormal];
         [_hyalineBtn setBorderWidth:1.0 BorderColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 1.0) forState:UIControlStateSelected];
         [_hyalineBtn addTarget:self action:@selector(clickEdit:) forControlEvents:UIControlEventTouchUpInside];
@@ -117,9 +118,9 @@
     BOOL isReset =  [isResetN boolValue];
     [self.resetBtn setEnabled:isReset];
     if (isReset) {
-        [self.resetBtn setTitle:@"恢复" withImage:[UIImage imageNamed:@"icon_lvmu_huifu"] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
+        [self.resetBtn setTitle:@"恢复" withImage:[UIImage imageNamed:@"icon_lvmu_huifu" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
     }else{
-        [self.resetBtn setTitle:@"恢复" withImage:[UIImage imageNamed:@"icon_lvmu_huifu_disabled"] withTextColor:TI_RGB_Alpha(254.0, 254.0, 254.0, 0.4) forState:UIControlStateNormal];
+        [self.resetBtn setTitle:@"恢复" withImage:[UIImage imageNamed:@"icon_lvmu_huifu_disabled" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_RGB_Alpha(254.0, 254.0, 254.0, 0.4) forState:UIControlStateNormal];
     }
 }
 
@@ -169,7 +170,7 @@
     
     [self Edit:is_greenEdit];
     [self.resetBtn setEnabled:NO];
-    [self.resetBtn setTitle:@"恢复" withImage:[UIImage imageNamed:@"icon_lvmu_huifu_disabled"] withTextColor:TI_RGB_Alpha(254.0, 254.0, 254.0, 0.4) forState:UIControlStateNormal];    
+    [self.resetBtn setTitle:@"恢复" withImage:[UIImage imageNamed:@"icon_lvmu_huifu_disabled" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_RGB_Alpha(254.0, 254.0, 254.0, 0.4) forState:UIControlStateNormal];    
 }
 
 - (void)dealloc{

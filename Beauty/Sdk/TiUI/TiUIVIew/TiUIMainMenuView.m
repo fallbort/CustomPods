@@ -17,6 +17,7 @@
 #import "TiUIMenuThreeViewCell.h"
 
 #import "TiUIMakeUpView.h"
+@import MeMeKit;
 
 bool is_reset = false;
 bool is_resetBeauty = false;
@@ -201,7 +202,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
 - (UIButton *)backBtn{
     if (!_backBtn) {
         _backBtn = [[UIButton alloc] init];
-        [_backBtn setBackgroundImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
+        [_backBtn setBackgroundImage:[UIImage imageNamed:@"icon_back.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
         [_backBtn addTarget:self action:@selector(BackPrevious:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _backBtn;
@@ -210,7 +211,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
 - (UIButton *)back2Btn{
     if (!_back2Btn) {
         _back2Btn = [[UIButton alloc] init];
-        [_back2Btn setImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
+        [_back2Btn setImage:[UIImage imageNamed:@"icon_back.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
         [_back2Btn addTarget:self action:@selector(BackPrevious:) forControlEvents:UIControlEventTouchUpInside];
         [_back2Btn setHidden:true];
     }
@@ -244,8 +245,8 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         [_resetBtn setTitleColor:TI_RGB_Alpha(254.0, 254.0, 254.0, 0.4) forState:UIControlStateDisabled];
         [_resetBtn.titleLabel setFont:[UIFont fontWithName:@"PingFang-SC-Regular" size:10]];
         [_resetBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 8, 0, -8)];
-        [_resetBtn setImage:[UIImage imageNamed:@"icon_chongzhi_def.png"] forState:UIControlStateNormal];
-        [_resetBtn setImage:[UIImage imageNamed:@"icon_chongzhi_disabled.png"] forState:UIControlStateDisabled];
+        [_resetBtn setImage:[UIImage imageNamed:@"icon_chongzhi_def.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
+        [_resetBtn setImage:[UIImage imageNamed:@"icon_chongzhi_disabled.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateDisabled];
         [_resetBtn addTarget:self action:@selector(ResetClick:) forControlEvents:UIControlEventTouchUpInside];
         //判断重置按钮状态
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -310,7 +311,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         [_reset_MY_YesBtn.titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_reset_MY_YesBtn.titleLabel setFont:[UIFont fontWithName:@"PingFang-SC-Regular" size:16]];
         [_reset_MY_YesBtn addTarget:self action:@selector(ResetYNClick:) forControlEvents:UIControlEventTouchUpInside];
-        [_reset_MY_YesBtn setBackgroundImage:[UIImage imageNamed:@"bg_chongzhi_yes.png"] forState:UIControlStateNormal];
+        [_reset_MY_YesBtn setBackgroundImage:[UIImage imageNamed:@"bg_chongzhi_yes.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
         [_reset_MY_YesBtn setHidden:true];
         [_reset_MY_YesBtn setEnabled:false];
     }
@@ -582,11 +583,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         [self addSubview:self.backgroundView];
         [self.backgroundView addSubview:self.menuView];//美颜分割线上的一级菜单
         [self.backgroundView addSubview:self.subMenuView];//二级菜单
-        [self.backgroundView addSubview:self.classifyView];//最上层大分类视图
         
-        [self.backgroundView addSubview:self.backBtn];
-        [self.backgroundView addSubview:self.backView];
-        [self.backView addSubview:self.back2Btn];
         [self.backgroundView addSubview:self.resetBtn];
         [self.backgroundView addSubview:self.lineView];
         
@@ -600,7 +597,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
             make.top.equalTo(self.sliderRelatedView.mas_bottom);
         }];
         [self.menuView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.backgroundView).offset(-55);
+            make.right.equalTo(self.backgroundView).offset(0);
             make.top.equalTo(self.backgroundView);
             make.left.equalTo(self.backgroundView);
             make.height.mas_offset(TiUIMenuViewHeight);
@@ -609,34 +606,17 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
               make.left.right.bottom.equalTo(self.backgroundView);
               make.top.equalTo(self.menuView.mas_bottom);
          }];
-         
-        [self.classifyView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo(self.backgroundView);
-        }];
-        
-        [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self).offset(30);
-            make.bottom.equalTo(self).offset(-44);
-            make.width.height.equalTo(@18);
-        }];
-        [self.backView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self);
-            make.top.bottom.equalTo(self.menuView);
-            make.width.equalTo(@55);
-        }];
+
         [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self).offset(-55);
             make.width.equalTo(@0.5);
             make.height.equalTo(@18);
             make.centerY.equalTo(self.menuView);
         }];
-        [self.back2Btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.centerY.equalTo(self.backView);
-            make.width.height.equalTo(@18);
-        }];
+
         [self.resetBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self).offset(-30);
-            make.centerY.equalTo(self.backBtn);
+            make.bottom.equalTo(self.backgroundView).offset(-44);
             make.width.equalTo(@48);
             make.height.equalTo(@20);
         }];
@@ -696,6 +676,23 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
             make.centerX.equalTo(self.resetBgView);
             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH*180/375, (SCREEN_WIDTH*180/375)*40/180));
         }];
+        
+        self.classifyArr = @[@(10),@(4),@(0),@(1),@(13),@(6)];
+        [self.menuView reloadData];
+        [self.subMenuView reloadData];
+        for (int i = 0; i<self.classifyArr.count; i++){
+            NSNumber *menuTag = self.classifyArr[i];
+            TIMenuMode *mode =  [[TiMenuPlistManager shareManager] mainModeArr][[menuTag intValue]];
+            if (mode.selected)
+            {
+                NSIndexPath * menuIndex = [NSIndexPath indexPathForRow:i inSection:0];
+                self.selectedIndexPath = [NSIndexPath indexPathForRow:i inSection:0];
+                [self.menuView scrollToItemAtIndexPath:menuIndex atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+             }
+        }
+        self.menuView.hidden = NO;
+        self.subMenuView.hidden = NO;
+        [self hiddenClassifyView];
     }
     return self;
 }

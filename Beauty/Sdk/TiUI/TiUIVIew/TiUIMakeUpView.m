@@ -11,6 +11,7 @@
 #import "TiUIMakeUpViewCell.h"
 #import "TiDownloadZipManager.h"
 #import "TiSetSDKParameters.h"
+@import  MeMeKit;
 
 bool Default_is_Null = true;
 bool makeup_is_reset = false;
@@ -56,7 +57,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
 - (UIButton *)backBtn{
     if (!_backBtn) {
         _backBtn = [[UIButton alloc]init];
-        [_backBtn setImage:[UIImage imageNamed:@"icon_back.png"] forState:UIControlStateNormal];
+        [_backBtn setImage:[UIImage imageNamed:@"icon_back.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
         [_backBtn addTarget:self action:@selector(backParentMenu:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _backBtn;
@@ -66,8 +67,8 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
     if (!_defaultBtn) {
         _defaultBtn = [[UIButton alloc]init];
         [_defaultBtn addTarget:self action:@selector(defaultselected:) forControlEvents:UIControlEventTouchUpInside];
-        [_defaultBtn setImage:[UIImage imageNamed:@"meizhuang_wu_normal_white.png"] forState:UIControlStateNormal];
-        [_defaultBtn setImage:[UIImage imageNamed:@"meizhuang_wu_selected.png"] forState:UIControlStateSelected];
+        [_defaultBtn setImage:[UIImage imageNamed:@"meizhuang_wu_normal_white.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
+        [_defaultBtn setImage:[UIImage imageNamed:@"meizhuang_wu_selected.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateSelected];
         //判断默认按钮状态
         if (Default_is_Null) {
             [_defaultBtn setSelected:true];

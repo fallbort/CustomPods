@@ -8,6 +8,7 @@
 
 #import "TiUIMakeUpViewCell.h"
 #import "TiUITool.h"
+@import MeMeKit;
 
 @interface TiUIMakeUpViewCell ()
 
@@ -78,11 +79,11 @@
             
         }else{
             [self.cellButton setTitle:subMod.dir
-                            withImage:[UIImage imageNamed:subMod.normalThumb]
+                            withImage:[UIImage imageNamed:subMod.normalThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]
                         withTextColor:TI_Color_Default_Text_Black
                              forState:UIControlStateNormal];
             [self.cellButton setTitle:subMod.dir
-                            withImage:[UIImage imageNamed:subMod.selectedThumb]
+                            withImage:[UIImage imageNamed:subMod.selectedThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]
                         withTextColor:TI_Color_Default_Background_Pink
                              forState:UIControlStateSelected];
             [self endAnimation];

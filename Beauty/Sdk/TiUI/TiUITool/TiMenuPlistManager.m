@@ -11,6 +11,7 @@
 #import "TiSetSDKParameters.h"
 #import "TiUIMakeUpView.h"
 #import "TiUIMenuTwoViewCell.h"
+@import MeMeKit;
 
 @interface TiMenuPlistManager ()
 
@@ -95,11 +96,13 @@ static dispatch_once_t token;
         self.gesturesModArr = [self jsonModeForPath:@"TiGestures"];
 
         // 获取文件路径
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"TiOneKeyBeautyParameter" ofType:@"json"];
+         
+        NSBundle *bundle = [NSBundle bundleWithPathBundle:@"TiUIData"];
+        NSString *path = [bundle pathForResource:@"TiOneKeyBeautyParameter" ofType:@"json"];
         NSData *data = [[NSData alloc] initWithContentsOfFile:path];
         self.onekeyParameter = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         
-        NSString *path2 = [[NSBundle mainBundle] pathForResource:@"TiFaceShapeBeautyParameter" ofType:@"json"];
+        NSString *path2 = [bundle pathForResource:@"TiFaceShapeBeautyParameter" ofType:@"json"];
         NSData *data2 = [[NSData alloc] initWithContentsOfFile:path2];
         self.faceshapeParameter = [NSJSONSerialization JSONObjectWithData:data2 options:kNilOptions error:nil];
         
@@ -276,7 +279,9 @@ static dispatch_once_t token;
 {
     NSMutableDictionary *plistDictionary;
     //获取配置文件
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:path ofType:@"json"];
+    NSBundle *mainBundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle bundleWithPathBundle:@"TiUIData"];
+    NSString *plistPath = [bundle pathForResource:path ofType:@"json"];
       
     NSString *filePatch = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.json",path]];
     
@@ -534,8 +539,10 @@ static dispatch_once_t token;
     
     
     //拷贝本地贴纸到沙盒
+    NSBundle *mainBundle = [NSBundle bundleForClass:[self class]];
+    NSBundle *bundle = [NSBundle bundleWithPathBundle:@"TiUIData"];
        NSString *localPath =
-               [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:name];
+               [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:name];
        NSArray *dirArr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath error:NULL];
        for (NSString *stickerName in dirArr) {
 

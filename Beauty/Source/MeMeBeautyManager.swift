@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import TiSDK
+import TiSDKInternal
+
 
 @objc public class MeMeBeautyManager : NSObject {
     @objc public static let shared = MeMeBeautyManager()
@@ -21,9 +22,8 @@ import TiSDK
     }
     //MARK: <>功能性方法
     @objc public func startup(appKey:String) {
-        TiSDK.initSDK(appKey) { status in
-            
-        }
+        TiInitManagerOC.shareinstance().appKey = appKey
+        TiInitManagerOC.shareinstance().initSDK()
     }
     //MARK: <>内部View
     

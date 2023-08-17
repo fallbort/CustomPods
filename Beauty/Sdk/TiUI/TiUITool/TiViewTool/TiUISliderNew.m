@@ -8,6 +8,7 @@
 
 #import "TiUISliderNew.h"
 #import "TiConfig.h"
+@import MeMeKit;
 
 @interface TiUISliderNew (){
     CGRect _trackRect;
@@ -23,7 +24,7 @@
 //        (TiUISliderHeight*4+2)为滑块直径 TiUISliderHeight/2 为滑条半经
         _tagView = [[UIImageView alloc]initWithFrame:CGRectMake(-TiUISliderTagViewWidth/2+1, -(TiUISliderTagViewHeight + (TiUISliderHeight*6+2)/2 - TiUISliderHeight/2),TiUISliderTagViewWidth, TiUISliderTagViewHeight)];
         //滑动条颜色
-        [_tagView setImage:[UIImage imageNamed:@"icon_drag_white.png"]];
+        [_tagView setImage:[UIImage imageNamed:@"icon_drag_white.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]];
         _tagView.alpha = 0;
         _tagView.contentMode = UIViewContentModeScaleAspectFit;
         [_tagView addSubview:self.tagLabel];
@@ -73,8 +74,8 @@
         self.maximumTrackTintColor = [UIColor clearColor];
         
         //滑块背景
-        [self setThumbImage:[self resizeImage:[UIImage imageNamed:@"icon_huakuai"] toSize:CGSizeMake(TiUISliderHeight*6, TiUISliderHeight*6)]  forState:UIControlStateNormal];
-        [self setThumbImage:[self resizeImage:[UIImage imageNamed:@"icon_huakuai"] toSize:CGSizeMake(TiUISliderHeight*6+2, TiUISliderHeight*6+2)] forState:UIControlStateHighlighted];
+        [self setThumbImage:[self resizeImage:[UIImage imageNamed:@"icon_huakuai" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] toSize:CGSizeMake(TiUISliderHeight*6, TiUISliderHeight*6)]  forState:UIControlStateNormal];
+        [self setThumbImage:[self resizeImage:[UIImage imageNamed:@"icon_huakuai" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] toSize:CGSizeMake(TiUISliderHeight*6+2, TiUISliderHeight*6+2)] forState:UIControlStateHighlighted];
         self.layer.cornerRadius = TiUISliderHeight/2;
         
         [self addSubview:self.tagView];

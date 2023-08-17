@@ -52,7 +52,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         [self addSubview:self.menuCollectionView];
         [self.menuCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.mas_left).offset(20);
-            make.right.equalTo(self.mas_right).offset(-23);
+            make.right.equalTo(self.mas_right).offset(-23).priority(888);
             make.height.mas_equalTo(TiUISubMenuTwoViewTiButtonHeight+5);
             make.top.equalTo(self).offset(20);
         }];

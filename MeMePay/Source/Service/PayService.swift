@@ -11,6 +11,7 @@ import Result
 import SwiftyJSON
 import MeMeKit
 import RxSwift
+import MeMePayInternel
 
 private let FunBankDuplicatedCode = 3006
 private let GetDefaultIAPProductsListKey: String = "GetDefaultIAPProductsListKey"

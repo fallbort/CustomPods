@@ -8,6 +8,7 @@
 
 #import "TiUISubMenuTwoViewCell.h"
 #import "TiButton.h"
+@import MeMeKit;
 
 @interface TiUISubMenuTwoViewCell ()
 
@@ -46,8 +47,8 @@
         }else{
             NSString *normalThumb = subMod.normalThumb?subMod.normalThumb:subMod.thumb;
             NSString *selectedThumb = subMod.selectedThumb?subMod.selectedThumb:subMod.thumb;
-            [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name] withImage:[UIImage imageNamed:normalThumb] withTextColor:TI_RGB_Alpha(68.0, 68.0, 68.0, 1.0) forState:UIControlStateNormal];
-            [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name] withImage:[UIImage imageNamed:selectedThumb] withTextColor:UIColor.whiteColor forState:UIControlStateSelected];
+            [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name] withImage:[UIImage imageNamed:normalThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:TI_RGB_Alpha(68.0, 68.0, 68.0, 1.0) forState:UIControlStateNormal];
+            [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name] withImage:[UIImage imageNamed:selectedThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:UIColor.whiteColor forState:UIControlStateSelected];
             [self.cellButton setSelected:subMod.selected];
             [self.cellButton setTextFont:[UIFont fontWithName:@"PingFang-SC-Regular" size:10]];
             [self.cellButton setSelectedText:[NSString stringWithFormat:@"%@",subMod.name]];

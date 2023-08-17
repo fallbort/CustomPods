@@ -124,9 +124,9 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
   end
 
   spec.subspec 'Beauty' do |base|
-      base.source_files = 'Beauty/Source/**/*.{h,m,mm,swift}','Beauty/*.{modulemap}','Beauty/Modules/*.{h}'
+      base.source_files = 'Beauty/Source/**/*.{h,m,mm,swift}','Beauty/Sdk/TiUI/**/*.{h,m,mm,swift}','Beauty/*.{modulemap}','Beauty/Modules/*.{h}'
       base.resource_bundles = {
-        'TiUIIcon' => ['Beauty/Sdk/TiUI/TiUIIcon/*'],
+        'TiUIData' => ['Beauty/Sdk/TiUI/TiUIIcon/**/*','Beauty/Sdk/TiUI/TiUIData/*/*'],
         'TiSDKResource' => ['Beauty/Sdk/TiSDKResource.bundle/*']}
 #      base.resources = ['Beauty/Sdk/TiSDKResource.bundle']
       base.public_header_files = 'Beauty/Source/**/*.{h}'
@@ -135,6 +135,9 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
 #      base.prefix_header_contents  = '@import MeMeKit;'
       
       base.dependency 'MeMeKit'
+      base.dependency 'MeMeKit/SSZipArchive'
+      base.dependency 'Masonry'
+      
 
       base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/Beauty'] }
 

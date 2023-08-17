@@ -7,6 +7,7 @@
 //
 
 #import "TiSDKResourceManager.h"
+@import MeMeKit;
 
 @interface TiSDKResourceManager ()
 
@@ -71,8 +72,10 @@ static dispatch_once_t token;
         }
         
         // 拷贝本地贴纸文件到沙盒
+        NSBundle *mainBundle = [NSBundle bundleForClass:[self class]];
+        NSBundle *bundle = [NSBundle bundleWithPathBundle:@"TiUIData"];
         NSString *localPath1 =
-        [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"sticker"];
+        [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"sticker"];
         NSArray *dirArr1 = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath1 error:NULL];
         for (NSString *pathName in dirArr1) {
             if (![[NSFileManager defaultManager] fileExistsAtPath:[localPath1 stringByAppendingPathComponent:pathName]]) {
@@ -81,7 +84,7 @@ static dispatch_once_t token;
         }
         // 拷贝本地礼物文件到沙盒
         NSString *localPath2 =
-        [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"gift"];
+        [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"gift"];
         NSArray *dirArr2 = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath2 error:NULL];
         for (NSString *pathName in dirArr2) {
             if (![[NSFileManager defaultManager] fileExistsAtPath:[localPath2 stringByAppendingPathComponent:pathName]]) {
@@ -90,7 +93,7 @@ static dispatch_once_t token;
         }
         // 拷贝本地水印文件到沙盒
         NSString *localPath3 =
-        [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"watermark"];
+        [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"watermark"];
         NSArray *dirArr3 = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath3 error:NULL];
         for (NSString *pathName in dirArr3) {
             if (![[NSFileManager defaultManager] fileExistsAtPath:[localPath3 stringByAppendingPathComponent:pathName]]) {
@@ -99,7 +102,7 @@ static dispatch_once_t token;
         }
         // 拷贝本地面具文件到沙盒
         NSString *localPath4 =
-        [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"mask"];
+        [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"mask"];
         NSArray *dirArr4 = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath4 error:NULL];
         for (NSString *pathName in dirArr4) {
             if (![[NSFileManager defaultManager] fileExistsAtPath:[localPath4 stringByAppendingPathComponent:pathName]]) {
@@ -108,7 +111,7 @@ static dispatch_once_t token;
         }
         // 拷贝本地绿幕文件到沙盒
         NSString *localPath5 =
-        [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"greenscreen"];
+        [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"greenscreen"];
         NSArray *dirArr5 = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath5 error:NULL];
         for (NSString *pathName in dirArr5) {
             if (![[NSFileManager defaultManager] fileExistsAtPath:[localPath5 stringByAppendingPathComponent:pathName]]) {
@@ -117,7 +120,7 @@ static dispatch_once_t token;
         }
         // 拷贝本地互动贴纸文件到沙盒
         NSString *localPath6 =
-        [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"interaction"];
+        [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"interaction"];
         NSArray *dirArr6 = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath6 error:NULL];
         for (NSString *pathName in dirArr6) {
             if (![[NSFileManager defaultManager] fileExistsAtPath:[localPath6 stringByAppendingPathComponent:pathName]]) {
@@ -126,7 +129,7 @@ static dispatch_once_t token;
         }
         // 拷贝本地抠图文件到沙盒
         NSString *localPath7 =
-        [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"portrait"];
+        [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"portrait"];
         NSArray *dirArr7 = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath7 error:NULL];
         for (NSString *pathName in dirArr7) {
             if (![[NSFileManager defaultManager] fileExistsAtPath:[localPath7 stringByAppendingPathComponent:pathName]]) {
@@ -135,7 +138,7 @@ static dispatch_once_t token;
         }
         // 拷贝本地手势文件到沙盒
         NSString *localPath8 =
-        [[[NSBundle mainBundle] pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"gesture"];
+        [[bundle pathForResource:@"TiSDKResource" ofType:@"bundle"] stringByAppendingPathComponent:@"gesture"];
         NSArray *dirArr8 = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:localPath8 error:NULL];
         for (NSString *pathName in dirArr8) {
             if (![[NSFileManager defaultManager] fileExistsAtPath:[localPath8 stringByAppendingPathComponent:pathName]]) {

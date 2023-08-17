@@ -10,6 +10,7 @@
 #import "TiConfig.h"
 
 #import <TiSDK/TiSDKInterface.h>
+@import MeMeKit;
 
 @interface TiUISliderRelatedView ()
  
@@ -44,8 +45,8 @@
 - (UIButton *)tiContrastBtn{
     if (!_tiContrastBtn) {
         _tiContrastBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_tiContrastBtn setImage:[UIImage imageNamed:@"icon_compare_white"] forState:UIControlStateNormal];
-        [_tiContrastBtn setImage:[UIImage imageNamed:@"icon_compare_white"] forState:UIControlStateSelected];
+        [_tiContrastBtn setImage:[UIImage imageNamed:@"icon_compare_white" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateNormal];
+        [_tiContrastBtn setImage:[UIImage imageNamed:@"icon_compare_white" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] forState:UIControlStateSelected];
         [_tiContrastBtn setSelected:NO];
         _tiContrastBtn.layer.masksToBounds = NO;
         UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
