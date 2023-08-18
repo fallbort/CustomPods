@@ -78,7 +78,10 @@ static dispatch_once_t token;
         [self.session addOutput:dataOutput];
     }
     [self.session commitConfiguration];
-    [self.session startRunning];
+    __weak __typeof(self)weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [weakSelf.session startRunning];
+    });
     
 }
 
@@ -154,7 +157,6 @@ static dispatch_once_t token;
 // MARK: --destroy释放 相关代码--
 - (void)destroy{
     [self.session stopRunning];
-    [TiCaptureSessionManager releaseShareManager];
 }
 
 @end

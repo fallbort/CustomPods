@@ -28,6 +28,8 @@
 
 @property (nonatomic, weak) BeautySettingCardViewController *settingVC;
 
+@property (nonatomic, strong) TiCaptureSessionManager *captureManager;
+
 @end
 
 #define _window_width [UIScreen mainScreen].bounds.size.width
@@ -69,10 +71,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.view.backgroundColor = [UIColor clearColor];
     self.navigationController.navigationBarHidden = YES;
     [self setUI];
      self.view.userInteractionEnabled = YES;
-    [[TiCaptureSessionManager shareManager] startAVCaptureDelegate:self];
+    self.captureManager = [[TiCaptureSessionManager alloc] init];
+    [self.captureManager startAVCaptureDelegate:self];
     
     BeautySettingCardViewController* vc = [[BeautySettingCardViewController alloc] init];
     __weak __typeof(self)weakSelf = self;
@@ -119,7 +123,7 @@
 
 -(void)didClickSwitchCameraButton{
     //切换摄像头
-    [[TiCaptureSessionManager shareManager] didClickSwitchCameraButton];
+    [self.captureManager didClickSwitchCameraButton];
 }
 
 -(void)resetAllSetting {
@@ -320,7 +324,7 @@ static void ReleaseCVPixelBuffer(void *pixel, const void *data, size_t size)
     
     UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
     
-    if ([[TiCaptureSessionManager shareManager].cameraPosition position] == AVCaptureDevicePositionFront) {
+    if ([self.captureManager.cameraPosition position] == AVCaptureDevicePositionFront) {
         //前置摄像头要转换镜像图片
         newPic = [self convertMirrorImage:newPic];
     }
@@ -348,6 +352,7 @@ static void ReleaseCVPixelBuffer(void *pixel, const void *data, size_t size)
 - (void)dealloc {
     //todo --- tillusory start ---
     [[TiSDKManager shareManager] destroy];
+    [self.captureManager destroy];
 //    [[TiUIManager shareManager] destroy];
     //todo --- tillusory end ---
 }
