@@ -125,6 +125,37 @@ static dispatch_once_t token;
         
         [TiSetSDKParameters initSDK];
         
+        int oneKeyIndex = (int)[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_ONEKEY_SLIDER_Index];
+        [self.onekeyModeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TIMenuMode* subMode = obj;
+            subMode.selected = idx == oneKeyIndex;
+        }];
+        
+        int faceshapeIndex = (int)[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FACESHAPE_SLIDER_Index];
+        [self.faceshapeModeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TIMenuMode* subMode = obj;
+            subMode.selected = idx == faceshapeIndex;
+        }];
+        
+        int distortionIndex = (int)[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_distortion_Index];
+        [self.distortionModeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TIMenuMode* subMode = obj;
+            subMode.selected = idx == distortionIndex;
+        }];
+        
+        int filterIndex = (int)[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_filter_Index];
+        [self.filterModeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TIMenuMode* subMode = obj;
+            subMode.selected = idx == filterIndex;
+        }];
+        
+        if (self.filterModeArr.count > filterIndex) {
+            TIMenuMode *modX = self.filterModeArr[filterIndex];
+            [[TiSDKManager shareManager] setBeautyFilter:modX.effectName Param:[TiSetSDKParameters getFloatValueForKey:(300+modX.menuTag)]];
+        }else{
+            [[TiSDKManager shareManager] setBeautyFilter:@"" Param:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FILTER0_SLIDER]];
+        }
+        
     }
     return self;
 }
@@ -134,6 +165,11 @@ static dispatch_once_t token;
         //一键美颜重置
         [TiSetSDKParameters setFloatValue:OnewKeyBeautyValue forKey:TI_UIDCK_ONEKEY_SLIDER];
         [TiSetSDKParameters setOneKeyBeautySlider:OnewKeyBeautyValue Index:0];
+        [TiSetSDKParameters setFloatValue:0 forKey:TI_UIDCK_ONEKEY_SLIDER_Index];
+        [self.onekeyModeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TIMenuMode* subMode = obj;
+            subMode.selected = idx == 0;
+        }];
         //重置一键美颜——发送通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationName_TIUIMenuTwo_isReset" object:@(true)];
         //美颜重置
@@ -160,8 +196,12 @@ static dispatch_once_t token;
         //脸型重置
         [TiSetSDKParameters setFloatValue:FaceShapeBeautyValue forKey:TI_UIDCK_FACESHAPE_SLIDER];
         [TiSetSDKParameters setFaceShapeBeautySlider:FaceShapeBeautyValue Index:0];
-        //重置脸型——发送通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationName_TIUIMenuOne_isReset" object:@(true)];
+        [TiSetSDKParameters setFloatValue:0 forKey:TI_UIDCK_FACESHAPE_SLIDER_Index];
+        [self.faceshapeModeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TIMenuMode* subMode = obj;
+            subMode.selected = idx == 0;
+        }];
+        
         //美型重置
         //大眼
         [TiSetSDKParameters setFloatValue:EyeMagnifyingValue forKey:TI_UIDCK_EYEMAGNIFYING_SLIDER];
@@ -237,7 +277,15 @@ static dispatch_once_t token;
         //提眉峰
         [TiSetSDKParameters setFloatValue:BrowCornerValue forKey:TI_UIDCK_BROWCORNER_SLIDER];
         [[TiSDKManager shareManager] setBrowCorner:BrowCornerValue];
+        //哈哈镜
+        [TiSetSDKParameters setFloatValue:0 forKey:TI_UIDCK_distortion_Index];
+        [[TiSDKManager shareManager] setDistortionEnum:[TiSetSDKParameters setDistortionEnumByIndex:0]];
+        //滤镜
+        [TiSetSDKParameters setFloatValue:0 forKey:TI_UIDCK_filter_Index];
+        [[TiSDKManager shareManager] setBeautyFilter:@"" Param:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FILTER0_SLIDER]];
         
+        //重置脸型——发送通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NotificationName_TIUIMenuOne_isReset" object:@(true)];
     }else if ([resetName  isEqual: @"美妆重置"]){
         //腮红
         [TiSetSDKParameters setFloatValue:CheekRedValue forKey:TI_UIDCK_CheekRed_SLIDER];

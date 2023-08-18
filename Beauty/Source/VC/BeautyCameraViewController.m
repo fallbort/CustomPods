@@ -26,6 +26,8 @@
 @property(nonatomic, strong) CIImage *outputImage;
 @property(nonatomic, assign) CVPixelBufferRef outputImagePixelBuffer;
 
+@property (nonatomic, weak) BeautySettingCardViewController *settingVC;
+
 @end
 
 #define _window_width [UIScreen mainScreen].bounds.size.width
@@ -73,6 +75,14 @@
     [[TiCaptureSessionManager shareManager] startAVCaptureDelegate:self];
     
     BeautySettingCardViewController* vc = [[BeautySettingCardViewController alloc] init];
+    __weak __typeof(self)weakSelf = self;
+    vc.resetAllClickedBlock = ^(void) {
+        if(weakSelf==nil){return;}
+        if (weakSelf.resetAllClickedBlock != nil) {
+            weakSelf.resetAllClickedBlock();
+        }
+    };
+    self.settingVC = vc;
     [MeMeShowManager commonBottomShowWithSuperController:self rootVC:vc isCornerLandscape:NO fadeColor:UIColor.clearColor topRadius:0 needClip:NO tapDismiss:NO];
 }
 
@@ -110,6 +120,10 @@
 -(void)didClickSwitchCameraButton{
     //切换摄像头
     [[TiCaptureSessionManager shareManager] didClickSwitchCameraButton];
+}
+
+-(void)resetAllSetting {
+    [self.settingVC resetAllSetting];
 }
 
 // MARK: --TiCaptureSessionManager Delegate--

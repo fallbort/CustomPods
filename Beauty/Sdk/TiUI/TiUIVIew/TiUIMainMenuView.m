@@ -252,7 +252,13 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         UIImage* imageD = [UIImage imageNamed:@"icon_chongzhi_disabled.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil];
         imageD = [imageD mmImageByResizeToSize:CGSizeMake(14, 14)];
         [_resetAllBtn setImage:imageD forState:UIControlStateDisabled];
-        
+        __weak __typeof(self)weakSelf = self;
+        [_resetAllBtn handleControlEvent:UIControlEventTouchUpInside closure:^{
+            if(weakSelf==nil){return;}
+            if (weakSelf.resetAllClickedBlock != nil) {
+                weakSelf.resetAllClickedBlock();
+            }
+        }];
     }
     return _resetAllBtn;
 }
@@ -516,6 +522,10 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         [[TiUIManager shareManager].tiUIViewBoxView showClassifyView];
     }
 
+}
+
+-(void)resetAllSetting {
+    [TiMenuPlistManager.shareManager reset:@"美颜重置"];
 }
 
 - (UICollectionView *)menuView{

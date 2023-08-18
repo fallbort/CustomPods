@@ -54,6 +54,10 @@ extern int is_greenEdit;
 @property(nonatomic,strong)UIView *topView;
 @property(nonatomic,strong)UILabel *topLabel;
 
+@property (nonatomic,copy)void(^resetAllClickedBlock)(void);
+
+-(void)resetAllSetting;
+
 - (void)showClassifyView;
 - (void)hiddenClassifyView;
 - (void)setMakeUpTitle:(BOOL)is_hidden withName:(NSString *)name;

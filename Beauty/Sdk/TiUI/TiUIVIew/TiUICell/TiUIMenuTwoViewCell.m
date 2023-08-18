@@ -288,6 +288,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
                 [collectionView reloadItemsAtIndexPaths:@[indexPath]];
             }
             self.filterIndexPath = indexPath;
+            [TiSetSDKParameters setFloatValue:indexPath.row forKey:TI_UIDCK_filter_Index];
             [[TiSDKManager shareManager] setBeautyFilter:modX.effectName Param:[TiSetSDKParameters getFloatValueForKey:(300+modX.menuTag)]];
 //            //汉字转拼音方法
 //            NSMutableString *pinyin = [modX.name mutableCopy];

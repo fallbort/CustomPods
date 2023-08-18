@@ -10,7 +10,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BeautySettingCardViewController : UIViewController
+@property (nonatomic,copy)void(^resetAllClickedBlock)(void);
 
+-(void)resetAllSetting;
 @end
 
 NS_ASSUME_NONNULL_END

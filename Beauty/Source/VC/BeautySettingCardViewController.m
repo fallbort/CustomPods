@@ -11,7 +11,7 @@
 #import "Masonry.h"
 
 @interface BeautySettingCardViewController ()
-
+@property (nonatomic, strong) TiUIMainMenuView *menuVIew;
 @end
 
 @implementation BeautySettingCardViewController
@@ -37,6 +37,14 @@
 
 -(void)setupViews {
     TiUIMainMenuView* menuView = [[TiUIMainMenuView alloc] initWithFrame:CGRectMake(0, 0, self.contentSizeInPopup.width, self.contentSizeInPopup.height)];
+    self.menuVIew = menuView;
+    __weak __typeof(self)weakSelf = self;
+    menuView.resetAllClickedBlock = ^(void) {
+        if(weakSelf==nil){return;}
+        if (weakSelf.resetAllClickedBlock != nil) {
+            weakSelf.resetAllClickedBlock();
+        }
+    };
     [self.view addSubview:menuView];
     [menuView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -47,7 +55,9 @@
 }
 
 #pragma mark <>功能性方法
-
+-(void)resetAllSetting {
+    [self.menuVIew resetAllSetting];
+}
 #pragma mark <>内部View
 
 #pragma mark <>内部UI变量

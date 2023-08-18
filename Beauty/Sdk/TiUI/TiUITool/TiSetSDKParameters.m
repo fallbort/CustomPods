@@ -18,7 +18,10 @@ bool is_updateFilterValue = false;
 @implementation TiSetSDKParameters
 
 + (void)initSDK{
-    
+    //一键美颜
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_ONEKEY_SLIDER_Index]) {
+        [TiSetSDKParameters setFloatValue:0 forKey:TI_UIDCK_ONEKEY_SLIDER_Index];
+    }
     //美白指定初始值
     if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_WHITENING_SLIDER]) {
         [TiSetSDKParameters setFloatValue:SkinWhiteningValue forKey:TI_UIDCK_SKIN_WHITENING_SLIDER];
@@ -195,6 +198,9 @@ bool is_updateFilterValue = false;
     if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FACESHAPE_SLIDER]) {
         [TiSetSDKParameters setFloatValue:FaceShapeBeautyValue forKey:TI_UIDCK_FACESHAPE_SLIDER];
     }
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FACESHAPE_SLIDER_Index]) {
+        [TiSetSDKParameters setFloatValue:0 forKey:TI_UIDCK_FACESHAPE_SLIDER_Index];
+    }
     //    TI_UIDCK_HAIRDRESS_SLIDER = 600, // 美发
     if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_HAIRDRESS_SLIDER]) {
         [TiSetSDKParameters setFloatValue:HairdressValue forKey:TI_UIDCK_HAIRDRESS_SLIDER];
@@ -277,8 +283,10 @@ bool is_updateFilterValue = false;
      * @param filterEnum 参考宏定义TiFilterEnum
      */
 //    [[TiSDKManager shareManager] setFilterEnum:NO_FILTER Param:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FILTER0_SLIDER]];
-    
-    [[TiSDKManager shareManager] setBeautyFilter:@"" Param:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_FILTER0_SLIDER]];
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_filter_Index]) {
+        [TiSetSDKParameters setFloatValue:0 forKey:TI_UIDCK_filter_Index];
+    }
+    //转移到...
     
     /**
      * 设置Rock特效参数函数
@@ -291,7 +299,11 @@ bool is_updateFilterValue = false;
       *
       * @param distortionEnum 参考宏定义TiDistortionEnum
       */
-    [[TiSDKManager shareManager] setDistortionEnum:NO_DISTORTION];
+    if (![TiSetSDKParameters getFloatValueForKey:TI_UIDCK_distortion_Index]) {
+        [TiSetSDKParameters setFloatValue:0 forKey:TI_UIDCK_distortion_Index];
+    }
+    int distortionIndex = (int)[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_distortion_Index];
+    [[TiSDKManager shareManager] setDistortionEnum:[TiSetSDKParameters setDistortionEnumByIndex:distortionIndex]];
     
     /**
      * 设置水印参数函数
@@ -648,6 +660,16 @@ bool is_updateFilterValue = false;
         case TI_UIDCK_FACESHAPE_SLIDER:
             return @"TI_UIDCK_FACESHAPE_SLIDER";
             break;
+        case TI_UIDCK_FACESHAPE_SLIDER_Index:
+            return @"TI_UIDCK_FACESHAPE_SLIDER_Index";
+            break;
+        case TI_UIDCK_distortion_Index:
+            return @"TI_UIDCK_distortion_Index";
+        case TI_UIDCK_filter_Index:
+            return @"TI_UIDCK_filter_Index";
+        case TI_UIDCK_ONEKEY_SLIDER_Index:
+            return @"TI_UIDCK_ONEKEY_SLIDER_Index";
+            break;
         default:
             return @"";
             break;
@@ -934,6 +956,7 @@ bool is_updateFilterValue = false;
     CGFloat valueFilter = [[onekeyParameter objectForKey:[TiSetSDKParameters getTiUIDataCategoryKey:300+filterMod.menuTag]] floatValue];
     [TiSetSDKParameters setFloatValue:valueFilter  * a forKey:300+filterMod.menuTag];//将一键美颜的参数储存本地
     [TiSetSDKParameters setBeautySlider:valueFilter * a forKey:300+filterMod.menuTag withIndex:[[onekeyParameter objectForKey:@"TiFilterIndex"] intValue]];
+    [TiSetSDKParameters setFloatValue:index forKey:TI_UIDCK_ONEKEY_SLIDER_Index];
     
 }
 
@@ -950,7 +973,7 @@ bool is_updateFilterValue = false;
         CGFloat valueF = [[FaceShapeParameter objectForKey:[TiSetSDKParameters getTiUIDataCategoryKey:200+facetrim]] floatValue];
         [TiSetSDKParameters setFloatValue:valueF  * a forKey:200+facetrim];
     }
-    
+    [TiSetSDKParameters setFloatValue:index forKey:(TI_UIDCK_FACESHAPE_SLIDER_Index)];
 }
 
 + (TiFilterEnum)getTiFilterEnumForIndex:(NSInteger)index{

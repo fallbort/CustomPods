@@ -471,6 +471,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
                         [collectionView reloadItemsAtIndexPaths:@[indexPath]];
                     }
                     self.selectedIndexPath = indexPath;
+                    [TiSetSDKParameters setFloatValue:indexPath.row forKey:TI_UIDCK_distortion_Index];
                     [[TiSDKManager shareManager] setDistortionEnum:[TiSetSDKParameters setDistortionEnumByIndex:indexPath.row]];
                 }
                     break;

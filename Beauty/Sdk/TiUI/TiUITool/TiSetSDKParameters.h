@@ -114,7 +114,9 @@ typedef NS_ENUM(NSInteger, TiUIDataCategoryKey) {
     TI_UIDCK_FILTER46_SLIDER = 346,// 黑白滤镜滑动条
     
     TI_UIDCK_ONEKEY_SLIDER = 400, // 一键美颜
+    TI_UIDCK_ONEKEY_SLIDER_Index = 401,  //一键美颜索引
     TI_UIDCK_FACESHAPE_SLIDER = 500, // 脸型
+    TI_UIDCK_FACESHAPE_SLIDER_Index = 501, // 脸型索引
     TI_UIDCK_HAIRDRESS_SLIDER = 600, // 美发
     
     //绿幕
@@ -127,6 +129,14 @@ typedef NS_ENUM(NSInteger, TiUIDataCategoryKey) {
     TI_UIDCK_Eyebrows_SLIDER = 3000, // 眉毛
     TI_UIDCK_Eyeshadow_SLIDER = 4000, // 眼影
     TI_UIDCK_Eyeline_SLIDER = 5000, // 眼线
+    
+    //哈哈镜
+    TI_UIDCK_distortion_Index = 6000, // 哈哈镜索引
+    
+    //滤镜
+    TI_UIDCK_filter_Index = 7000, // 滤镜索引
+    
+    
     
 };
 
