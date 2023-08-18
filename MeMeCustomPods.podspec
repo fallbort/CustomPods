@@ -126,7 +126,7 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
   spec.subspec 'Beauty' do |base|
       base.source_files = 'Beauty/Source/**/*.{h,m,mm,swift}','Beauty/Sdk/TiUI/**/*.{h,m,mm,swift}','Beauty/*.{modulemap}','Beauty/Modules/*.{h}'
       base.resource_bundles = {
-        'TiUIData' => ['Beauty/Sdk/TiUI/TiUIIcon/**/*','Beauty/Sdk/TiUI/TiUIData/*/*'],
+        'TiUIData' => ['Beauty/Sdk/TiUI/TiUIIcon/**/*','Beauty/Sdk/TiUI/TiUIData/*/*','Beauty/Sdk/TiUI/TiUIData/*'],
         'TiSDKResource' => ['Beauty/Sdk/TiSDKResource.bundle/*']}
 #      base.resources = ['Beauty/Sdk/TiSDKResource.bundle']
       base.public_header_files = 'Beauty/Source/**/*.{h}'
