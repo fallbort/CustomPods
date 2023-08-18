@@ -73,7 +73,7 @@
     [[TiCaptureSessionManager shareManager] startAVCaptureDelegate:self];
     
     BeautySettingCardViewController* vc = [[BeautySettingCardViewController alloc] init];
-    [MeMeShowManager commonBottomShowWithSuperController:self rootVC:vc isCornerLandscape:NO topRadius:0 needClip:NO];
+    [MeMeShowManager commonBottomShowWithSuperController:self rootVC:vc isCornerLandscape:NO fadeColor:UIColor.clearColor topRadius:0 needClip:NO tapDismiss:NO];
 }
 
 -(void)setUI{

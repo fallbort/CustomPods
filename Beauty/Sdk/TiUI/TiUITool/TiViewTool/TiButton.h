@@ -22,6 +22,11 @@ typedef NS_ENUM(NSInteger, TiUIDownloadViewFrame) {
 @end
 
 @interface TiButton : UIButton
+
+@property(nonatomic,strong)UIView *_Nullable selectView;
+@property(nonatomic,strong)UIImageView * _Nullable topView;
+@property(nonatomic,strong)UILabel *_Nullable bottomLabel;
+
 //scaling 为图片缩放比
 - (instancetype _Nullable )initWithScaling:(CGFloat)scaling;
 
@@ -52,5 +57,7 @@ typedef NS_ENUM(NSInteger, TiUIDownloadViewFrame) {
 
 //调整内部图片缩放比
 - (void)setScaling:(CGFloat)scaling;
+
+- (void)setSelected:(BOOL)selected;
 
 @end

@@ -86,9 +86,6 @@
 
 @interface TiButton ()
 
-@property(nonatomic,strong)UIView *selectView;
-@property(nonatomic,strong)UIImageView *topView;
-@property(nonatomic,strong)UILabel *bottomLabel;
 @property(nonatomic,strong)UILabel *selectedLabel;//一键美颜文字被选中
 
 @property(nonatomic,strong)UIImageView *downloadView;
@@ -239,6 +236,7 @@
 - (void)setSelected:(BOOL)selected {
     if (selected) {
         [self.topView setImage:self.selectedImage];
+        self.topView.tintColor = [UIColor hexStringToColor:@"#FD4186"];
         [self.bottomLabel setText:self.selectedTitle];
         [self.bottomLabel setTextColor:self.selectedColor];
         if (self.selectedBorderColor) {
@@ -246,13 +244,14 @@
             self.selectView.layer.borderColor = self.selectedBorderColor.CGColor;
             //设置矩形四个圆角半径
             [self.selectView.layer setMasksToBounds:YES];
-            [self.selectView.layer setCornerRadius:6];
+            [self.selectView.layer setCornerRadius:10];
         }
         if (self.cellmaskView) {
             [self.cellmaskView setHidden:NO];
         }
     }else{
         [self.topView setImage:self.normalImage];
+        self.topView.tintColor = [UIColor hexStringToColor:@"ffffff"];
         [self.bottomLabel setText:self.normalTitle];
         [self.bottomLabel setTextColor:self.normalColor];
         if (self.is_white == true) {
@@ -263,6 +262,8 @@
         if (self.normalBorderColor) {
             self.selectView.layer.borderWidth = self.normalBorderW;
             self.selectView.layer.borderColor = self.normalBorderColor.CGColor;
+            [self.selectView.layer setMasksToBounds:YES];
+            [self.selectView.layer setCornerRadius:10];
         }
         if (self.cellmaskView) {
             [self.cellmaskView setHidden:YES];
@@ -354,7 +355,7 @@
 - (void)setViewforState{
     if (!self.cellmaskView) {
         self.cellmaskView = [[UIView alloc]init];
-        [self.cellmaskView setBackgroundColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 0.6)];
+        [self.cellmaskView setBackgroundColor:[UIColor hexStringToColor:@"#99FD4186"]];
         [self addSubview:self.cellmaskView];
         [self.cellmaskView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.left.right.equalTo(self.topView);
@@ -396,7 +397,7 @@
     self.classTextLabel.text = title;
     if (!self.classMaskView) {
         self.classMaskView = [[UIView alloc]init];
-        [self.classMaskView setBackgroundColor:TI_RGB_Alpha(88.0, 221.0, 221.0, 0.4)];
+        [self.classMaskView setBackgroundColor:[UIColor hexStringToColor:@"#99FD4186"]];
         [self addSubview:self.classMaskView];
         [self.classMaskView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@5);

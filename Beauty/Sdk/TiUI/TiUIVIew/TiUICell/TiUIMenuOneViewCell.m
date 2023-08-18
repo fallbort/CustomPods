@@ -50,7 +50,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         //设置最小行间距
-        layout.minimumLineSpacing = 15;
+        layout.minimumLineSpacing = 14;
         _menuCollectionView =[[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _menuCollectionView.showsHorizontalScrollIndicator = NO;
         _menuCollectionView.backgroundColor = [UIColor clearColor];
@@ -126,8 +126,6 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self addSubview:self.totalSwitch];
-        [self addSubview:self.lineView];
         
         [self addSubview:self.menuCollectionView];
 
@@ -135,24 +133,12 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
         if (@available(iOS 11.0, *)) {
             safeBottomHeigh = getSafeBottomHeight/2;
         }
-        
-        [self.totalSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.mas_left).offset(35);
-            make.width.mas_equalTo(TiUISubMenuOneViewTiButtonWidth-12);
-            make.height.mas_equalTo(TiUISubMenuOneViewTiButtonHeight);
-            make.top.equalTo(self).offset(30);
-        }];
-        [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.totalSwitch.mas_right).offset(20);
-            make.width.mas_equalTo(0.25);
-            make.height.mas_equalTo(TiUISubMenuOneViewTiButtonHeight);
-            make.top.equalTo(self).offset(30);
-        }];
+    
         [self.menuCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.lineView.mas_right).offset(25);
-            make.right.equalTo(self.mas_right).offset(-20);
+            make.left.mas_equalTo(16);
+            make.right.equalTo(self.mas_right).offset(-16);
             make.height.mas_equalTo(TiUISubMenuOneViewTiButtonHeight);
-            make.top.equalTo(self).offset(30);
+            make.top.equalTo(self).offset(1);
         }];
         [self addSubview:self.meizhuangView];
         [self.meizhuangView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -226,7 +212,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
     }
     //美型分类单独判断
     if (self.mode.menuTag == 1 && [subMod.normalThumb  isEqual: @""]) {
-        return CGSizeMake(30,40);
+        return CGSizeMake(30,TiUISubMenuOneViewTiButtonHeight);
     }else{
         return CGSizeMake(TiUISubMenuOneViewTiButtonWidth ,TiUISubMenuOneViewTiButtonHeight);
     }

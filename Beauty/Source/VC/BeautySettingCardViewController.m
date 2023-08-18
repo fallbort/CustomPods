@@ -23,7 +23,8 @@
 #pragma mark <>生命周期开始
 -(instancetype)init {
     self = [super initWithNibName:nil bundle:nil];
-    self.contentSizeInPopup = CGSizeMake(UIScreen.mainScreen.bounds.size.width, 270);
+    CGFloat extraBottom = [UIWindow keyWindowSafeAreaInsets].bottom;
+    self.contentSizeInPopup = CGSizeMake(UIScreen.mainScreen.bounds.size.width, 228 + extraBottom);
     return self;
 }
 

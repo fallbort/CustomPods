@@ -41,14 +41,14 @@
 #define DefaultButton_WIDTH SCREEN_WIDTH/4
 
  // MARK: --美颜弹框视图总高度 TiUIManager--
-#define TiUIViewBoxTotalHeight 270
+#define TiUIViewBoxTotalHeight ((178.0) + (TiUISliderRelatedViewHeight) + (UIApplication.sharedApplication.keyWindow.safeAreaInsets.bottom))
 #define TiUIViewBoxTotalHeightN 250
 // MARK: --美颜弹框视图总高度 TiUIManager--
 //#define TiUIViewBoxTotalHeight SCREEN_HEIGHT/2.5
 
  // MARK:  滑动条View --TiUISliderRelatedView--
 #define TiUISliderRelatedViewHeight 50
-#define TiUIMenuViewHeight 45
+#define TiUIMenuViewHeight 62
 
 //左右按钮的宽度
 #define TiUISliderLeftRightWidth 55
@@ -58,8 +58,8 @@
 #define TiUISliderTagViewHeight TiUISliderTagViewWidth * 1.2353 // 更具UI图得出的比例
 
 // MARK:  子菜单状态1View --TiUISubMenuOneView--
-#define TiUISubMenuOneViewTiButtonWidth 45
-#define TiUISubMenuOneViewTiButtonHeight 70
+#define TiUISubMenuOneViewTiButtonWidth 56
+#define TiUISubMenuOneViewTiButtonHeight 100
 
 #define TiUISubMenuTwoViewTiButtonWidth 60
 #define TiUISubMenuTwoViewTiButtonHeight 80

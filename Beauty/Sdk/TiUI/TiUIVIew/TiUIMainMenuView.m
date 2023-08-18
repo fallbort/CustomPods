@@ -38,6 +38,8 @@ int is_greenEdit = 1;
 @property(nonatomic,strong)UIView *editView;
 @property(nonatomic,strong)UILabel *editLabel;
 
+@property(nonatomic,strong)UIButton *resetAllBtn;
+
 @end
 
 static NSString *const TiUIMenuViewCollectionViewCellId = @"TiUIMainMenuViewCollectionViewCellId";
@@ -50,6 +52,8 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         _sliderRelatedView = [[TiUISliderRelatedView alloc]init];
         //默认美白滑动条
         [_sliderRelatedView.sliderView setSliderType:TI_UI_SLIDER_TYPE_ONE WithValue:[TiSetSDKParameters getFloatValueForKey:TI_UIDCK_SKIN_WHITENING_SLIDER]];
+        _sliderRelatedView.sliderLabel.text = [NSString stringWithFormat:@"%d%%",(int)(_sliderRelatedView.sliderView.minimumValue)];
+        _sliderRelatedView.sliderLabelRight.text = [NSString stringWithFormat:@"%d%%",(int)(_sliderRelatedView.sliderView.maximumValue)];
         
         WeakSelf;//滑动滑动条调用成回调
         [_sliderRelatedView.sliderView setRefreshValueBlock:^(CGFloat value) {
@@ -234,6 +238,23 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         [_lineView setHidden:true];
     }
     return _lineView;
+}
+
+-(UIButton *)resetAllBtn {
+    if(!_resetAllBtn) {
+        _resetAllBtn = [[UIButton alloc] init];
+        [_resetAllBtn setTitle:[NELocalize localizedString:@"重置"] forState:UIControlStateNormal];
+        _resetAllBtn.titleLabel.font = [UIFont fontWithName:@"PingFang SC" size:14];
+        [_resetAllBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+        UIImage* image = [UIImage imageNamed:@"icon_chongzhi_def.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil];
+        image = [image mmImageByResizeToSize:CGSizeMake(14, 14)];
+        [_resetAllBtn setImage:image forState:UIControlStateNormal];
+        UIImage* imageD = [UIImage imageNamed:@"icon_chongzhi_disabled.png" inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil];
+        imageD = [imageD mmImageByResizeToSize:CGSizeMake(14, 14)];
+        [_resetAllBtn setImage:imageD forState:UIControlStateDisabled];
+        
+    }
+    return _resetAllBtn;
 }
 
 - (UIButton *)resetBtn{
@@ -506,9 +527,10 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         _menuView =[[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         [_menuView setTag:10];
         _menuView.showsHorizontalScrollIndicator = NO;
-        _menuView.backgroundColor = TI_RGB_Alpha(45.0, 45.0, 45.0, 0.6);
+        _menuView.backgroundColor = [UIColor hexStringToColor:@"aa000000"];
         _menuView.dataSource= self;
         _menuView.delegate = self;
+        _menuView.contentInset = UIEdgeInsetsMake(0, 0, 0, 10);
         [_menuView registerClass:[TiUIMenuViewCell class] forCellWithReuseIdentifier:TiUIMenuViewCollectionViewCellId];
     }
     return _menuView;
@@ -524,7 +546,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         _subMenuView =[[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         [_subMenuView setTag:20];
         _subMenuView.showsHorizontalScrollIndicator = NO;
-        _subMenuView.backgroundColor = TI_RGB_Alpha(45.0, 45.0, 45.0, 0.6);
+        _subMenuView.backgroundColor = [UIColor hexStringToColor:@"aa000000"];
         _subMenuView.dataSource= self;
         _subMenuView.scrollEnabled = NO;//禁止滑动
         //注册多个cell 不重用，重用会导致嵌套的UICollectionView内的cell 错乱
@@ -578,16 +600,19 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        UIView* resetBack = [[UIView alloc] init];
+        resetBack.backgroundColor = UIColor.blackColor;
         [self addSubview:self.sliderRelatedView];//滑动条模块
         [self addSubview:self.backgroundView];
         [self.backgroundView addSubview:self.menuView];//美颜分割线上的一级菜单
         [self.backgroundView addSubview:self.subMenuView];//二级菜单
-        
-        [self.backgroundView addSubview:self.resetBtn];
+        [self.backgroundView addSubview:resetBack];
+        [resetBack addSubview:self.resetAllBtn];
         [self.backgroundView addSubview:self.lineView];
         
         self.sliderRelatedView.hidden = YES;
+        self.sliderRelatedView.tiContrastBtn.hidden = YES;
+        self.sliderRelatedView.sliderLabelRight.hidden = NO;
         [self.sliderRelatedView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.top.right.equalTo(self);
             make.height.mas_offset(TiUISliderRelatedViewHeight);
@@ -597,7 +622,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
             make.top.equalTo(self.sliderRelatedView.mas_bottom);
         }];
         [self.menuView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.backgroundView).offset(0);
+            make.right.equalTo(resetBack.mas_left).offset(0);
             make.top.equalTo(self.backgroundView);
             make.left.equalTo(self.backgroundView);
             make.height.mas_offset(TiUIMenuViewHeight);
@@ -614,12 +639,6 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
             make.centerY.equalTo(self.menuView);
         }];
 
-        [self.resetBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self).offset(-30);
-            make.bottom.equalTo(self.backgroundView).offset(-44);
-            make.width.equalTo(@48);
-            make.height.equalTo(@20);
-        }];
         //美妆
         [self addSubview:self.topView];
         [self.topView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -645,6 +664,20 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
             make.left.equalTo(self).offset(30);
             make.centerY.equalTo(self.editView);
             make.width.equalTo(@100);
+        }];
+        
+        [resetBack mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.mas_equalTo(0);
+            make.top.mas_equalTo(self.menuView.mas_top);
+            make.bottom.mas_equalTo(self.menuView.mas_bottom);
+            make.width.mas_equalTo(60);
+        }];
+        
+        [self.resetAllBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(0);
+            make.top.mas_equalTo(0);
+            make.bottom.mas_equalTo(0);
+            make.width.mas_equalTo(resetBack.mas_width);
         }];
         //重置功能
         [self addSubview:self.masklayersView];
@@ -713,7 +746,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
     if (collectionView.tag ==10) {
         int menuTag = [self.classifyArr[indexPath.row] intValue];
         TIMenuMode *mode =  [[TiMenuPlistManager shareManager] mainModeArr][menuTag];
-        CGSize size = [self sizeWithString:mode.name font:TI_Font_Default_Size_Medium];
+        CGSize size = [self sizeWithString:mode.name font:[UIFont fontWithName:@"PingFang SC" size:14]];
         return CGSizeMake(size.width, TiUIMenuViewHeight);
     }else{
         return CGSizeMake(SCREEN_WIDTH, TiUIViewBoxTotalHeight- TiUIMenuViewHeight - TiUISliderRelatedViewHeight-1);
@@ -1085,7 +1118,8 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
         
     }
     [self.sliderRelatedView.sliderView setSliderType:sliderType WithValue:[TiSetSDKParameters getFloatValueForKey:categoryKey]];
-    
+    self.sliderRelatedView.sliderLabel.text = [NSString stringWithFormat:@"%d%%",(int)(_sliderRelatedView.sliderView.minimumValue)];
+    self.sliderRelatedView.sliderLabelRight.text = [NSString stringWithFormat:@"%d%%",(int)(_sliderRelatedView.sliderView.maximumValue)];
 }
 
 //返回 显示分类view

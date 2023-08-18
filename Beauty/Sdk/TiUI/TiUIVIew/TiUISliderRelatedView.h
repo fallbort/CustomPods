@@ -15,6 +15,7 @@
 @property(nonatomic,strong) TiUISliderNew *sliderView;
 //显示Slider数值
 @property(nonatomic,strong) UILabel *sliderLabel;
+@property(nonatomic,strong) UILabel *sliderLabelRight;
 //美颜对比开关
 @property(nonatomic,strong) UIButton *tiContrastBtn;
 

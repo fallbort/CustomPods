@@ -8,21 +8,24 @@
 
 #import "TiUISubMenuOneViewCell.h"
 #import "TiButton.h"
+#import "TiCustomButtom.h"
 @import MeMeKit;
 
 
 @interface TiUISubMenuOneViewCell ()
 
-@property(nonatomic ,strong)TiButton *cellButton;
+@property(nonatomic ,strong)TiCustomButtom *cellButton;
 
 @end
 
 @implementation TiUISubMenuOneViewCell
 
-- (TiButton *)cellButton{
+- (TiCustomButtom *)cellButton{
     if (!_cellButton) {
-        _cellButton = [[TiButton alloc]initWithScaling:0.9];
+        _cellButton = [[TiCustomButtom alloc]initWithScaling:0.43];
         _cellButton.userInteractionEnabled = NO;
+        [_cellButton setBorderWidth:56 BorderColor:[UIColor hexStringToColor:@"15ffffff"] forState:UIControlStateNormal];
+        [_cellButton setBorderWidth:56 BorderColor:[UIColor hexStringToColor:@"15ffffff"] forState:UIControlStateHighlighted];
     }
     return _cellButton;
 }
@@ -34,8 +37,8 @@
         [self addSubview:self.cellButton];
         [self.cellButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.bottom.equalTo(self);
-            make.left.equalTo(self.mas_left).offset(6);
-            make.right.equalTo(self.mas_right).offset(-6);
+            make.left.equalTo(self.mas_left).offset(0);
+            make.right.equalTo(self.mas_right).offset(0);
         }];
     }
     return self;
@@ -48,15 +51,26 @@
         if ([subMod.normalThumb  isEqual: @""]) {
             [self.cellButton setTitle:[NSString stringWithFormat:@"%@",@""] withImage:nil withTextColor:UIColor.clearColor forState:UIControlStateNormal];
             [self.cellButton setClassifyText:subMod.name withTextColor:UIColor.whiteColor];
-            
+            [self.cellButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self);
+                make.left.equalTo(self.mas_left).offset(0);
+                make.right.equalTo(self.mas_right).offset(0);
+                make.height.mas_equalTo(56);
+            }];
         }else{
+            UIImage* image = [[UIImage imageNamed:subMod.selectedThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] imageWithRenderingMode:(UIImageRenderingModeAlwaysTemplate)];
             [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name] withImage:[UIImage imageNamed:subMod.normalwhiteThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil] withTextColor:UIColor.whiteColor forState:UIControlStateNormal];
             [self.cellButton setTitle:[NSString stringWithFormat:@"%@",subMod.name]
-                    withImage:[UIImage imageNamed:subMod.selectedThumb inBundle:[NSBundle bundleWithPathBundle:@"TiUIData"] withConfiguration:nil]
-                withTextColor:TI_Color_Default_Background_Pink
+                    withImage:image
+                withTextColor:[UIColor hexStringToColor:@"#FD4186"]
                      forState:UIControlStateSelected];
             [self.cellButton setSelected:subMod.selected];
-            [self.cellButton setTextFont:[UIFont fontWithName:@"PingFang-SC-Regular" size:10]];
+            [self.cellButton setTextFont:[UIFont fontWithName:@"PingFang SC" size:14]];
+            [self.cellButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.top.bottom.equalTo(self);
+                make.left.equalTo(self.mas_left).offset(0);
+                make.right.equalTo(self.mas_right).offset(0);
+            }];
         }
     }
     

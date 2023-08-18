@@ -23,8 +23,8 @@
         _sliderView = [[TiUISliderNew alloc] init];
         WeakSelf
         [_sliderView setValueBlock:^(CGFloat value) {
-            //数值
-            weakSelf.sliderLabel.text = [NSString stringWithFormat:@"%d%%",(int)value];
+//            //数值
+//            weakSelf.sliderLabel.text = [NSString stringWithFormat:@"%d%%",(int)value];
         }];
     }
     return _sliderView;
@@ -40,6 +40,19 @@
         _sliderLabel.text = @"100%";
     }
     return _sliderLabel;
+}
+
+- (UILabel *)sliderLabelRight{
+    if (!_sliderLabelRight) {
+        _sliderLabelRight = [[UILabel alloc]init];
+        [_sliderLabelRight setTextAlignment:NSTextAlignmentCenter];
+        [_sliderLabelRight setFont:TI_Font_Default_Size_Medium];
+        [_sliderLabelRight setTextColor:TI_Color_Default_Text_White];
+        _sliderLabelRight.userInteractionEnabled = NO;
+        _sliderLabelRight.text = @"100%";
+        _sliderLabelRight.hidden = YES;
+    }
+    return _sliderLabelRight;
 }
 
 - (UIButton *)tiContrastBtn{
@@ -71,6 +84,7 @@
 - (void)setSliderHidden:(BOOL)hidden{
     [self.sliderView setHidden:hidden];
     [self.sliderLabel setHidden:hidden];
+    [self.sliderLabelRight setHidden:hidden];
 }
 
 - (instancetype)init{
@@ -80,6 +94,7 @@
         [self addSubview:self.sliderView];
         [self addSubview:self.sliderLabel];
         [self addSubview:self.tiContrastBtn];
+        [self addSubview:self.sliderLabelRight];
         
         [self.sliderView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.mas_centerY);
@@ -95,6 +110,11 @@
             make.top.bottom.equalTo(self);
             make.right.equalTo(@-28.5);
         }];
+        [self.sliderLabelRight mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.bottom.equalTo(self);
+            make.right.equalTo(@-29.5);
+        }];
+        
     }
     return self;
 }

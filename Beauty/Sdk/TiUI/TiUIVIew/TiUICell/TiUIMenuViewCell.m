@@ -7,6 +7,7 @@
 //
 
 #import "TiUIMenuViewCell.h"
+@import MeMeKit;
 
 @interface TiUIMenuViewCell ()
 
@@ -22,8 +23,8 @@
         _textLabel = [[UILabel alloc]init];
         _textLabel.textAlignment = NSTextAlignmentCenter;
         _textLabel.userInteractionEnabled = YES;
-        _textLabel.font = [UIFont fontWithName:@"PingFang-SC-Regular" size:13];
-        _textLabel.textColor = TI_Color_Default_Text_Black;
+        _textLabel.font = [UIFont fontWithName:@"PingFang SC" size:14];
+        _textLabel.textColor = [UIColor hexStringToColor:@"#88FFFFFF"];
         //取消响应、避免冲突
         _textLabel.userInteractionEnabled = NO;
         [_textLabel sizeToFit];
@@ -34,7 +35,7 @@
 - (UIView *)view{
     if (!_view) {
         _view = [[UIView alloc]init];
-        _view.backgroundColor = TI_Color_Default_Background_Pink;
+        _view.backgroundColor = UIColor.clearColor;
         _view.layer.cornerRadius = 1;
     }
     return _view;
@@ -69,12 +70,12 @@
         BOOL highlighted = menuMode.selected;
         if (highlighted)
         {
-            self.textLabel.textColor = TI_Color_Default_Background_Pink;
+            self.textLabel.textColor = [UIColor hexStringToColor:@"#FFFFFF"];
             [self.view setHidden:false];
         }
         else
         {
-            [self.textLabel setTextColor:UIColor.whiteColor];
+            [self.textLabel setTextColor:[UIColor hexStringToColor:@"#88FFFFFF"]];
             [self.view setHidden:true];
         }
     }

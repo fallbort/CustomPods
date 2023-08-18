@@ -54,7 +54,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
             make.left.equalTo(self.mas_left).offset(20);
             make.right.equalTo(self.mas_right).offset(-23).priority(888);
             make.height.mas_equalTo(TiUISubMenuTwoViewTiButtonHeight+5);
-            make.top.equalTo(self).offset(20);
+            make.top.equalTo(self).offset(0);
         }];
         //注册通知——通知滤镜同步一键美颜
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(synchronization:) name:@"NotificationName_TIUIMenuTwo_UpdateFilter" object:nil];
