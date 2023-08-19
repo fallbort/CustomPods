@@ -36,7 +36,7 @@ class LiveAgoraPusher : NSObject, MeMeLivePusher {
         liveObject.views = object.views
         liveObject.uids = object.uids
         liveObject.myPosition = object.myPos
-        
+        liveObject.useOutCapture = object.useOutCapture
         
         let agoraManager = AgoraLiveManager.init(liveObject: liveObject,devMode:devMode,appId: appId)
         agoraManager.delegates.addObject(self)
@@ -269,6 +269,10 @@ class LiveAgoraPusher : NSObject, MeMeLivePusher {
     
     func syncCapture(sampleBuffer: CMSampleBuffer?) {
         agoraManager?.syncCapture(sampleBuffer: sampleBuffer)
+    }
+    
+    func syncCapture(sampleBuffer: CMSampleBuffer?,pixelBuffer:CVPixelBuffer?) {
+        agoraManager?.syncCapture(sampleBuffer: sampleBuffer,pixelBuffer: pixelBuffer)
     }
     
     func renewToken(token: String) {

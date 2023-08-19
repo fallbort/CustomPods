@@ -90,6 +90,7 @@ public struct MeMeLivePushObject {
     public var preview: UIView?   //可预览的本地视图
     public var views: [UIView]?   //所有用户直播流的父窗口
     public var uids: [UInt] = []  //所有的用户id
+    public var useOutCapture = false //使用外部流数据
     
     public init() {}
 }
@@ -218,6 +219,7 @@ public protocol MeMeLivePusher :NSObjectProtocol {
     func resetCanvas(uids: [UInt?]) //重设画布
     func pushStreamingToCDN(pushUrl: String)  //设置推流
     func syncCapture(sampleBuffer: CMSampleBuffer?)  //同步视频画面
+    func syncCapture(sampleBuffer: CMSampleBuffer?,pixelBuffer:CVPixelBuffer?)  //同步视频画面
     func renewToken(token: String)  //刷新token
     func destroyEngine()  //销毁
     

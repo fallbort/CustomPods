@@ -17,6 +17,7 @@ class AgoraLiveObject: NSObject {
     var views: [UIView]?
     var uids: [UInt] = []
     var myPosition = 0
+    var useOutCapture = false //使用外部流数据
    
     override init() {
         super.init()

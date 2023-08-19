@@ -199,6 +199,7 @@ class AgoraLiveManager: NSObject {
     fileprivate var roomOwnerUid: UInt = 0                                  // 房主（主播）Uid，从接入层赋值过来。
     fileprivate var localUid: UInt = 0                                      // 当前登录用户Uid，从接入层赋值过来。
     fileprivate var myUid: Int = 0
+    fileprivate var useOutCapture:Bool = false  //使用外部视频源
     
     fileprivate var streamerViewMapping: [UInt: UIView?] = [:]              // 视频连麦，缓存连麦者容器View数组。
     fileprivate var videoCanvasMapping: [UInt: AgoraRtcVideoCanvas] = [:]   // 视频连麦，远端连麦者嘉宾的画布数组。
@@ -270,6 +271,7 @@ class AgoraLiveManager: NSObject {
         transcodingUids = liveObject.uids
         _myPosition = liveObject.myPosition
         myUid = liveObject.currentUid
+        useOutCapture = liveObject.useOutCapture
        
         UIApplication.shared.setMultiValueMixTrue(uniqueKey: "\(self.className)+\(self.getAddress())", keyPath: \UIApplication.isIdleTimerDisabled, value: true)
 
@@ -599,15 +601,24 @@ extension AgoraLiveManager {
             agoraSDK.setVideoEncoderConfiguration(config)
             
             agoraSDK.enableVideo()
-            // 构建本地预览画面。
-            let localCanvas = AgoraRtcVideoCanvas()
-            if let localPreview = localPreview {
-                localCanvas.view = localPreview
+            if self.useOutCapture == true {
+                agoraSDK.setExternalVideoSource(true, useTexture: true, pushMode: true) //关键代码：启用自采集方案，触发AgoraVideoSourceProtocol的协议回调
+                agoraSDK.setParameters("{\"che.video.keep_prerotation\":false}")        // 美颜专用私有方法
+                agoraSDK.setParameters("{\"che.video.local.camera_index\":1025}")       // 美颜专用私有方法
+                agoraSDK.setParameters("{\"che.video.keyFrameInterval\":1}")            // 视频发送码流中关键帧间隔从2s修改成1s
+                agoraSDK.setParameters("{\"lowLatency\":true}")                         // 降低服务端转码推流服务器jitterBuffer
+            }else{
+                // 构建本地预览画面。
+                let localCanvas = AgoraRtcVideoCanvas()
+                if let localPreview = localPreview {
+                    localCanvas.view = localPreview
+                }
+                localCanvas.uid = localUid
+                localCanvas.renderMode = .hidden
+                agoraSDK.setupLocalVideo(localCanvas)
+                agoraSDK.startPreview()
             }
-            localCanvas.uid = localUid
-            localCanvas.renderMode = .hidden
-            agoraSDK.setupLocalVideo(localCanvas)
-            agoraSDK.startPreview()
+            
         }
         
         // .PK主播PK模式。
@@ -1299,9 +1310,12 @@ extension AgoraLiveManager {
     
     // 自采集视频数据。在此同步给声网的推流引擎。目前的数据是720P：width = 720,height = 1280
     func syncCapture(sampleBuffer: CMSampleBuffer?) {
+        self.syncCapture(sampleBuffer: sampleBuffer,pixelBuffer: nil)
+    }
+    func syncCapture(sampleBuffer: CMSampleBuffer?,pixelBuffer:CVPixelBuffer?) {
         guard let sampleBuffer = sampleBuffer else { return  }
         
-        guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+        guard let pixelBuffer: CVPixelBuffer = pixelBuffer ?? CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
         

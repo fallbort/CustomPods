@@ -55,6 +55,8 @@
 
 - (NSArray *)modifyObject:(id)obj forKey:(NSString *)key In:(NSUInteger)index WithPath:(NSString *)path;
 
+-(void)initSDK;
+
 @end
 
 @interface TIMenuMode : NSObject

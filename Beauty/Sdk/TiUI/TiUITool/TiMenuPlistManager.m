@@ -35,6 +35,10 @@ static dispatch_once_t token;
    shareManager = nil;
 }
 
+-(void)initSDK {
+    
+}
+
 - (instancetype)init
 {
     self = [super init];

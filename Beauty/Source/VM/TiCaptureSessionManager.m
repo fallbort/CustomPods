@@ -70,17 +70,23 @@ static dispatch_once_t token;
     dispatch_queue_t queue = dispatch_queue_create("dataOutputQueue", NULL);
     [dataOutput setSampleBufferDelegate:self queue:queue];
     
-    [self.session beginConfiguration];
-    if ([self.session canAddInput:input]) {
-        [self.session addInput:input];
-    }
-    if ([self.session canAddOutput:dataOutput]) {
-        [self.session addOutput:dataOutput];
-    }
-    [self.session commitConfiguration];
+    
     __weak __typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [weakSelf.session beginConfiguration];
+        if ([weakSelf.session canAddInput:input]) {
+            [weakSelf.session addInput:input];
+        }
+        if ([weakSelf.session canAddOutput:dataOutput]) {
+            [weakSelf.session addOutput:dataOutput];
+        }
+        [weakSelf.session commitConfiguration];
         [weakSelf.session startRunning];
+        
+        AVCaptureConnection* connect = [dataOutput connectionWithMediaType:AVMediaTypeVideo];
+        if ([connect isVideoOrientationSupported]) {
+            connect.videoOrientation = [self getCaptureVideoOrientation];
+        }
     });
     
 }
@@ -94,19 +100,19 @@ static dispatch_once_t token;
     
     switch (orientation) {
         case UIDeviceOrientationPortrait:
-            rotation = 90;
+            rotation = 0;
             break;
         case UIDeviceOrientationLandscapeLeft:
-            rotation = isMirror ? 180 : 0;
+            rotation = isMirror ? 90 : 0;
             break;
         case UIDeviceOrientationLandscapeRight:
-            rotation = isMirror ? 0 : 180;
+            rotation = isMirror ? 0 : 90;
             break;
         case UIDeviceOrientationPortraitUpsideDown:
-            rotation = 270;
+            rotation = 180;
             break;
         default:
-            rotation = 90;
+            rotation = 0;
             break;
     }
     
@@ -116,33 +122,62 @@ static dispatch_once_t token;
     
 }
 
+- (AVCaptureVideoOrientation)getCaptureVideoOrientation {
+    AVCaptureVideoOrientation result;
+    
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    switch (deviceOrientation) {
+        case UIDeviceOrientationPortrait:
+        case UIDeviceOrientationFaceUp:
+        case UIDeviceOrientationFaceDown:
+            result = AVCaptureVideoOrientationPortrait;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            //如果这里设置成AVCaptureVideoOrientationPortraitUpsideDown，则视频方向和拍摄时的方向是相反的。
+            result = AVCaptureVideoOrientationPortrait;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            result = AVCaptureVideoOrientationLandscapeRight;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            result = AVCaptureVideoOrientationLandscapeLeft;
+            break;
+        default:
+            result = AVCaptureVideoOrientationPortrait;
+            break;
+    }
+    
+    return result;
+}
+
 - (void)didClickSwitchCameraButton {
     
     NSArray *inputs = self.session.inputs;
-    for ( AVCaptureDeviceInput *input in inputs ) {
-        AVCaptureDevice *device = input.device;
-        //先移除当前摄像头采集的画面
-        [self.session removeInput:input];
-        if ( [device hasMediaType:AVMediaTypeVideo] ) {
-            AVCaptureDevicePosition position = device.position;
-            self.cameraPosition = nil;
-            AVCaptureDeviceInput *newInput = nil;
-            if (position == AVCaptureDevicePositionFront){
-                self.cameraPosition = [self cameraWithPosition:AVCaptureDevicePositionBack];
-            }else{
-                self.cameraPosition = [self cameraWithPosition:AVCaptureDevicePositionFront];
+    if (inputs != nil) {
+        for ( AVCaptureDeviceInput *input in inputs ) {
+            AVCaptureDevice *device = input.device;
+            //先移除当前摄像头采集的画面
+            [self.session removeInput:input];
+            if ( [device hasMediaType:AVMediaTypeVideo] ) {
+                AVCaptureDevicePosition position = device.position;
+                self.cameraPosition = nil;
+                AVCaptureDeviceInput *newInput = nil;
+                if (position == AVCaptureDevicePositionFront){
+                    self.cameraPosition = [self cameraWithPosition:AVCaptureDevicePositionBack];
+                }else{
+                    self.cameraPosition = [self cameraWithPosition:AVCaptureDevicePositionFront];
+                }
+                newInput = [AVCaptureDeviceInput deviceInputWithDevice:self.cameraPosition error:nil];
+                // beginConfiguration ensures that pending changes are not applied immediately
+                [self.session beginConfiguration];
+                [self.session addInput:newInput];
+                // Changes take effect once the outermost commitConfiguration is invoked.
+                [self.session commitConfiguration];
+                
+                break;
             }
-            newInput = [AVCaptureDeviceInput deviceInputWithDevice:self.cameraPosition error:nil];
-            // beginConfiguration ensures that pending changes are not applied immediately
-            [self.session beginConfiguration];
-            [self.session addInput:newInput];
-            // Changes take effect once the outermost commitConfiguration is invoked.
-            [self.session commitConfiguration];
-            
-            break;
         }
     }
-    
 }
 
 - (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition)position {
