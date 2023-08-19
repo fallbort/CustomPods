@@ -12,12 +12,13 @@
 #import <TiSDK/TiSDK.h>
 #import <Masonry/Masonry.h>
 #import "TiMenuPlistManager.h"
+#import "BeautyGLView.h"
 @import MeMeKit;
 
 NSInteger m_beautyCameraViewCount = 0;
 
 @interface BeautyCameraView ()
-@property(nonatomic, nonnull,strong)TiLiveView *tiLiveView;
+@property(nonatomic, nonnull,strong)BeautyGLView *glView;
 @property(nonatomic, nonnull,strong)UIImageView *imageView;
 @property (nonatomic, strong) TiCaptureSessionManager *captureManager;
 @property (nonatomic, assign) BOOL isCaptureStarted;
@@ -53,6 +54,9 @@ NSInteger m_beautyCameraViewCount = 0;
 
 -(void)setupViews {
     self.clipsToBounds = YES;
+//    [self addSubview:self.glView];
+//    [self.glView setupGL];//着色器相关设置
+    
     [self addSubview:self.imageView];
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -60,7 +64,6 @@ NSInteger m_beautyCameraViewCount = 0;
         make.top.mas_equalTo(0);
         make.bottom.mas_equalTo(0);
     }];
-    
     
 }
 
@@ -94,13 +97,12 @@ NSInteger m_beautyCameraViewCount = 0;
 }
 
 #pragma mark <>内部View
-- (TiLiveView *)tiLiveView{
-    if (_tiLiveView==nil) {
-        _tiLiveView = [[TiLiveView alloc] initWithFrame:CGRectMake(0, 0, self.captureVideoSize.width, self.captureVideoSize.height)];
-        [_tiLiveView setupPreview:kCV_BGRA];
+- (BeautyGLView *)glView{
+    if (_glView==nil) {
+        _glView = [[BeautyGLView alloc] initWithFrame:CGRectMake(0, 0, self.captureVideoSize.width, self.captureVideoSize.height)];
         
     }
-    return _tiLiveView;
+    return _glView;
 }
 
 -(UIImageView *)imageView {
