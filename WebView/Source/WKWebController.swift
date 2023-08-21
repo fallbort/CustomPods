@@ -18,16 +18,16 @@ let WhiteUrls: [String] = {
     ]
 }()
 
-public class WKWebController: UIViewController {
+open class WKWebController: UIViewController {
     
     public static var webViewHasExtra = false
     
     fileprivate static var sharedWebView: WKWebView?
     
-    fileprivate var innerWebView: WKWebView?
+    public var innerWebView: WKWebView?
     fileprivate var bridge: WKWebViewJavascriptBridge?
     
-    fileprivate lazy var progressView: UIProgressView = {
+    public lazy var progressView: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .bar)
         view.progressTintColor = UIColor.init(hex: 0xff596a)
         return view
@@ -79,11 +79,14 @@ public class WKWebController: UIViewController {
     
     public var titleChangeObser = BehaviorSubject<String?>(value: nil)
     
+    public var innerViewConstraint:ConstraintGroup?
+    public var progressConstraint:ConstraintGroup?
+    
     public init() {
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -137,7 +140,7 @@ public class WKWebController: UIViewController {
         return webview
     }
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         automaticallyAdjustsScrollViewInsets = false
         edgesForExtendedLayout = UIRectEdge(rawValue: 0)
         self.view.backgroundColor = UIColor.black
@@ -153,7 +156,7 @@ public class WKWebController: UIViewController {
             }
             innerWebView.removeFromSuperview()
             view.addSubview(innerWebView)
-            constrain(innerWebView) {
+            innerViewConstraint = constrain(innerWebView) {
                 $0.edges == $0.superview!.edges
             }
             if Self.webViewHasExtra == true{
@@ -201,7 +204,7 @@ public class WKWebController: UIViewController {
         view.addSubview(progressView)
         self.innerWebView?.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         
-        constrain(progressView) {
+        self.progressConstraint = constrain(progressView) {
             $0.left == $0.superview!.left
             $0.right == $0.superview!.right
             $0.top == $0.superview!.top
