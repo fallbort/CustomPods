@@ -9,19 +9,24 @@ import Foundation
 import JverificationSDK
 import MeMeKit
 
+enum JiGuangImageType {
+    case checkboxNormal
+    case checkBoxSelected
+}
+
 @objc public class JiGuangManager : NSObject {
     @objc public static var shared = JiGuangManager()
     //MARK: <>外部变量
     
     //MARK: <>外部block
-    
+    var getImageBlock:((JiGuangImageType)->(image:UIImage,size:CGSize?))?
     
     //MARK: <>生命周期开始
     fileprivate override init() {
         super.init()
     }
     //MARK: <>功能性方法
-    @objc public func startup(appKey:String,isProduction:Bool,privacyName:String,privacyUrl:String) {
+    @objc public func startup(appKey:String,isProduction:Bool,first:String,privacyNames:[String],privacyUrls:[String],connect:String = "、",last:String = "") {
         let config = JVAuthConfig()
         config.appKey = appKey
         config.channel = "App Store"
@@ -47,7 +52,15 @@ import MeMeKit
         JVERIFICATIONService.setup(with: config)
         JVERIFICATIONService.setDebug(!isProduction)
         
-        customWindowUI(privacyName:privacyName,privacyUrl:privacyUrl)
+//        customWindowUI(privacyName:privacyName,privacyUrl:privacyUrl)
+        var datas:[(name:String,url:String)] = []
+        for (index,name) in privacyNames.enumerated() {
+            if privacyUrls.count > index {
+                let url = privacyUrls[index]
+                datas.append((name,url))
+            }
+        }
+        customFullScreenUI(first: first, privacys: datas,connect: connect,last: last)
     }
     
     public func startLogin(workingChangeBlock:((_ isWorking:Bool)->())? = nil,complete:@escaping ((_ loginToken:String?,_ errorCode:Int)->())) {
@@ -92,6 +105,111 @@ import MeMeKit
     public func clearLoginCache() {
         JVERIFICATIONService.clearPreLoginCache()
     }
+    
+    //全屏模式
+    func customFullScreenUI(first:String,privacys:[(name:String,url:String)],connect:String = "、",last:String = "") {
+        let config = JVUIConfig()
+        //导航栏
+        config.navCustom = true
+        config.navReturnHidden = false
+        
+        config.shouldAutorotate = true
+        config.autoLayout = true
+        //弹窗弹出方式
+        config.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        //logo
+        config.logoImg = UIImage(named: "cmccLogo") ?? UIImage()
+        let logoWidth = config.logoImg.size.width ?? 100
+        let logoHeight = logoWidth
+        let logoConstraintX = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
+        let logoConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: -90)
+        let logoConstraintW = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1, constant: logoWidth)
+        let logoConstraintH = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant: logoHeight)
+        config.logoConstraints = [logoConstraintX!,logoConstraintY!,logoConstraintW!,logoConstraintH!]
+        config.logoHorizontalConstraints = config.logoConstraints
+        
+        //号码栏
+        let numberConstraintX = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant:0)
+        let numberConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant:-55)
+        let numberConstraintW = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1, constant:130)
+        let numberConstraintH = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant:25)
+        config.numberConstraints = [numberConstraintX!, numberConstraintY!, numberConstraintW!, numberConstraintH!]
+        config.numberHorizontalConstraints = config.numberConstraints
+        
+        //slogan
+        let sloganConstraintX = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant:0)
+        let sloganConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant:-20)
+        let sloganConstraintW = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1, constant:130)
+        let sloganConstraintH = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant:20)
+        config.sloganConstraints = [sloganConstraintX!, sloganConstraintY!, sloganConstraintW!, sloganConstraintH!]
+        config.sloganHorizontalConstraints = config.sloganConstraints
+        
+        //登录按钮
+        let login_nor_image = imageNamed(name: "loginBtn_Nor")
+        let login_dis_image = imageNamed(name: "loginBtn_Dis")
+        let login_hig_image = imageNamed(name: "loginBtn_Hig")
+        if let norImage = login_nor_image, let disImage = login_dis_image, let higImage = login_hig_image {
+            config.logBtnImgs = [norImage, disImage, higImage]
+        }
+        let loginBtnWidth = login_nor_image?.size.width ?? 100
+        let loginBtnHeight = login_nor_image?.size.height ?? 100
+        let loginConstraintX = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant:0)
+        let loginConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant:30)
+        let loginConstraintW = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1, constant:loginBtnWidth)
+        let loginConstraintH = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant:loginBtnHeight)
+        config.logBtnConstraints = [loginConstraintX!, loginConstraintY!, loginConstraintW!, loginConstraintH!]
+        config.logBtnHorizontalConstraints = config.logBtnConstraints
+        
+        //勾选框
+        let checkBoxLeft:CGFloat = 38
+        let uncheckedImage = self.getImageBlock?(.checkboxNormal)
+        let checkedImage = self.getImageBlock?(.checkBoxSelected)
+        let checkViewWidth = uncheckedImage?.size?.width ?? 10
+        let checkViewHeight = uncheckedImage?.size?.height ?? 10
+        config.uncheckedImg = uncheckedImage?.image ?? UIImage()
+        config.checkedImg = checkedImage?.image ?? UIImage()
+        let checkViewConstraintX = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.left, multiplier: 1, constant:checkBoxLeft)
+        let checkViewConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.privacy, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant:0)
+        let checkViewConstraintW = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1, constant:checkViewWidth)
+        let checkViewConstraintH = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant:checkViewHeight)
+        config.checkViewConstraints = [checkViewConstraintX!, checkViewConstraintY!, checkViewConstraintW!, checkViewConstraintH!]
+        config.checkViewHorizontalConstraints = config.checkViewConstraints
+        
+        //隐私
+        let spacingLeft:CGFloat = 60
+        let spacingRight:CGFloat = -35
+        config.privacyState = true
+        config.privacyTextFontSize = 14
+        config.appPrivacyColor = [UIColor.hexString(toColor: "#999999")!,UIColor.hexString(toColor: "#222222")!]
+        config.privacyTextAlignment = NSTextAlignment.left
+        var appPrivacyDict:[Any] = []
+        appPrivacyDict.append(first)
+        for data in privacys {
+            appPrivacyDict.append([connect,data.name,data.url,data.name])
+        }
+        appPrivacyDict.append(last)
+        config.appPrivacys = appPrivacyDict
+        config.privacyShowBookSymbol = true
+        let privacyConstraintX = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.left, multiplier: 1, constant:spacingLeft)
+        let privacyConstraintX2 = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.right, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.right, multiplier: 1, constant:spacingRight)
+        let privacyConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant:-10)
+        let privacyConstraintH = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant:50)
+        config.privacyConstraints = [privacyConstraintX!,privacyConstraintX2!, privacyConstraintY!, privacyConstraintH!]
+        config.privacyHorizontalConstraints = config.privacyConstraints
+        
+       //loading
+        let loadingConstraintX = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant:0)
+        let loadingConstraintY = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.super, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant:0)
+        let loadingConstraintW = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.width, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.width, multiplier: 1, constant:30)
+        let loadingConstraintH = JVLayoutConstraint(attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, to: JVLayoutItem.none, attribute: NSLayoutConstraint.Attribute.height, multiplier: 1, constant:30)
+        config.loadingConstraints = [loadingConstraintX!, loadingConstraintY!, loadingConstraintW!, loadingConstraintH!]
+        config.loadingHorizontalConstraints = config.loadingConstraints
+        
+        JVERIFICATIONService.customUI(with: config) { (customView) in
+            //自定义view, 加到customView上
+        }
+        
+       }
     //弹窗模式
     fileprivate func customWindowUI(privacyName:String,privacyUrl:String) {
         let config = JVUIConfig()
