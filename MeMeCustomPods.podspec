@@ -279,5 +279,21 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
 
       base.vendored_frameworks    = "MeMePayData/Sdk/*.framework"
   end
+  
+  spec.subspec 'WebView' do |base|
+      base.source_files = 'WebView/Source/**/*.{h,m,mm,swift}','WebView/*.{modulemap}','WebView/Modules/*.{h}'
+      base.public_header_files = 'WebView/Source/**/*.{h}'
+      base.framework    = "UIKit","WebKit"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+      base.dependency 'MeMeKit/MeMeBaseKit'
+      base.dependency 'RxSwift'
+      base.dependency 'Cartography'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/WebView'] }
+
+      base.vendored_frameworks    = "WebView/Sdk/*.framework"
+  end
 
 end
