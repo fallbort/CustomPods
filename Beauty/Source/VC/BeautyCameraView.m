@@ -12,13 +12,11 @@
 #import <TiSDK/TiSDK.h>
 #import <Masonry/Masonry.h>
 #import "TiMenuPlistManager.h"
-#import "BeautyGLView.h"
 @import MeMeKit;
 
 NSInteger m_beautyCameraViewCount = 0;
 
 @interface BeautyCameraView ()
-@property(nonatomic, nonnull,strong)BeautyGLView *glView;
 @property(nonatomic, nonnull,strong)UIImageView *imageView;
 @property (nonatomic, strong) TiCaptureSessionManager *captureManager;
 @property (nonatomic, assign) BOOL isCaptureStarted;
@@ -97,13 +95,6 @@ NSInteger m_beautyCameraViewCount = 0;
 }
 
 #pragma mark <>内部View
-- (BeautyGLView *)glView{
-    if (_glView==nil) {
-        _glView = [[BeautyGLView alloc] initWithFrame:CGRectMake(0, 0, self.captureVideoSize.width, self.captureVideoSize.height)];
-        
-    }
-    return _glView;
-}
 
 -(UIImageView *)imageView {
     if (!_imageView) {

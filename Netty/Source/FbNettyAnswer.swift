@@ -34,6 +34,9 @@ open class FbNettyContentBody {
     func makeBodyObject() {
         if let map:[String: Any] = body.convertToDictionary() {
             _bodyObject = map
+            if (_bodyObject?.count == 0) {
+                _bodyObject = nil
+            }
         }else{
             _bodyObject = nil
         }
