@@ -712,7 +712,7 @@ extension AgoraLiveManager {
             self.token = token
             joinCheckDelay?.cancel()
             joinCheckDelay = delay(12.0) {
-                NELocalize.localizedString("check_network",comment: "")
+                NELocalize.localizedString("check_network",bundlePath: MeMeCustomPodsBundle,comment: "")
             }
             
     //        #if DEBUG
