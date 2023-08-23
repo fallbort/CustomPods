@@ -712,7 +712,7 @@ extension AgoraLiveManager {
             self.token = token
             joinCheckDelay?.cancel()
             joinCheckDelay = delay(12.0) {
-                MeMeKitConfig.showHUDBlock(MeMeKitConfig.localizeStringBlock("check_network", .normal))
+                NELocalize.localizedString("check_network",comment: "")
             }
             
     //        #if DEBUG
