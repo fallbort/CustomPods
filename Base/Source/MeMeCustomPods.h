@@ -7,6 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
+
+#define MeMeCustomPodsBundle "MeMeCustomPods"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MeMeCustomPodsOC : NSObject

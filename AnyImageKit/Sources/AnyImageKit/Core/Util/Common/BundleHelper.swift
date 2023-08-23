@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MeMeKit
 
 public struct BundleHelper {
     
@@ -90,7 +91,7 @@ extension BundleHelper {
     }
     
     private static func localizedString(key: String, value: String?, table: String, bundle current: Bundle) -> String {
-        let result = current.localizedString(forKey: key, value: value, table: table)
+        let result = NELocalize.localizedString(key, bundle: current, table: table, comment: "", value: value)
         if result != key {
             return result
         } else { // Just in case

@@ -181,7 +181,7 @@ open class WKWebController: UIViewController {
                 copybtn.handleControlEvent(.touchUpInside) { [weak self,weak innerWebView] in
                     let pasteboard = UIPasteboard.general
                     pasteboard.string = self?.request?.url?.absoluteString ?? ""
-                    MeMeKitConfig.showHUDBlock(NELocalize.localizedString("copied_toast"))
+                    MeMeKitConfig.showHUDBlock(NELocalize.localizedString("copied_toast",bundlePath: MeMeCustomPodsBundle))
                 }
                 view.addSubview(copybtn)
                 constrain(copybtn,btn) {

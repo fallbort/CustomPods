@@ -81,16 +81,17 @@ public class PushService {
     }
     
     fileprivate class func showRequestAlert() {
-        let title = NELocalize.localizedString("System prevents MeMe to access notification", comment: "")
-        let message = NELocalize.localizedString("To grant the permission: settings -> MeMe -> notification", comment: "")
+        let appName = DeviceInfo.appDisplayName
+        let title = String(format: NELocalize.localizedString("System prevents %@ to access notification",bundlePath: MeMeCustomPodsBundle, comment: ""), appName)
+        let message = String(format: NELocalize.localizedString("To grant the permission: settings -> %@ -> notification",bundlePath: MeMeCustomPodsBundle, comment: ""), appName)
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let actionCancel = UIAlertAction(title: NELocalize.localizedString("Do not ask again", comment: ""), style: .cancel) { action in
+        let actionCancel = UIAlertAction(title: NELocalize.localizedString("Do not ask again",bundlePath: MeMeCustomPodsBundle, comment: ""), style: .cancel) { action in
             PushService.denialAlert = true
         }
         alert.addAction(actionCancel)
 
-        let actionSet = UIAlertAction(title: NELocalize.localizedString("Settings", comment: ""), style: .default) { action in
+        let actionSet = UIAlertAction(title: NELocalize.localizedString("Settings",bundlePath: MeMeCustomPodsBundle, comment: ""), style: .default) { action in
             if let URL = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.openURL(URL as URL)
             }

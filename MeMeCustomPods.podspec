@@ -38,6 +38,7 @@ Pod::Spec.new do |spec|
   spec.subspec 'Base' do |base|
       base.source_files = 'Base/Source/**/*.{h,m,mm,swift}'
       base.framework    = "Foundation"
+      base.resources = ['Base/Resources/*.bundle']
   end
 
   spec.subspec 'AnyImageKit' do |base|

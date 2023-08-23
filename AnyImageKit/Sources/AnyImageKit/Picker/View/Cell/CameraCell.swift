@@ -19,10 +19,10 @@ public final class CameraCell: UICollectionViewCell {
             switch type {
             case .camera:
                 imageView.image = UIImage(named: "albumIcCamera")
-                label.text = NELocalize.localizedString("photo")
+                label.text = NELocalize.localizedString("photo",bundlePath: MeMeCustomPodsBundle)
             case .video:
                 imageView.image = UIImage(named: "albumIcVideo")
-                label.text = NELocalize.localizedString("video")
+                label.text = NELocalize.localizedString("video",bundlePath: MeMeCustomPodsBundle)
             }
         }
     }
@@ -38,7 +38,7 @@ public final class CameraCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.medium)
         label.textColor = UIColor.init(hex: 0xff1e76, alpha: 1)
-        label.text = NELocalize.localizedString("Take photos")
+        label.text = NELocalize.localizedString("Take photos",bundlePath: MeMeCustomPodsBundle)
         label.textAlignment = .center
         return label
     }()

@@ -300,7 +300,7 @@ extension PayService {
                               productId: product.productId,
                               amount: nil,
                               currency: product.currency,
-                              error: MemeCommonError.normal(code: PurchasedErrorCode.invalidParams.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true))
+                              error: MemeCommonError.normal(code: PurchasedErrorCode.invalidParams.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true))
             return
         }
         
@@ -396,7 +396,7 @@ extension PayService {
                                         productId: productId,
                                         amount: amount,
                                         currency: currency,
-                                        error: MemeCommonError.normal(code: PurchasedErrorCode.getPreorderIdFailed.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true))
+                                        error: MemeCommonError.normal(code: PurchasedErrorCode.getPreorderIdFailed.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true))
                 break
             }
         }
@@ -648,7 +648,7 @@ extension PayService: NEPayDelegate {
                                                     amount: orderItem.item?.price,
                                                     currency: orderItem.item?.currency,
                                                     preorderId: orderItem.item?.preorderId,
-                                                    error: MemeCommonError.normal(code: PurchasedErrorCode.getPreorderIdFailed.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true))
+                                                    error: MemeCommonError.normal(code: PurchasedErrorCode.getPreorderIdFailed.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true))
                         }
                     }
                 }
@@ -792,7 +792,7 @@ extension PayService: NEPayDelegate {
                                             amount: order?.price,
                                             currency: order?.currency,
                                             preorderId: order?.preorderId,
-                                            error:MemeCommonError.normal(code: PurchasedErrorCode.getPreorderIdFailed.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true))
+                                            error:MemeCommonError.normal(code: PurchasedErrorCode.getPreorderIdFailed.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true))
                 }
             }
         } else {
@@ -813,22 +813,22 @@ extension PayService: NEPayDelegate {
                 success = true
             case .ResponseCode_RequestParamsError:
                 success = false
-                error = MemeCommonError.normal(code: PurchasedErrorCode.invalidParams.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true)
+                error = MemeCommonError.normal(code: PurchasedErrorCode.invalidParams.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true)
             case .ResponseCode_GetIAPProductFailed:
-                error = MemeCommonError.normal(code: PurchasedErrorCode.getIAPProductFailed.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true)
+                error = MemeCommonError.normal(code: PurchasedErrorCode.getIAPProductFailed.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true)
             case .ResponseCode_IAPCantMakePurchase:
-                error = MemeCommonError.normal(code: PurchasedErrorCode.IAPCantMakePurcahse.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true)
+                error = MemeCommonError.normal(code: PurchasedErrorCode.IAPCantMakePurcahse.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true)
             case .ResponseCode_Canceled:
-                error = MemeCommonError.normal(code: PurchasedErrorCode.canceled.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true)
+                error = MemeCommonError.normal(code: PurchasedErrorCode.canceled.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true)
             case .ResponseCode_VerifyFailedOther:
-                error = MemeCommonError.normal(code: PurchasedErrorCode.IAPVerifyFailedOther.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true)
+                error = MemeCommonError.normal(code: PurchasedErrorCode.IAPVerifyFailedOther.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true)
             case .ResponseCode_IAPPurchasedFail:
-                error = MemeCommonError.normal(code: PurchasedErrorCode.IAPPurchaseFail.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true)
+                error = MemeCommonError.normal(code: PurchasedErrorCode.IAPPurchaseFail.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true)
             default:
-                error = MemeCommonError.normal(code: PurchasedErrorCode.faildUnknown.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true)
+                error = MemeCommonError.normal(code: PurchasedErrorCode.faildUnknown.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true)
             }
         } else {
-            error = MemeCommonError.normal(code: PurchasedErrorCode.faildUnknown.rawValue, msg: NELocalize.localizedString("Purchase Failed",comment: ""), isCustom: true)
+            error = MemeCommonError.normal(code: PurchasedErrorCode.faildUnknown.rawValue, msg: NELocalize.localizedString("Purchase Failed",bundlePath: MeMeCustomPodsBundle,comment: ""), isCustom: true)
         }
 
         var responseCode: Int? = nil

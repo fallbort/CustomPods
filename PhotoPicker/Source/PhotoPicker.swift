@@ -38,20 +38,20 @@ import MBProgressHUD
 	}
     
     @objc public func showChoiseAlert() {
-		let alert = UIAlertController(title: NELocalize.localizedString("Please select", comment: ""), message: nil, preferredStyle: .actionSheet)
+		let alert = UIAlertController(title: NELocalize.localizedString("Please select",bundlePath: MeMeCustomPodsBundle, comment: ""), message: nil, preferredStyle: .actionSheet)
 
-		let actionAlbum = UIAlertAction(title: NELocalize.localizedString("Photo album", comment: ""), style: .default) { [unowned self] action in
+		let actionAlbum = UIAlertAction(title: NELocalize.localizedString("Photo album",bundlePath: MeMeCustomPodsBundle, comment: ""), style: .default) { [unowned self] action in
 			self.takeAlbum()
             
 		}
 		alert.addAction(actionAlbum)
 
-		let actionCamera = UIAlertAction(title: NELocalize.localizedString("Take photos", comment: ""), style: .default) { [unowned self] action in
+		let actionCamera = UIAlertAction(title: NELocalize.localizedString("Take photos",bundlePath: MeMeCustomPodsBundle, comment: ""), style: .default) { [unowned self] action in
 			self.takeCamera()
 		}
 		alert.addAction(actionCamera)
 
-        let actionCancel = UIAlertAction(title: NELocalize.localizedString("Cancel", comment: ""), style: .cancel) { [unowned self] action in
+        let actionCancel = UIAlertAction(title: NELocalize.localizedString("Cancel",bundlePath: MeMeCustomPodsBundle, comment: ""), style: .cancel) { [unowned self] action in
             self.didCancel?()
         }
 		alert.addAction(actionCancel)
