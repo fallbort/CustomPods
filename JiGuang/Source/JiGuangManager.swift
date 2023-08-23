@@ -155,7 +155,7 @@ public enum JiGuangImageType : Equatable {
         if let norImage = login_nor_image?.image, let disImage = login_dis_image?.image, let higImage = login_hig_image?.image {
             config.logBtnImgs = [norImage, disImage, higImage]
         }
-        config.logBtnText = NELocalize.localizedString("本机号码一键登录",bundlePath: MeMeCustomPodsBundle,comment: "totest")
+        config.logBtnText = NELocalize.localizedString("one_key_login",bundlePath: MeMeCustomPodsBundle,comment: "totest")
         config.logBtnFont = ThemeLite.Font.pingfang(size: 16)
         config.logBtnTextColor = UIColor.hexString(toColor: "ffffff")!
         let loginBtnWidth = login_nor_image?.size?.width ?? 100
