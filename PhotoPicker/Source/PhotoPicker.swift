@@ -67,7 +67,10 @@ import MBProgressHUD
 	}
 
     func takeCamera() {
-		self.imagePicker(.camera)
+        MMVideoPermissionManager.requestCapturePermission { [weak self] isEnabled in
+            self?.imagePicker(.camera)
+        }
+		
 	}
 
     func takeAlbum() {
