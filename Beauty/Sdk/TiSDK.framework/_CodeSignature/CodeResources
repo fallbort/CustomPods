@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/TiLiveView.h</key>
 		<data>
-		9QaottmJP3slcM0kH4m4JLhglHo=
+		j0BcOuC8LL2sbg3uKJFBcxcXq6Y=
 		</data>
 		<key>Headers/TiSDK.h</key>
 		<data>
@@ -14,11 +14,11 @@
 		</data>
 		<key>Headers/TiSDKInterface.h</key>
 		<data>
-		m4QpNGIDP6p0GvxOwaobawDo9AI=
+		oGrm5PFTU04vGfYbuGroJPl26vU=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		25DHI6mvm4OUalV9EB7V4xcOlPQ=
+		dmNnIpawQ5s4CCrfhGpSjNzHQug=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -31,11 +31,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			9QaottmJP3slcM0kH4m4JLhglHo=
+			j0BcOuC8LL2sbg3uKJFBcxcXq6Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			p2+i9KTIjeMMyfjw4ZCdmx6PwhJyVRTi4R0IHG89c8c=
+			HZ7sPFqEiVsP6bpx0kiwg7uvnquVkGmcCvZ2/4t95N8=
 			</data>
 		</dict>
 		<key>Headers/TiSDK.h</key>
@@ -53,11 +53,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			m4QpNGIDP6p0GvxOwaobawDo9AI=
+			oGrm5PFTU04vGfYbuGroJPl26vU=
 			</data>
 			<key>hash2</key>
 			<data>
-			gHGZrFlmdSC3NuMpF7wppfOS+j6atCvb4b/AlNNE9jg=
+			UC+H7pRN7IUuLoCJxzUMiM0It73z+s2rR2wre55vgTM=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

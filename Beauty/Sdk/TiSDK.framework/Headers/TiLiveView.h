@@ -6,17 +6,20 @@
 //  Copyright © 2018年 Tillusory Tech. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <GLKit/GLKit.h>
+#import <AVFoundation/AVCaptureSession.h>
+
+typedef NS_ENUM(NSInteger, TiLiveViewOrientation) {
+    TiLiveViewOrientationPortrait              = 0,
+    TiLiveViewOrientationLandscapeRight        = 1,
+    TiLiveViewOrientationPortraitUpsideDown    = 2,
+    TiLiveViewOrientationLandscapeLeft         = 3,
+};
 
 @interface TiLiveView : UIView
 
-typedef enum TiPixelFormatType {
-    kCV_BGRA = kCVPixelFormatType_32BGRA,
-    kCV_420v = kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange,
-    kCV_420f = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
-} TiPixelFormatType;
+@property (nonatomic, assign) TiLiveViewOrientation orientation;
 
-- (void)setupPreview:(TiPixelFormatType)type;
 - (void)startPreview:(CVPixelBufferRef)pixelBuffer isMirror:(BOOL)isMirror;
 
 @end

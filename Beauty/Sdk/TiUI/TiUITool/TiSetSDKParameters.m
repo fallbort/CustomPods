@@ -975,167 +975,167 @@ bool is_updateFilterValue = false;
     }
     [TiSetSDKParameters setFloatValue:index forKey:(TI_UIDCK_FACESHAPE_SLIDER_Index)];
 }
-
-+ (TiFilterEnum)getTiFilterEnumForIndex:(NSInteger)index{
-    switch (index) {
-        case 0:
-            return NO_FILTER; // 无
-            break;
-        case 50:
-            return SKETCH_FILTER; // 1素描
-            break;
-        case 49:
-            return SOBELEDGE_FILTER; // 2黑边
-            break;
-        case 48:
-            return TOON_FILTER; // 3卡通
-            break;
-        case 47:
-            return EMBOSS_FILTER; // 4浮雕
-            break;
-        case 36:
-            return FILM_FILTER; // 5胶片
-            break;
-        case 46:
-            return PIXELLATION_FILTER; // 6马赛克
-            break;
-        case 45:
-            return HALFTONE_FILTER; // 7半色调
-            break;
-        case 44:
-            return CROSSHATCH_FILTER; // 8交叉边
-            break;
-        case 12:
-            return KISS_FILTER; // 19初吻
-            break;
-        case 27:
-            return COFFEE_FILTER; // 10咖啡
-            break;
-        case 14:
-            return CHOCOLATE_FILTER; // 11巧克力
-            break;
-        case 28:
-            return COCO_FILTER; // 12可可
-            break;
-        case 29:
-            return DELICIOUS_FILTER; // 13美味
-            break;
-        case 17:
-            return FIRSTLOVE_FILTER; // 14初恋
-            break;
-        case 16:
-            return FOREST_FILTER; // 15森林
-            break;
-        case 25:
-            return GLOSSY_FILTER; // 16光泽
-            break;
-        case 18:
-            return GRASS_FILTER; // 17禾草
-            break;
-        case 19:
-            return HOLIDAY_FILTER; // 18假日
-            break;
-        case 11:
-            return LOLITA_FILTER; // 20洛丽塔
-            break;
-        case 10:
-            return RED_FILTER; // 26赤红
-            break;
-        case 32:
-            return MEMORY_FILTER; // 21回忆
-            break;
-        case 30:
-            return MOUSSE_FILTER; // 22慕斯
-            break;
-        case 13:
-            return NASHVILLE_FILTER; // 9那舍尔
-            break;
-        case 15:
-            return OXGEN_FILTER; // 24氧气
-            break;
-        case 23:
-            return PLATYCODON_FILTER; // 25桔梗
-            break;
-        case 9:
-            return VIGNETTE_FILTER; // 32光晕
-            break;
-        case 31:
-            return SUNLESS_FILTER; // 27冷日
-            break;
-        case 43:
-            return PINCH_DISTORTION_FILTER; // 28扭曲
-            break;
-        case 33:
-            return KUWAHARA_FILTER; // 29油画
-            break;
-        case 35:
-            return POSTERIZE_FILTER; // 30分色
-            break;
-        case 42:
-            return SWIRL_DISTORTION_FILTER; // 31漩涡
-            break;
-        case 8:
-            return AZREAL_FILTER; // 41素肌
-            break;
-        case 41:
-            return ZOOM_BLUR_FILTER; // 33眩晕
-            break;
-        case 40:
-            return POLKA_DOT_FILTER; // 34圆点
-            break;
-        case 39:
-            return POLAR_PIXELLATE_FILTER; // 35极坐标
-            break;
-        case 38:
-            return GLASS_SPHERE_REFRACTION_FILTER; // 36水晶球
-            break;
-        case 37:
-            return SOLARIZE_FILTER; // 37曝光
-            break;
-        case 34:
-            return INK_WASH_PAINTING_FILTER; // 38水墨
-            break;
-        case 26:
-            return ARABICA_FILTER; // 39阿拉比卡
-            break;
-        case 22:
-            return AVA_FILTER; // 40阿瓦
-            break;
-        case 7:
-            return BYERS_FILTER; // 43拜尔斯
-            break;
-        case 21:
-            return BOURBON_FILTER; // 42波旁
-            break;
-        case 6:
-            return FUJI_REALA_FILTER; // 90真实
-            break;
-        case 5:
-            return CHEMICAL_FILTER; // 44化学
-            break;
-        case 20:
-            return CLAYTON_FILTER; // 45克莱顿
-            break;
-        case 2:
-            return CLOUSEAU_FILTER; // 46克卢索
-            break;
-        case 4:
-            return COBI_FILTER; // 47小新
-            break;
-        case 3:
-            return CONTRAIL_FILTER; // 48凝迹
-            break;
-        case 24:
-            return CUBICLE_FILTER; // 49隔间
-            break;
-        case 1:
-            return DJANGO_FILTER; // 50姜戈
-            break;
-        default:
-            return NO_FILTER;
-            break;
-    }
-}
+//
+//+ (TiFilterEnum)getTiFilterEnumForIndex:(NSInteger)index{
+//    switch (index) {
+//        case 0:
+//            return NO_FILTER; // 无
+//            break;
+//        case 50:
+//            return SKETCH_FILTER; // 1素描
+//            break;
+//        case 49:
+//            return SOBELEDGE_FILTER; // 2黑边
+//            break;
+//        case 48:
+//            return TOON_FILTER; // 3卡通
+//            break;
+//        case 47:
+//            return EMBOSS_FILTER; // 4浮雕
+//            break;
+//        case 36:
+//            return FILM_FILTER; // 5胶片
+//            break;
+//        case 46:
+//            return PIXELLATION_FILTER; // 6马赛克
+//            break;
+//        case 45:
+//            return HALFTONE_FILTER; // 7半色调
+//            break;
+//        case 44:
+//            return CROSSHATCH_FILTER; // 8交叉边
+//            break;
+//        case 12:
+//            return KISS_FILTER; // 19初吻
+//            break;
+//        case 27:
+//            return COFFEE_FILTER; // 10咖啡
+//            break;
+//        case 14:
+//            return CHOCOLATE_FILTER; // 11巧克力
+//            break;
+//        case 28:
+//            return COCO_FILTER; // 12可可
+//            break;
+//        case 29:
+//            return DELICIOUS_FILTER; // 13美味
+//            break;
+//        case 17:
+//            return FIRSTLOVE_FILTER; // 14初恋
+//            break;
+//        case 16:
+//            return FOREST_FILTER; // 15森林
+//            break;
+//        case 25:
+//            return GLOSSY_FILTER; // 16光泽
+//            break;
+//        case 18:
+//            return GRASS_FILTER; // 17禾草
+//            break;
+//        case 19:
+//            return HOLIDAY_FILTER; // 18假日
+//            break;
+//        case 11:
+//            return LOLITA_FILTER; // 20洛丽塔
+//            break;
+//        case 10:
+//            return RED_FILTER; // 26赤红
+//            break;
+//        case 32:
+//            return MEMORY_FILTER; // 21回忆
+//            break;
+//        case 30:
+//            return MOUSSE_FILTER; // 22慕斯
+//            break;
+//        case 13:
+//            return NASHVILLE_FILTER; // 9那舍尔
+//            break;
+//        case 15:
+//            return OXGEN_FILTER; // 24氧气
+//            break;
+//        case 23:
+//            return PLATYCODON_FILTER; // 25桔梗
+//            break;
+//        case 9:
+//            return VIGNETTE_FILTER; // 32光晕
+//            break;
+//        case 31:
+//            return SUNLESS_FILTER; // 27冷日
+//            break;
+//        case 43:
+//            return PINCH_DISTORTION_FILTER; // 28扭曲
+//            break;
+//        case 33:
+//            return KUWAHARA_FILTER; // 29油画
+//            break;
+//        case 35:
+//            return POSTERIZE_FILTER; // 30分色
+//            break;
+//        case 42:
+//            return SWIRL_DISTORTION_FILTER; // 31漩涡
+//            break;
+//        case 8:
+//            return AZREAL_FILTER; // 41素肌
+//            break;
+//        case 41:
+//            return ZOOM_BLUR_FILTER; // 33眩晕
+//            break;
+//        case 40:
+//            return POLKA_DOT_FILTER; // 34圆点
+//            break;
+//        case 39:
+//            return POLAR_PIXELLATE_FILTER; // 35极坐标
+//            break;
+//        case 38:
+//            return GLASS_SPHERE_REFRACTION_FILTER; // 36水晶球
+//            break;
+//        case 37:
+//            return SOLARIZE_FILTER; // 37曝光
+//            break;
+//        case 34:
+//            return INK_WASH_PAINTING_FILTER; // 38水墨
+//            break;
+//        case 26:
+//            return ARABICA_FILTER; // 39阿拉比卡
+//            break;
+//        case 22:
+//            return AVA_FILTER; // 40阿瓦
+//            break;
+//        case 7:
+//            return BYERS_FILTER; // 43拜尔斯
+//            break;
+//        case 21:
+//            return BOURBON_FILTER; // 42波旁
+//            break;
+//        case 6:
+//            return FUJI_REALA_FILTER; // 90真实
+//            break;
+//        case 5:
+//            return CHEMICAL_FILTER; // 44化学
+//            break;
+//        case 20:
+//            return CLAYTON_FILTER; // 45克莱顿
+//            break;
+//        case 2:
+//            return CLOUSEAU_FILTER; // 46克卢索
+//            break;
+//        case 4:
+//            return COBI_FILTER; // 47小新
+//            break;
+//        case 3:
+//            return CONTRAIL_FILTER; // 48凝迹
+//            break;
+//        case 24:
+//            return CUBICLE_FILTER; // 49隔间
+//            break;
+//        case 1:
+//            return DJANGO_FILTER; // 50姜戈
+//            break;
+//        default:
+//            return NO_FILTER;
+//            break;
+//    }
+//}
 
 + (TiRockEnum)setRockEnumByIndex:(NSInteger)index{
     
@@ -1156,7 +1156,6 @@ bool is_updateFilterValue = false;
             return ASTRAL_PROJECTION_ROCK;
             break;
         case 5:
-            return BLACK_MAGIC_ROCK;
             break;
         case 6:
             return VIRTUAL_MIRROR_ROCK;

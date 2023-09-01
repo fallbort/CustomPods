@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, TiUIDataCategoryKey) {
 
 + (void)setBeautySlider:(float)v forKey:(TiUIDataCategoryKey)key withIndex:(NSInteger)index;
  
-+ (TiFilterEnum)getTiFilterEnumForIndex:(NSInteger)index;
+//+ (TiFilterEnum)getTiFilterEnumForIndex:(NSInteger)index;
 
 + (TiHairEnum)getTiHairEnumForIndex:(NSInteger)index;
 

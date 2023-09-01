@@ -48,7 +48,7 @@
     
         if (subMod.menuTag) {
             WeakSelf;
-            NSString *iconUrl =[TiSDK getMakeupIconURL];
+            NSString *iconUrl = nil;
             NSString *folder = @"makeup_icon";
            
             iconUrl = iconUrl?iconUrl:@"";

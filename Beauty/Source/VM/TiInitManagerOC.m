@@ -8,7 +8,7 @@
 #import "TiInitManagerOC.h"
 #import <TiSDK/TiSDK.h>
 
-@interface TiInitManagerOC ()
+@interface TiInitManagerOC () <TiSDKDelegate>
 @property (nonatomic, assign) BOOL initSuccess;
 @end
 
@@ -34,11 +34,12 @@
 -(void)initSDK {
     if(self.initSuccess == NO) {
         __weak __typeof(self)weakSelf = self;
-        [TiSDK initSDK:self.appKey CallBack:^(InitStatus callBack) {
-            if (callBack.code == 100) {
-                weakSelf.initSuccess = YES;
-            }
-        }];
+        [TiSDK.shareInstance initSDK:self.appKey withDelegate:self];
+//        [TiSDK initSDK:self.appKey CallBack:^(InitStatus callBack) {
+//            if (callBack.code == 100) {
+//                weakSelf.initSuccess = YES;
+//            }
+//        }];
 //        [TiSDK.shareInstance initSDK:self.appKey withDelegate:self];
     }
 }

@@ -20,6 +20,7 @@ NSInteger m_beautyCameraViewCount = 0;
 @property(nonatomic, nonnull,strong)UIImageView *imageView;
 @property (nonatomic, strong) TiCaptureSessionManager *captureManager;
 @property (nonatomic, assign) BOOL isCaptureStarted;
+@property (nonatomic, strong) TiLiveView* tiLiveView;
 @end
 
 @implementation BeautyCameraView
@@ -55,8 +56,18 @@ NSInteger m_beautyCameraViewCount = 0;
 //    [self addSubview:self.glView];
 //    [self.glView setupGL];//着色器相关设置
     
-    [self addSubview:self.imageView];
-    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+//    
+//    [self addSubview:self.imageView];
+//    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.mas_equalTo(0);
+//        make.right.mas_equalTo(0);
+//        make.top.mas_equalTo(0);
+//        make.bottom.mas_equalTo(0);
+//    }];
+    
+    [self addSubview:self.tiLiveView];
+    [self.tiLiveView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
         make.top.mas_equalTo(0);
@@ -102,6 +113,15 @@ NSInteger m_beautyCameraViewCount = 0;
         _imageView.backgroundColor = UIColor.clearColor;
     }
     return _imageView;
+}
+
+
+-(TiLiveView *)tiLiveView {
+    if (!_tiLiveView) {
+        _tiLiveView = [[TiLiveView alloc] initWithFrame:CGRectMake(0, 0, self.captureVideoSize.width, self.captureVideoSize.height)];
+        _tiLiveView.orientation = TiLiveViewOrientationPortrait;
+    }
+    return _tiLiveView;
 }
 
 
@@ -152,21 +172,21 @@ NSInteger m_beautyCameraViewCount = 0;
 
     [[TiSDKManager shareManager] renderPixels:baseAddress Format:format Width:imageWidth Height:imageHeight Rotation:rotation Mirror:isMirror FaceNumber:2];
     /////////////////// TiFaceSDK 添加 结束 ///////////////////
-//    if (self.tiLiveView) {
-//        [self.tiLiveView startPreview:pixelBuffer isMirror:isMirror];
-//    }
+    if (self.tiLiveView) {
+        [self.tiLiveView startPreview:pixelBuffer isMirror:isMirror];
+    }
     
     if (self.sampleBufferBlock != nil) {
         self.sampleBufferBlock(sampleBuffer,pixelBuffer);
     }
     
-    CIImage* image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
-    UIImage* uiImage = [UIImage imageWithCIImage:image];
-    __weak __typeof(self)weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(weakSelf==nil){return;}
-        weakSelf.imageView.image = uiImage;
-    });
+//    CIImage* image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+//    UIImage* uiImage = [UIImage imageWithCIImage:image];
+//    __weak __typeof(self)weakSelf = self;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        if(weakSelf==nil){return;}
+//        weakSelf.imageView.image = uiImage;
+//    });
     
     CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
     

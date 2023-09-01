@@ -82,42 +82,42 @@
                 WeakSelf;
                 NSString *iconUrl = @"";
                 NSString *folder = @"";
-                switch (tag) {
-                    case 2:
-                        iconUrl = [TiSDK getStickerIconURL];
-                        folder = @"sticker_icon";
-                        break;
-                    case 3:
-                        iconUrl = [TiSDK getGiftIconURL];
-                        folder = @"gift_icon";
-                        break;
-                    case 7:
-                        iconUrl = [TiSDK getWatermarkIconURL];
-                        folder = @"watermark_icon";
-                        break;
-                    case 8:
-                        iconUrl = [TiSDK getMaskIconURL];
-                        folder = @"mask_icon";
-                        break;
-                    case 9:
-                        iconUrl = [TiSDK getGreenScreenIconURL];
-                        folder = @"greenscreen_icon";
-                        break;
-                    case 11:
-                        iconUrl = [TiSDK getInteractionIconURL];
-                        folder = @"interaction_icon";
-                        break;
-                    case 14:
-                        iconUrl = [TiSDK getPortraitIconURL];
-                        folder = @"portrait_icon";
-                        break;
-                    case 16:
-                        iconUrl = [TiSDK getGestureIconURL];
-                        folder = @"gesture_icon";
-                        break;
-                    default:
-                        break;
-                }
+//                switch (tag) {
+//                    case 2:
+//                        iconUrl = [TiSDK getStickerIconURL];
+//                        folder = @"sticker_icon";
+//                        break;
+//                    case 3:
+//                        iconUrl = [TiSDK getGiftIconURL];
+//                        folder = @"gift_icon";
+//                        break;
+//                    case 7:
+//                        iconUrl = [TiSDK getWatermarkIconURL];
+//                        folder = @"watermark_icon";
+//                        break;
+//                    case 8:
+//                        iconUrl = [TiSDK getMaskIconURL];
+//                        folder = @"mask_icon";
+//                        break;
+//                    case 9:
+//                        iconUrl = [TiSDK getGreenScreenIconURL];
+//                        folder = @"greenscreen_icon";
+//                        break;
+//                    case 11:
+//                        iconUrl = [TiSDK getInteractionIconURL];
+//                        folder = @"interaction_icon";
+//                        break;
+//                    case 14:
+//                        iconUrl = [TiSDK getPortraitIconURL];
+//                        folder = @"portrait_icon";
+//                        break;
+//                    case 16:
+//                        iconUrl = [TiSDK getGestureIconURL];
+//                        folder = @"gesture_icon";
+//                        break;
+//                    default:
+//                        break;
+//                }
                 
                 iconUrl = iconUrl?iconUrl:@"";
                 [TiUITool getImageFromeURL:[NSString stringWithFormat:@"%@%@", iconUrl, subMod.thumb] WithFolder:folder downloadComplete:^(UIImage *image) {

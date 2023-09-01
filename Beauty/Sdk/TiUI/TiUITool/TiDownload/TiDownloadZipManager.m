@@ -52,75 +52,75 @@ static TiDownloadZipManager *shareManager = NULL;
     
     NSString *downloadURL = @"";
     NSString *cachePaths = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    
-    switch (type) {
-        case TI_DOWNLOAD_TYPE_Sticker://贴纸
-            downloadURL = [[TiSDK getStickerURL] stringByAppendingFormat:@"%@.zip",mode.name];
-            cachePaths =  TiSDK.getStickerPath;
-            break;
-        case TI_DOWNLOAD_STATE_Gift://礼物
-            downloadURL = [[TiSDK getGiftURL] stringByAppendingFormat:@"%@.zip",mode.name];
-            cachePaths =  TiSDK.getGiftPath;
-            break;
-        case TI_DOWNLOAD_STATE_Watermark://水印
-            downloadURL = [[TiSDK getWatermarkURL] stringByAppendingFormat:@"%@.zip",mode.name];
-            cachePaths =  TiSDK.getWatermarkPath;
-            break;
-        case TI_DOWNLOAD_STATE_Mask://面具
-            downloadURL = [[TiSDK getMaskURL] stringByAppendingFormat:@"%@.png",mode.name];
-            cachePaths =  TiSDK.getMaskPath;
-            cachePaths =  [cachePaths stringByAppendingFormat:@"/%@",mode.name];
-            break;
-        case TI_DOWNLOAD_STATE_Greenscreen://绿幕抠图
-            downloadURL = [[TiSDK getGreenScreenURL] stringByAppendingFormat:@"%@",mode.name];
-            cachePaths =  TiSDK.getGreenScreenPath;
-            break;
-        case TI_DOWNLOAD_STATE_Interactions://互动
-            downloadURL = [[TiSDK getInteractionURL] stringByAppendingFormat:@"%@.zip",mode.name];
-            cachePaths =  TiSDK.getInteractionPath;
-            break;
-        case TI_DOWNLOAD_STATE_Makeup://美妆主菜单UI
-            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.zip",mode.name];
-            cachePaths =  TiSDK.getMakeupPath;
-            break;
-        case TI_DOWNLOAD_STATE_Makeup_blusher://美妆-腮红
-            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
-            cachePaths =  TiSDK.getMakeupPath;
-            cachePaths =  [cachePaths stringByAppendingFormat:@"/blusher/%@",mode.name];
-            break;
-        case TI_DOWNLOAD_STATE_Makeup_eyelash://美妆-睫毛
-            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
-            cachePaths =  TiSDK.getMakeupPath;
-            cachePaths =  [cachePaths stringByAppendingFormat:@"/eyelash/%@",mode.name];
-            break;
-        case TI_DOWNLOAD_STATE_Makeup_eyebrow://美妆-眉毛
-            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
-            cachePaths =  TiSDK.getMakeupPath;
-            cachePaths =  [cachePaths stringByAppendingFormat:@"/eyebrow/%@",mode.name];
-            break;
-        case TI_DOWNLOAD_STATE_Makeup_eyeshadow://美妆-眼影
-            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
-            cachePaths =  TiSDK.getMakeupPath;
-            cachePaths =  [cachePaths stringByAppendingFormat:@"/eyeshadow/%@",mode.name];
-            break;
-        case TI_DOWNLOAD_STATE_Makeup_eyeline://美妆-眼线
-            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
-            cachePaths =  TiSDK.getMakeupPath;
-            cachePaths =  [cachePaths stringByAppendingFormat:@"/eyeline/%@",mode.name];
-            break;
-        case TI_DOWNLOAD_STATE_Portraits://人像抠图
-            downloadURL = [[TiSDK getPortraitURL] stringByAppendingFormat:@"%@.zip",mode.name];
-            cachePaths =  TiSDK.getPortraitPath;
-            break;
-        case TI_DOWNLOAD_STATE_Gestures://手势识别
-            downloadURL = [[TiSDK getGestureURL] stringByAppendingFormat:@"%@.zip",mode.name];
-            cachePaths =  TiSDK.getGesturePath;
-            break;
-            
-        default:
-            break;
-    }
-    
+//    
+//    switch (type) {
+//        case TI_DOWNLOAD_TYPE_Sticker://贴纸
+//            downloadURL = [[TiSDK getStickerURL] stringByAppendingFormat:@"%@.zip",mode.name];
+//            cachePaths =  TiSDK.getStickerPath;
+//            break;
+//        case TI_DOWNLOAD_STATE_Gift://礼物
+//            downloadURL = [[TiSDK getGiftURL] stringByAppendingFormat:@"%@.zip",mode.name];
+//            cachePaths =  TiSDK.getGiftPath;
+//            break;
+//        case TI_DOWNLOAD_STATE_Watermark://水印
+//            downloadURL = [[TiSDK getWatermarkURL] stringByAppendingFormat:@"%@.zip",mode.name];
+//            cachePaths =  TiSDK.getWatermarkPath;
+//            break;
+//        case TI_DOWNLOAD_STATE_Mask://面具
+//            downloadURL = [[TiSDK getMaskURL] stringByAppendingFormat:@"%@.png",mode.name];
+//            cachePaths =  TiSDK.getMaskPath;
+//            cachePaths =  [cachePaths stringByAppendingFormat:@"/%@",mode.name];
+//            break;
+//        case TI_DOWNLOAD_STATE_Greenscreen://绿幕抠图
+//            downloadURL = [[TiSDK getGreenScreenURL] stringByAppendingFormat:@"%@",mode.name];
+//            cachePaths =  TiSDK.getGreenScreenPath;
+//            break;
+//        case TI_DOWNLOAD_STATE_Interactions://互动
+//            downloadURL = [[TiSDK getInteractionURL] stringByAppendingFormat:@"%@.zip",mode.name];
+//            cachePaths =  TiSDK.getInteractionPath;
+//            break;
+//        case TI_DOWNLOAD_STATE_Makeup://美妆主菜单UI
+//            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.zip",mode.name];
+//            cachePaths =  TiSDK.getMakeupPath;
+//            break;
+//        case TI_DOWNLOAD_STATE_Makeup_blusher://美妆-腮红
+//            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
+//            cachePaths =  TiSDK.getMakeupPath;
+//            cachePaths =  [cachePaths stringByAppendingFormat:@"/blusher/%@",mode.name];
+//            break;
+//        case TI_DOWNLOAD_STATE_Makeup_eyelash://美妆-睫毛
+//            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
+//            cachePaths =  TiSDK.getMakeupPath;
+//            cachePaths =  [cachePaths stringByAppendingFormat:@"/eyelash/%@",mode.name];
+//            break;
+//        case TI_DOWNLOAD_STATE_Makeup_eyebrow://美妆-眉毛
+//            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
+//            cachePaths =  TiSDK.getMakeupPath;
+//            cachePaths =  [cachePaths stringByAppendingFormat:@"/eyebrow/%@",mode.name];
+//            break;
+//        case TI_DOWNLOAD_STATE_Makeup_eyeshadow://美妆-眼影
+//            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
+//            cachePaths =  TiSDK.getMakeupPath;
+//            cachePaths =  [cachePaths stringByAppendingFormat:@"/eyeshadow/%@",mode.name];
+//            break;
+//        case TI_DOWNLOAD_STATE_Makeup_eyeline://美妆-眼线
+//            downloadURL = [[TiSDK getMakeupURL] stringByAppendingFormat:@"%@.png",mode.name];
+//            cachePaths =  TiSDK.getMakeupPath;
+//            cachePaths =  [cachePaths stringByAppendingFormat:@"/eyeline/%@",mode.name];
+//            break;
+//        case TI_DOWNLOAD_STATE_Portraits://人像抠图
+//            downloadURL = [[TiSDK getPortraitURL] stringByAppendingFormat:@"%@.zip",mode.name];
+//            cachePaths =  TiSDK.getPortraitPath;
+//            break;
+//        case TI_DOWNLOAD_STATE_Gestures://手势识别
+//            downloadURL = [[TiSDK getGestureURL] stringByAppendingFormat:@"%@.zip",mode.name];
+//            cachePaths =  TiSDK.getGesturePath;
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    
     if ([[downloadURL pathExtension] isEqualToString:@"png"]) {
         
         NSError *error = nil;
