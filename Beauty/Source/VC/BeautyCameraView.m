@@ -57,7 +57,7 @@ NSInteger m_beautyCameraViewCount = 0;
 //    [self.glView setupGL];//着色器相关设置
     
     
-//    
+//
 //    [self addSubview:self.imageView];
 //    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.left.mas_equalTo(0);

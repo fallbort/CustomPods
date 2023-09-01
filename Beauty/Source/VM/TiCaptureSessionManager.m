@@ -11,9 +11,9 @@
 
 static TiCaptureSessionManager *shareManager = NULL;
 static dispatch_once_t token;
+static dispatch_queue_t runQueue;
 
 @interface TiCaptureSessionManager ()<AVCaptureVideoDataOutputSampleBufferDelegate>
-
 @end
 
 @implementation TiCaptureSessionManager
@@ -29,6 +29,32 @@ static dispatch_once_t token;
 + (void)releaseShareManager{
     token = 0; // 只有置成0,GCD才会认为它从未执行过.它默认为0.这样才能保证下次再次调用shareInstance的时候,再次创建对象.
     shareManager = nil;
+}
+
+-(void)dealloc {
+    [NSNotificationCenter.defaultCenter removeObserver:self];
+}
+
+-(instancetype)init {
+    self = [super init];
+    if (runQueue == nil) {
+        runQueue = dispatch_queue_create("com.zebra.app", DISPATCH_QUEUE_SERIAL);
+    }
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(appDidBecome) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(appWillResign) name:UIApplicationWillResignActiveNotification object:nil];
+    return self;
+}
+
+-(void)appDidBecome {
+    dispatch_async(runQueue, ^{
+        [self.session startRunning];
+    });
+}
+
+-(void)appWillResign {
+    dispatch_async(runQueue, ^{
+        [self.session stopRunning];
+    });
 }
 
 - (void)startAVCaptureDelegate:(id<TiCaptureSessionManagerDelegate>)delegate{
@@ -87,8 +113,8 @@ static dispatch_once_t token;
         connect.videoOrientation = [self getCaptureVideoOrientation];
     }
     [weakSelf.session commitConfiguration];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [weakSelf.session startRunning];
+    dispatch_async(runQueue, ^{
+        [self.session startRunning];
     });
     
 }
@@ -175,14 +201,14 @@ static dispatch_once_t token;
                 [self.session beginConfiguration];
                 [self.session addInput:newInput];
                 // Changes take effect once the outermost commitConfiguration is invoked.
-                
-                [self.session commitConfiguration];
                 if(dataOutput != nil) {
                     AVCaptureConnection* connect = [dataOutput connectionWithMediaType:AVMediaTypeVideo];
                     if ([connect isVideoOrientationSupported]) {
                         connect.videoOrientation = [self getCaptureVideoOrientation];
                     }
                 }
+                [self.session commitConfiguration];
+                
                 
                 break;
             }
@@ -212,7 +238,10 @@ static dispatch_once_t token;
 
 // MARK: --destroy释放 相关代码--
 - (void)destroy{
-    [self.session stopRunning];
+    AVCaptureSession* oldSession = self.session;
+    dispatch_async(runQueue, ^{
+        [oldSession startRunning];
+    });
     self.session = nil;
 }
 
