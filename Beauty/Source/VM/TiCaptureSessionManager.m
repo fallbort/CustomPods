@@ -72,22 +72,25 @@ static dispatch_once_t token;
     
     
     __weak __typeof(self)weakSelf = self;
+
+    
+    [weakSelf.session beginConfiguration];
+    if ([weakSelf.session canAddInput:input]) {
+        [weakSelf.session addInput:input];
+    }
+    if ([weakSelf.session canAddOutput:dataOutput]) {
+        [weakSelf.session addOutput:dataOutput];
+    }
+    [weakSelf.session commitConfiguration];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [weakSelf.session beginConfiguration];
-        if ([weakSelf.session canAddInput:input]) {
-            [weakSelf.session addInput:input];
-        }
-        if ([weakSelf.session canAddOutput:dataOutput]) {
-            [weakSelf.session addOutput:dataOutput];
-        }
-        [weakSelf.session commitConfiguration];
         [weakSelf.session startRunning];
-        
-        AVCaptureConnection* connect = [dataOutput connectionWithMediaType:AVMediaTypeVideo];
-        if ([connect isVideoOrientationSupported]) {
-            connect.videoOrientation = [self getCaptureVideoOrientation];
-        }
     });
+    
+    
+    AVCaptureConnection* connect = [dataOutput connectionWithMediaType:AVMediaTypeVideo];
+    if ([connect isVideoOrientationSupported]) {
+        connect.videoOrientation = [self getCaptureVideoOrientation];
+    }
     
 }
 
@@ -174,6 +177,13 @@ static dispatch_once_t token;
                 // Changes take effect once the outermost commitConfiguration is invoked.
                 [self.session commitConfiguration];
                 
+                AVCaptureVideoDataOutput * dataOutput = self.session.outputs.firstObject;
+                if(dataOutput != nil) {
+                    AVCaptureConnection* connect = [dataOutput connectionWithMediaType:AVMediaTypeVideo];
+                    if ([connect isVideoOrientationSupported]) {
+                        connect.videoOrientation = [self getCaptureVideoOrientation];
+                    }
+                }
                 break;
             }
         }
