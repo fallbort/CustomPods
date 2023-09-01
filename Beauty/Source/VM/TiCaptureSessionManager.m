@@ -32,6 +32,7 @@ static dispatch_once_t token;
 }
 
 - (void)startAVCaptureDelegate:(id<TiCaptureSessionManagerDelegate>)delegate{
+    if (self.session != nil)  {return;}
     self.delegate = delegate;
     self.session = [[AVCaptureSession alloc] init];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)
@@ -64,7 +65,7 @@ static dispatch_once_t token;
     }
     
     AVCaptureVideoDataOutput * dataOutput = [[AVCaptureVideoDataOutput alloc] init];
-    [dataOutput setAlwaysDiscardsLateVideoFrames: true];
+    [dataOutput setAlwaysDiscardsLateVideoFrames: false];
     // 设置视频帧格式
     [dataOutput setVideoSettings:@{(id)kCVPixelBufferPixelFormatTypeKey: @(kCVPixelFormatType_32BGRA)}];
     dispatch_queue_t queue = dispatch_queue_create("dataOutputQueue", NULL);
@@ -81,16 +82,14 @@ static dispatch_once_t token;
     if ([weakSelf.session canAddOutput:dataOutput]) {
         [weakSelf.session addOutput:dataOutput];
     }
-    [weakSelf.session commitConfiguration];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [weakSelf.session startRunning];
-    });
-    
-    
     AVCaptureConnection* connect = [dataOutput connectionWithMediaType:AVMediaTypeVideo];
     if ([connect isVideoOrientationSupported]) {
         connect.videoOrientation = [self getCaptureVideoOrientation];
     }
+    [weakSelf.session commitConfiguration];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [weakSelf.session startRunning];
+    });
     
 }
 
@@ -161,6 +160,7 @@ static dispatch_once_t token;
             AVCaptureDevice *device = input.device;
             //先移除当前摄像头采集的画面
             [self.session removeInput:input];
+            AVCaptureVideoDataOutput * dataOutput = self.session.outputs.firstObject;
             if ( [device hasMediaType:AVMediaTypeVideo] ) {
                 AVCaptureDevicePosition position = device.position;
                 self.cameraPosition = nil;
@@ -175,15 +175,15 @@ static dispatch_once_t token;
                 [self.session beginConfiguration];
                 [self.session addInput:newInput];
                 // Changes take effect once the outermost commitConfiguration is invoked.
-                [self.session commitConfiguration];
                 
-                AVCaptureVideoDataOutput * dataOutput = self.session.outputs.firstObject;
+                [self.session commitConfiguration];
                 if(dataOutput != nil) {
                     AVCaptureConnection* connect = [dataOutput connectionWithMediaType:AVMediaTypeVideo];
                     if ([connect isVideoOrientationSupported]) {
                         connect.videoOrientation = [self getCaptureVideoOrientation];
                     }
                 }
+                
                 break;
             }
         }
@@ -191,17 +191,29 @@ static dispatch_once_t token;
 }
 
 - (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition)position {
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType: AVMediaTypeVideo];
-    for ( AVCaptureDevice *device in devices )
-        if ( device.position == position )
-            return device;
-    return nil;
+    AVCaptureDevice* useDevice = nil;
+    // 默认为前置摄像头
+    if (@available(iOS 10.0, *)) {
+        NSArray *devices = [[AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera] mediaType:AVMediaTypeVideo position:position] devices];
+        for (AVCaptureDevice *device in devices) {
+            if ([device hasMediaType: AVMediaTypeVideo]) {
+                if ([device position] == position) {
+                    useDevice = device;
+                    break;
+                }
+            }
+        }
+    } else {
+        // Fallback on earlier versions
+    }
+    return useDevice;
 }
 
 
 // MARK: --destroy释放 相关代码--
 - (void)destroy{
     [self.session stopRunning];
+    self.session = nil;
 }
 
 @end
