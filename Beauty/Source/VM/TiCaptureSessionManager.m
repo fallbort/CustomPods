@@ -240,7 +240,7 @@ static dispatch_queue_t runQueue;
 - (void)destroy{
     AVCaptureSession* oldSession = self.session;
     dispatch_async(runQueue, ^{
-        [oldSession startRunning];
+        [oldSession stopRunning];
     });
     self.session = nil;
 }
