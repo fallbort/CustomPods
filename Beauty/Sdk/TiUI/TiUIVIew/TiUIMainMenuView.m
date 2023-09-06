@@ -988,8 +988,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
     }
     int selectedMenuTag = [self.classifyArr[self.selectedIndexPath.row] intValue];
     if (selectedMenuTag != menuTag) {
-        [TiMenuPlistManager shareManager].mainModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:menuTag WithPath:@"TiMenu.json"];
-        [TiMenuPlistManager shareManager].mainModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:selectedMenuTag WithPath:@"TiMenu.json"];
+        [TiMenuPlistManager shareManager].mainModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:menuTag WithPath:@"TiMenu.json"];
         if(self.selectedIndexPath)
         {
             [self.menuView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];

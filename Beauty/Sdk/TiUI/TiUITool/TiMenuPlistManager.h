@@ -54,7 +54,7 @@
 @property(nonatomic,strong)NSArray *hairdressModArr;//美发
 
 - (NSArray *)modifyObject:(id)obj forKey:(NSString *)key In:(NSUInteger)index WithPath:(NSString *)path;
-
+- (NSArray *)modifyAllWithSelectedindex:(NSInteger)index WithPath:(NSString *)path;
 -(void)initSDK;
 
 @end

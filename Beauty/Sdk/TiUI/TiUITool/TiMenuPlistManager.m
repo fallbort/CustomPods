@@ -404,6 +404,7 @@ static dispatch_once_t token;
         
         if ([path isEqualToString:@"TiMenu"]||[path isEqualToString:@"TiBlusher"]||[path isEqualToString:@"TiEyelash"]||[path isEqualToString:@"TiEyebrows"]||[path isEqualToString:@"TiEyeshadow"]||[path isEqualToString:@"TiEyeline"]) {
   #pragma make  这里可以单独保存选中状态 除了选中区域外 其他的都默认重置选中状态
+                
                }else{
                    if (mode.menuTag == 0) {// 默认无 或者第一个按钮
                        mode.selected = YES;
@@ -530,6 +531,136 @@ static dispatch_once_t token;
     if (modeArr.count) {
         TIMenuMode *dome = [TIMenuMode applicationWithDic:nmDic];
         [modeArr setObject:dome atIndexedSubscript:index];
+    }
+    
+    return modeArr;
+}
+
+- (NSArray *)modifyAllWithSelectedindex:(NSInteger)index WithPath:(NSString *)path{
+ 
+    NSString* key = @"selected";
+    NSString *filePatch = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",path]];
+    NSMutableDictionary *plistDictionary = [TiUITool getJsonDataForPath:filePatch];
+    //修改字典里面的内容,先按照结构取到你想修改内容的小字典
+    NSMutableArray *nmArr = [NSMutableArray arrayWithArray:[plistDictionary objectForKey:@"menu"]];
+    NSMutableArray * newArr = [NSMutableArray array];
+    if (nmArr.count > 0) {
+        [nmArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSMutableDictionary *nmDic = [NSMutableDictionary dictionaryWithDictionary:obj];
+            if (index == idx) {
+                [nmDic setObject:@(YES) forKey:key];
+            }else{
+                [nmDic setObject:@(NO) forKey:key];
+            }
+            [newArr addObject:nmDic];
+        }];
+    }
+    
+    //修改完成组建成大字典写入本地
+    nmArr = newArr;
+    [plistDictionary setValue:nmArr forKey:@"menu"];
+    [TiUITool setWriteJsonDic:plistDictionary toPath:filePatch];
+    
+     //修改mode数组
+    NSMutableArray *modeArr;
+    if([@"TiMenu.json" rangeOfString:path].location !=NSNotFound)//_roaldSearchText
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.mainModeArr];
+     }
+     else if([@"TiBeauty.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.beautyModeArr];
+     }
+     else if([@"TiAppearance.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.appearanceModeArr];
+     }
+     else if([@"TiFilter.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.filterModeArr];
+     }
+     else if([@"TiRock.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.rockModeArr];
+     }
+     else if([@"TiDistortion.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.distortionModeArr];
+     }
+     else if([@"TiStickers.json" rangeOfString:path].location !=NSNotFound)
+     {
+        modeArr = [NSMutableArray arrayWithArray:self.stickersModeArr];
+     }
+     else if([@"TiGifts.json" rangeOfString:path].location !=NSNotFound)
+     {
+        modeArr = [NSMutableArray arrayWithArray:self.giftModeArr];
+     }
+     else if([@"TiWaterMarks.json" rangeOfString:path].location !=NSNotFound)
+     {
+        modeArr = [NSMutableArray arrayWithArray:self.watermarksModeArr];
+     }
+     else if([@"TiMasks.json" rangeOfString:path].location !=NSNotFound)
+     {
+        modeArr = [NSMutableArray arrayWithArray:self.masksModeArr];
+     }
+     else if([@"TiGreenScreens.json" rangeOfString:path].location !=NSNotFound)
+     {
+        modeArr = [NSMutableArray arrayWithArray:self.greenscreensModeArr];
+     }
+     else if([@"TiOneKeyBeauty.json" rangeOfString:path].location !=NSNotFound)
+     {
+        modeArr = [NSMutableArray arrayWithArray:self.onekeyModeArr];
+     }
+     else if([@"TiInteractions.json" rangeOfString:path].location !=NSNotFound)
+     {
+        modeArr = [NSMutableArray arrayWithArray:self.interactionsArr];
+     }
+     else if([@"TiBlusher.json" rangeOfString:path].location !=NSNotFound)
+     {
+        modeArr = [NSMutableArray arrayWithArray:self.blusherModArr];
+     }
+     else if([@"TiEyebrows.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.eyebrowsModArr];
+     }
+     else if([@"TiEyelash.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.eyelashModArr];
+     }
+     else if([@"TiEyeline.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.eyeLineModArr];
+     }
+     else if([@"TiEyeshadow.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.eyeshadowModArr];
+     }
+     else if ([@"TiFaceShape.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.faceshapeModeArr];
+     }
+     else if ([@"TiPortraits.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.portraitsModArr];
+     }
+     else if ([@"TiHairdressDef.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.hairdressModArr];
+     }
+     else if ([@"TiGestures.json" rangeOfString:path].location !=NSNotFound)
+     {
+         modeArr = [NSMutableArray arrayWithArray:self.gesturesModArr];
+     }
+    
+    if (modeArr.count) {
+        [modeArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            TIMenuMode *dome = obj;
+            if (index == idx) {
+                dome.selected = YES;
+            }else{
+                dome.selected = NO;
+            }
+        }];
     }
     
     return modeArr;

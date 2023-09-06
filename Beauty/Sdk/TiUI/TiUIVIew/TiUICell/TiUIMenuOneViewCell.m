@@ -348,8 +348,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
         {
           self.clickOnCellBlock(IndexPath.row);
         }
-        [TiMenuPlistManager shareManager].faceshapeModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:IndexPath.row WithPath:@"TiFaceShape.json"];
-        [TiMenuPlistManager shareManager].faceshapeModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.FaceshapeIndexPath.row WithPath:@"TiFaceShape.json"];
+        [TiMenuPlistManager shareManager].faceshapeModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:IndexPath.row WithPath:@"TiFaceShape.json"];
         if (self.FaceshapeIndexPath) {
             [self.menuCollectionView reloadItemsAtIndexPaths:@[self.FaceshapeIndexPath,IndexPath]];
         }else{
@@ -416,8 +415,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
             {
                 return;
             }else{
-                [TiMenuPlistManager shareManager].faceshapeModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiFaceShape.json"];
-                [TiMenuPlistManager shareManager].faceshapeModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.FaceshapeIndexPath.row WithPath:@"TiFaceShape.json"];
+                [TiMenuPlistManager shareManager].faceshapeModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiFaceShape.json"];
                 if (self.FaceshapeIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.FaceshapeIndexPath,indexPath]];
                 }else{
@@ -435,8 +433,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
             switch (self.mode.menuTag) {
                 case 0:
                 {
-                    [TiMenuPlistManager shareManager].beautyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiBeauty.json"];
-                    [TiMenuPlistManager shareManager].beautyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiBeauty.json"];
+                    [TiMenuPlistManager shareManager].beautyModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiBeauty.json"];
                     if (self.selectedIndexPath) {
                         [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                     }else{
@@ -451,8 +448,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
                     break;
                 case 1:
                 {
-                    [TiMenuPlistManager shareManager].appearanceModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiAppearance.json"];
-                    [TiMenuPlistManager shareManager].appearanceModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiAppearance.json"];
+                    [TiMenuPlistManager shareManager].appearanceModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiAppearance.json"];
                     if (self.selectedIndexPath) {
                         [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                     }else{
@@ -463,8 +459,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuCollectionVi
                     break;
                 case 6:
                 {
-                    [TiMenuPlistManager shareManager].distortionModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiDistortion.json"];
-                    [TiMenuPlistManager shareManager].distortionModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiDistortion.json"];
+                    [TiMenuPlistManager shareManager].distortionModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiDistortion.json"];
                     if (self.selectedIndexPath) {
                         [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                     }else{

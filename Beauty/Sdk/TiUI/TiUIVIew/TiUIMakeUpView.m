@@ -394,8 +394,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
                 if (self.selectedIndexPath!=nil) {
                     [TiMenuPlistManager shareManager].blusherModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiBlusher.json"];
                   }
-                [TiMenuPlistManager shareManager].blusherModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiBlusher.json"];
-
+                [TiMenuPlistManager shareManager].blusherModArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiBlusher.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -443,7 +442,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
                 if (self.selectedIndexPath!=nil) {
                     [TiMenuPlistManager shareManager].eyelashModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiEyelash.json"];
                   }
-                [TiMenuPlistManager shareManager].eyelashModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiEyelash.json"];
+                [TiMenuPlistManager shareManager].eyelashModArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiEyelash.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -488,8 +487,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
                 if (self.selectedIndexPath!=nil) {
                     [TiMenuPlistManager shareManager].eyebrowsModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiEyebrows.json"];
                   }
-                [TiMenuPlistManager shareManager].eyebrowsModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiEyebrows.json"];
-                
+                [TiMenuPlistManager shareManager].eyebrowsModArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiEyebrows.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -535,8 +533,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
                 if (self.selectedIndexPath!=nil) {
                     [TiMenuPlistManager shareManager].eyeshadowModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiEyeshadow.json"];
                   }
-                [TiMenuPlistManager shareManager].eyeshadowModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiEyeshadow.json"];
-                
+                [TiMenuPlistManager shareManager].eyeshadowModArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiEyeshadow.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -581,7 +578,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMeiZhuangViewCellId"
                 if (self.selectedIndexPath!=nil) {
                     [TiMenuPlistManager shareManager].eyeLineModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiEyeline.json"];
                   }
-                [TiMenuPlistManager shareManager].eyeLineModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiEyeline.json"];
+                [TiMenuPlistManager shareManager].eyeLineModArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiEyeline.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{

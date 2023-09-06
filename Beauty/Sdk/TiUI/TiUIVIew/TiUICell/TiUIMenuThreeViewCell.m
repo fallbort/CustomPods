@@ -212,9 +212,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
         {
             TIMenuMode *mode = [TiMenuPlistManager shareManager].stickersModeArr[indexPath.row];
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET){
-                
-                [TiMenuPlistManager shareManager].stickersModeArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiStickers.json"];
-                [TiMenuPlistManager shareManager].stickersModeArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiStickers.json"];
+                [TiMenuPlistManager shareManager].stickersModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiStickers.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -248,9 +246,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
         {
             TIMenuMode *mode = [TiMenuPlistManager shareManager].giftModeArr[indexPath.row];
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET){
-                
-                [TiMenuPlistManager shareManager].giftModeArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiGifts.json"];
-                [TiMenuPlistManager shareManager].giftModeArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiGifts.json"];
+                [TiMenuPlistManager shareManager].giftModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiGifts.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -283,9 +279,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
         {
             TIMenuMode *mode = [TiMenuPlistManager shareManager].watermarksModeArr[indexPath.row];
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET){
-                
-                [TiMenuPlistManager shareManager].watermarksModeArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiWaterMarks.json"];
-                [TiMenuPlistManager shareManager].watermarksModeArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiWaterMarks.json"];
+                [TiMenuPlistManager shareManager].watermarksModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiWaterMarks.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -323,9 +317,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
         {
             TIMenuMode *mode = [TiMenuPlistManager shareManager].masksModeArr[indexPath.row];
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET){
-                
-                [TiMenuPlistManager shareManager].masksModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiMasks.json"];
-                [TiMenuPlistManager shareManager].masksModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiMasks.json"];
+                [TiMenuPlistManager shareManager].masksModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiMasks.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -378,9 +370,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
             
             TIMenuMode *mode = [TiMenuPlistManager shareManager].greenscreensModeArr[indexPath.row];
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET){
-                
-                [TiMenuPlistManager shareManager].greenscreensModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiGreenScreens.json"];
-                [TiMenuPlistManager shareManager].greenscreensModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiGreenScreens.json"];
+                [TiMenuPlistManager shareManager].greenscreensModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiGreenScreens.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -415,9 +405,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
         {
             TIMenuMode *mode = [TiMenuPlistManager shareManager].interactionsArr[indexPath.row];
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET){
-                
-                [TiMenuPlistManager shareManager].interactionsArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiInteractions.json"];
-                [TiMenuPlistManager shareManager].interactionsArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiInteractions.json"];
+                [TiMenuPlistManager shareManager].interactionsArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiInteractions.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -453,9 +441,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
         {
             TIMenuMode *mode = [TiMenuPlistManager shareManager].portraitsModArr[indexPath.row];
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET){
-                
-                [TiMenuPlistManager shareManager].portraitsModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiPortraits.json"];
-                [TiMenuPlistManager shareManager].portraitsModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiPortraits.json"];
+                [TiMenuPlistManager shareManager].portraitsModArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiPortraits.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
@@ -489,9 +475,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuThre
         {
             TIMenuMode *mode = [TiMenuPlistManager shareManager].gesturesModArr[indexPath.row];
             if (mode.downloaded==TI_DOWNLOAD_STATE_CCOMPLET){
-                
-                [TiMenuPlistManager shareManager].gesturesModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiGestures.json"];
-                [TiMenuPlistManager shareManager].gesturesModArr  =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiGestures.json"];
+                [TiMenuPlistManager shareManager].gesturesModArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiGestures.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{

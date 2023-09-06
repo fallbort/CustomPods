@@ -213,8 +213,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
     NSInteger index = [notification.object integerValue];
     NSIndexPath *IndexPath = [NSIndexPath indexPathForRow:index inSection:0];
     //滤镜
-    [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:IndexPath.row WithPath:@"TiFilter.json"];
-    [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.filterIndexPath.row WithPath:@"TiFilter.json"];
+    [TiMenuPlistManager shareManager].filterModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:IndexPath.row WithPath:@"TiFilter.json"];
     [self.menuCollectionView reloadData];
     self.filterIndexPath = IndexPath;
     is_updateFilter = false;
@@ -229,8 +228,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
           self.clickOnCellBlock(IndexPath.row);
         }
         //一键美颜
-        [TiMenuPlistManager shareManager].onekeyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:IndexPath.row WithPath:@"TiOneKeyBeauty.json"];
-        [TiMenuPlistManager shareManager].onekeyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiOneKeyBeauty.json"];
+        [TiMenuPlistManager shareManager].onekeyModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:IndexPath.row WithPath:@"TiOneKeyBeauty.json"];
         if (self.selectedIndexPath) {
             [self.menuCollectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,IndexPath]];
         }else{
@@ -246,12 +244,11 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
           self.clickOnCellBlock(IndexPath.row);
         }
         //滤镜
-        [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:IndexPath.row WithPath:@"TiFilter.json"];
-        [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.filterIndexPath.row WithPath:@"TiFilter.json"];
+        [TiMenuPlistManager shareManager].filterModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:IndexPath.row WithPath:@"TiFilter.json"];
         [self.menuCollectionView reloadData];
         self.filterIndexPath = IndexPath;
     }else if (self.filterIndexPath.row == 0) {
-        [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:self.filterIndexPath.row WithPath:@"TiFilter.json"];
+        [TiMenuPlistManager shareManager].filterModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:IndexPath.row WithPath:@"TiFilter.json"];
         [self.menuCollectionView reloadData];
     }
     //重置所有滤镜参数到默认参数
@@ -279,8 +276,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
             {
                 self.clickOnCellBlock(modX.menuTag);
             }
-            [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiFilter.json"];
-            [TiMenuPlistManager shareManager].filterModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.filterIndexPath.row WithPath:@"TiFilter.json"];
+            [TiMenuPlistManager shareManager].filterModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiFilter.json"];
             
             if (self.filterIndexPath) {
                 [collectionView reloadItemsAtIndexPaths:@[self.filterIndexPath,indexPath]];
@@ -315,8 +311,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
         switch (self.mode.menuTag) {
             case 5:
             {
-                [TiMenuPlistManager shareManager].rockModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiRock.json"];
-                [TiMenuPlistManager shareManager].rockModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiRock.json"];
+                [TiMenuPlistManager shareManager].rockModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiRock.json"];
                 if (self.selectedIndexPath) {
                    [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                  }else{
@@ -344,8 +339,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
                 {
                   self.clickOnCellBlock(indexPath.row);
                 }
-                [TiMenuPlistManager shareManager].onekeyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiOneKeyBeauty.json"];
-                [TiMenuPlistManager shareManager].onekeyModeArr   =  [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiOneKeyBeauty.json"];
+                [TiMenuPlistManager shareManager].onekeyModeArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiOneKeyBeauty.json"];
                 TIMenuMode * mode = [[TIMenuMode alloc] init];
                 mode = [TiMenuPlistManager shareManager].onekeyModeArr[indexPath.row];
                 if (self.selectedIndexPath) {
@@ -366,8 +360,7 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
                 {
                   self.clickOnCellBlock(indexPath.row);
                 }
-                [TiMenuPlistManager shareManager].hairdressModArr = [[TiMenuPlistManager shareManager] modifyObject:@(YES) forKey:@"selected" In:indexPath.row WithPath:@"TiHairdressDef.json"];
-                [TiMenuPlistManager shareManager].hairdressModArr = [[TiMenuPlistManager shareManager] modifyObject:@(NO) forKey:@"selected" In:self.selectedIndexPath.row WithPath:@"TiHairdressDef.json"];
+                [TiMenuPlistManager shareManager].hairdressModArr   = [[TiMenuPlistManager shareManager] modifyAllWithSelectedindex:indexPath.row WithPath:@"TiHairdressDef.json"];
                 if (self.selectedIndexPath) {
                     [collectionView reloadItemsAtIndexPaths:@[self.selectedIndexPath,indexPath]];
                 }else{
