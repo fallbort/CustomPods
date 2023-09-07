@@ -1,0 +1,6 @@
+framework module MeMediaPlayer {
+  umbrella header "MeMediaPlayer.h"
+
+  export *
+  module * { export * }
+}

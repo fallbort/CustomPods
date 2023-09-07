@@ -296,5 +296,22 @@ base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/S
 
       base.vendored_frameworks    = "WebView/Sdk/*.framework"
   end
+  
+  spec.subspec 'MeMePlayer' do |base|
+      base.source_files = 'MeMePlayer/Source/**/*.{h,m,mm,swift}','MeMePlayer/*.{modulemap}','MeMePlayer/Modules/*.{h}'
+      base.public_header_files = 'MeMePlayer/Source/**/*.{h}'
+      base.framework    = "UIKit","WebKit"
+
+#      base.prefix_header_contents  = '@import MeMeKit;'
+
+      base.dependency 'MeMeKit/MeMeBaseKit'
+      base.dependency 'RxSwift'
+      base.dependency 'Cartography'
+      base.dependency 'MeMediaPlayer'
+
+      base.pod_target_xcconfig = { 'SWIFT_INCLUDE_PATHS' => ['$(PODS_TARGET_SRCROOT)/MeMePlayer'] }
+
+      base.vendored_frameworks    = "MeMePlayer/Sdk/*.framework"
+  end
 
 end
