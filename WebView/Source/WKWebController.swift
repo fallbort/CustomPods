@@ -20,6 +20,7 @@ let WhiteUrls: [String] = {
 
 open class WKWebController: UIViewController {
     
+    public static var baseHost:String = ""
     public static var webViewHasExtra = false
     
     fileprivate static var sharedWebView: WKWebView?
@@ -37,6 +38,14 @@ open class WKWebController: UIViewController {
     fileprivate var activityBackView: UIView?
     
     fileprivate var titled = false
+    
+    public var urlWithoutHost: String? {
+        didSet {
+            if Self.baseHost.count > 0 {
+                self.url = Self.baseHost + (self.urlWithoutHost ?? "")
+            }
+        }
+    }
 
     public var url: String? {
         didSet {
@@ -102,7 +111,11 @@ open class WKWebController: UIViewController {
         request = nil
     }
     
-    public static func lanuch() {
+    public static func lanuch(baseHost:String? = nil) {
+        if let baseHost = baseHost {
+            Self.baseHost = baseHost
+        }
+        
         prepareWebView()
     }
     
@@ -323,7 +336,11 @@ open class WKWebController: UIViewController {
         return view
     }()
     
-    func addExtraBridge(handleName:String,handler:@escaping WVJBHandler) {
+    public func addExtraMMBridge(handleName:String,handler:@escaping ((_ data:Any?,_ complete:((_ responseData:Any)->())?)->())) {
+        self.addExtraBridge(handleName: handleName, handler: handler)
+    }
+    
+    fileprivate func addExtraBridge(handleName:String,handler:@escaping WVJBHandler) {
         extraBridgeDict[handleName] = handler
         dealExtraBridge()
     }
