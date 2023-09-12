@@ -67,10 +67,22 @@ static NSString *const TiUIMenuCollectionViewCellId = @"TiUIMainMenuTiUIMenuTwoV
 #pragma mark ---UICollectionViewDataSource---
 //设置每个section包含的item数目
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    
+    __block NSInteger foundIndex = NSNotFound;
     switch (self.mode.menuTag) {
         case 4:
-            return [TiMenuPlistManager shareManager].filterModeArr.count;
+            [[TiMenuPlistManager shareManager].filterModeArr enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                TIMenuMode* subMode = obj;
+                if (subMode.menuTag == 22) {
+                    foundIndex = idx;
+                    // stop the enumeration
+                    *stop = YES;
+                }
+            }];
+            if (foundIndex != NSNotFound) {
+                return foundIndex + 1;
+            }else{
+                return [TiMenuPlistManager shareManager].filterModeArr.count;
+            }
             break;
         case 5:
             return [TiMenuPlistManager shareManager].rockModeArr.count;
