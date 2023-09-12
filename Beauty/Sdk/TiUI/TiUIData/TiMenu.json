@@ -20,7 +20,7 @@
       {
           "name": "贴纸",
           "menuTag":2,
-          "selected": true,
+          "selected": false,
           "totalSwitch": true,
           "subMenu": ""
       },
@@ -34,7 +34,7 @@
        {
            "name": "滤镜",
            "menuTag":4,
-           "selected": true,
+           "selected": false,
            "totalSwitch": true,
            "subMenu": ""
        },
@@ -90,7 +90,7 @@
        {
             "name": "美妆",
             "menuTag":12,
-            "selected": true,
+            "selected": false,
             "totalSwitch": false,
             "subMenu": ""
        },

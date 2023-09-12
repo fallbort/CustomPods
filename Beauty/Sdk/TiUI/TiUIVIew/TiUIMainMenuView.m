@@ -611,7 +611,7 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
     self = [super initWithFrame:frame];
     if (self) {
         UIView* resetBack = [[UIView alloc] init];
-        resetBack.backgroundColor = UIColor.blackColor;
+        resetBack.backgroundColor =  [UIColor hexStringToColor:@"aa000000"];
         [self addSubview:self.sliderRelatedView];//滑动条模块
         [self addSubview:self.backgroundView];
         [self.backgroundView addSubview:self.menuView];//美颜分割线上的一级菜单
@@ -720,7 +720,8 @@ static NSString *const TiUISubMenuViewCollectionViewCellId = @"TiUIMainSubMenuVi
             make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH*180/375, (SCREEN_WIDTH*180/375)*40/180));
         }];
         
-        self.classifyArr = @[@(10),@(4),@(0),@(1),@(13),@(6)];
+//        self.classifyArr = @[@(10),@(4),@(0),@(1),@(13),@(6)];
+        self.classifyArr = @[@(10),@(4),@(0),@(1),@(13)];
         [self.menuView reloadData];
         [self.subMenuView reloadData];
         for (int i = 0; i<self.classifyArr.count; i++){
